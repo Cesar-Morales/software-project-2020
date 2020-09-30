@@ -3,19 +3,11 @@ import pymysql
 from flask import current_app
 from flask import g
 from flask import cli
-
+from flask_sqlalchemy import SQLAlchemy
 
 def connection():
     if "db_conn" not in g:
-        conf = current_app.config
-        g.db_conn = pymysql.connect(
-            host=conf["DB_HOST"],
-            user=conf["DB_USER"],
-            password=conf["DB_PASS"],
-            db=conf["DB_NAME"],
-            cursorclass=pymysql.cursors.DictCursor,
-        )
-
+        g.db_conn = SQLAlchemy(current_app)
     return g.db_conn
 
 
