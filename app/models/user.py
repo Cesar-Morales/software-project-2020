@@ -1,34 +1,22 @@
-class User(object):
-    @classmethod
-    def all(cls, conn):
-        sql = "SELECT * FROM users"
-        cursor = conn.cursor()
-        cursor.execute(sql)
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column
+from sqlalchemy import String
+from sqlalchemy import Integer
 
-        return cursor.fetchall()
+Base = declarative_base()
 
-    @classmethod
-    def create(cls, conn, data):
-        sql = """
-            INSERT INTO users (email, password, first_name, last_name)
-            VALUES (%s, %s, %s, %s)
-        """
+class User(Base):
 
-        cursor = conn.cursor()
-        cursor.execute(sql, list(data.values()))
-        conn.commit()
+    __tablename__ = "users"
 
-        return True
-
-    @classmethod
-    def find_by_email_and_pass(cls, conn, email, password):
-        sql = """
-            SELECT * FROM users AS u
-            WHERE u.email = %s AND u.password = %s
-        """
-
-        cursor = conn.cursor()
-        cursor.execute(sql, (email, password))
-
-        return cursor.fetchone()
-
+    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    email = Column(String, unique=True, nullable=False)
+    password = Column(String, unique=True, nullable=False)
+    first_name = Column(String, unique=True, nullable=False)
+    last_name = Column(String, unique=True, nullable=False)
+    
+    def __init__(self, email, password, first_name, last_name):
+        self.email = email
+        self.password = password
+        self.first_name = first_name
+        self.last_name = last_name

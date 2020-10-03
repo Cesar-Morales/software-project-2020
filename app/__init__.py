@@ -11,12 +11,11 @@ from app.helpers import handler
 from app.helpers import auth as helper_auth
 from flask_sqlalchemy import SQLAlchemy
 
+
 def create_app(environment="development"):
     # Configuración inicial de la app
     app = Flask(__name__)
-    uri = 'mysql://' + app.config["DB_USER"] + ':' + app.config["DB_PASS"] + '@' + app.config["DB_HOST"] + '/' + app.config["DB_NAME"]
-    app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = uri
+    
     # Carga de la configuración
     env = environ.get("FLASK_ENV", environment)
     app.config.from_object(config[env])
@@ -24,6 +23,11 @@ def create_app(environment="development"):
     # Server Side session
     app.config["SESSION_TYPE"] = "filesystem"
     Session(app)
+
+    #Configurar datos alchemy
+    uri = 'mysql://' + app.config["DB_USER"] + ':' + app.config["DB_PASS"] + '@' + app.config["DB_HOST"] + '/' + app.config["DB_NAME"]
+    app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
+    app.config['SQLALCHEMY_DATABASE_URI'] = uri
 
     # Configure db
     db.init_app(app)

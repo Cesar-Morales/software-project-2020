@@ -2,6 +2,7 @@ from flask import redirect, render_template, request, url_for, session, abort
 from app.db import connection
 from app.models.user import User
 from app.helpers.auth import authenticated
+from sqlalchemy.orm import sessionmaker
 
 # Protected resources
 def index():
@@ -9,7 +10,8 @@ def index():
         abort(401)
 
     conn = connection()
-    users = User.all(conn)
+    session_db = sessionmaker(bind=conn)()
+    users = session_db.query(User).all()
 
     return render_template("user/index.html", users=users)
 
