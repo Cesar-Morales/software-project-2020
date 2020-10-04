@@ -8,9 +8,13 @@ from app import db
 def index():
     if not authenticated(session):
         abort(401)
+<<<<<<< HEAD
 
     users = db.session.query(User).all()
 
+=======
+    users = session_db.query(User).all()
+>>>>>>> 9341b4ab120a386f67c528cf4ed75cae9a530909
     return render_template("user/index.html", users=users)
 
 
