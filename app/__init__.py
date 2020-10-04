@@ -2,7 +2,6 @@ from os import path, environ
 from flask import Flask, render_template, g
 from flask_session import Session
 from config import config
-from app import db
 from app.resources import issue
 from app.resources import user
 from app.resources import auth
@@ -30,7 +29,7 @@ def create_app(environment="development"):
     app.config['SQLALCHEMY_DATABASE_URI'] = uri
 
     # Configure db
-    db.init_app(app)
+    db = SQLAlchemy(app)
 
     # Funciones que se exportan al contexto de Jinja2
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
