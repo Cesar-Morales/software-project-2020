@@ -1,7 +1,4 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column
-from sqlalchemy import String
-from sqlalchemy import Integer
 from flask_sqlalchemy import SQLAlchemy
 from app import db
 

@@ -1,9 +1,9 @@
 from os import path, environ
-from flask import Flask, render_template, g
+from flask import Flask
 from flask_session import Session
 from config import config
-from flask_sqlalchemy import SQLAlchemy
 
+from flask_sqlalchemy import SQLAlchemy
 
 environment = "development"
 
@@ -27,3 +27,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = uri
 db = SQLAlchemy(app)  
 
 Session(app)
+
+from app import routes
+
