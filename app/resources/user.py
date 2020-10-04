@@ -26,7 +26,7 @@ def new():
 def create():
     if not authenticated(session):
         abort(401)
-
     conn = connection()
-    User.create(conn, request.form)
+    session_db = sessionmaker(bind=conn)()
+    User.create(session_db,request.form)
     return redirect(url_for("user_index"))
