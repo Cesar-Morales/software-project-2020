@@ -2,12 +2,12 @@ from os import path, environ
 from flask import Flask, render_template, g
 from flask_session import Session
 from config import config
-from app.resources import issue
-from app.resources import user
-from app.resources import auth
-from app.resources.api import issue as api_issue
-from app.helpers import handler
-from app.helpers import auth as helper_auth
+#from app.resources import issue
+#from app.resources import user
+#from app.resources import auth
+#from app.resources.api import issue as api_issue
+#from app.helpers import handler
+#from app.helpers import auth as helper_auth
 from flask_sqlalchemy import SQLAlchemy
 
 
