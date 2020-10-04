@@ -3,8 +3,7 @@ from sqlalchemy import Column
 from sqlalchemy import String
 from sqlalchemy import Integer
 from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from app import db
 
 class User(db.Model):
 
@@ -12,12 +11,11 @@ class User(db.Model):
 
 
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    username = db.Column(db.Integer, primary_key=True, nullable=False)
-    email = db.Column(db.String, unique=True, nullable=False)
-    password = db.Column(db.String, unique=True, nullable=False)
-    first_name = db.Column(db.String, unique=True, nullable=False)
-    last_name = db.Column(db.String, unique=True, nullable=False)
-
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(20), unique=True, nullable=False)
+    password = db.Column(db.String(120), nullable=False)
+    first_name = db.Column(db.String(20), nullable=False)
+    last_name = db.Column(db.String(20), nullable=False)
 
     def create(requestform):
          username = requestform.get("username")
