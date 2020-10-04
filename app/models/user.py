@@ -21,6 +21,6 @@ class User(db.Model):
          first_name = requestform.get("first_name")
          password = requestform.get("password")
         
-         nuevo = User(email=email, last_name=last_name, first_name=first_name, password=password)
-         db.add(nuevo)
-         db.commit()   
+         nuevo = User(email=email, last_name=last_name, first_name=first_name, password=password,username=username)
+         db.session.add(nuevo)
+         db.session.commit()   

@@ -3,6 +3,7 @@ from flask import Flask
 from flask_session import Session
 from config import config
 
+
 from flask_sqlalchemy import SQLAlchemy
 
 environment = "development"
@@ -27,6 +28,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = uri
 db = SQLAlchemy(app)  
 
 Session(app)
-
+from app.models.user import User
+db.create_all()
 from app import routes
 
