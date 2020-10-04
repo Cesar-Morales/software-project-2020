@@ -22,7 +22,7 @@ def create_app(environment="development"):
 
     # Server Side session
     app.config["SESSION_TYPE"] = "filesystem"
-    Session(app)
+
 
     #Configurar datos alchemy
     uri = 'mysql://' + app.config["DB_USER"] + ':' + app.config["DB_PASS"] + '@' + app.config["DB_HOST"] + '/' + app.config["DB_NAME"]
@@ -30,8 +30,10 @@ def create_app(environment="development"):
     app.config['SQLALCHEMY_DATABASE_URI'] = uri
 
     # Configure db
-    db.init_app(app)
-
+    db = SQLAlchemy(app)
+  
+    Session(app)
+    db.create_all()
     # Funciones que se exportan al contexto de Jinja2
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
 

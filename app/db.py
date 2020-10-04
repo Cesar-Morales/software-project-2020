@@ -20,5 +20,3 @@ def close(e=None):
     #    conn.close()
 
 
-def init_app(app):
-    app.teardown_appcontext(close)
