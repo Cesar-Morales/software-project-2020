@@ -11,7 +11,7 @@ class User(db.Model):
     password = db.Column(db.String(120), nullable=False)
     first_name = db.Column(db.String(20), nullable=False)
     last_name = db.Column(db.String(20), nullable=False)
-    active = db.Column(db.Boolean)
+    active = db.Column(db.Boolean, default=True)
 
     roles = db.relationship('Rol', secondary=usuario_tiene_rol, back_populates='users')
 

@@ -39,8 +39,14 @@ site = db.session.query(Site).first()
 if not site:
     site_new = Site(title='AyudAR', email='ayudar@gmail.ar' , description='Sistema de ayuda social')
     db.session.add(site_new)
-    db.session.commit()    
+    db.session.commit()
+
+#Creacion del admin
+user = db.session.query(User).filter_by(email='admin').first()
+if not user:
+    user = User(email='admin', last_name='Marcos', first_name='Carlos', password='123123', username='admin')
+    db.session.add(user)
+    db.session.commit()
 
 #Importar las rutas de la aplicacion
 from app import routes
-
