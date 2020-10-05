@@ -20,6 +20,8 @@ def new():
 
     return render_template("user/new.html")
 
+def search():
+    return render_template("user/index.html",users=User.search(request.form))
 
 def create():
     if not authenticated(session):
