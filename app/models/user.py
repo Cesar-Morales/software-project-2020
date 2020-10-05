@@ -29,3 +29,11 @@ class User(db.Model):
             db.session.add(nuevo)
             db.session.commit() 
             return True  
+
+    #Funcion de busqueda de usuarios
+    #inicialmente busco por nombre de usuario que es unico, luego voy a buscar por activo o bloqueado, que trae mas resultados
+    #pero esto una vez que este lista la tabla de usuarios con los campos necesarios
+    def search(requestform):
+         usernam = requestform.get("search")
+         users = db.session.query(User).filter_by(username = usernam).all()
+         return users
