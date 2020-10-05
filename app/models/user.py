@@ -1,11 +1,9 @@
-from sqlalchemy.ext.declarative import declarative_base
-from flask_sqlalchemy import SQLAlchemy
 from app import db
 from sqlalchemy import or_
+from app.models.usuario_tiene_rol import usuario_tiene_rol
+
+
 class User(db.Model):
-
-    __tablename__ = "users"
-
 
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
@@ -13,6 +11,9 @@ class User(db.Model):
     password = db.Column(db.String(120), nullable=False)
     first_name = db.Column(db.String(20), nullable=False)
     last_name = db.Column(db.String(20), nullable=False)
+    active = db.Column(db.Boolean, default=True)
+
+    roles = db.relationship('Rol', secondary=usuario_tiene_rol, back_populates='users')
 
     def create(requestform):
          username = requestform.get("username")

@@ -29,6 +29,7 @@ db = SQLAlchemy(app)
 
 Session(app)
 from app.models.user import User
+from app.models.rol import Rol
 db.create_all()
 from app import routes
 
