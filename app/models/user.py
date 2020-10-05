@@ -1,34 +1,31 @@
-class User(object):
-    @classmethod
-    def all(cls, conn):
-        sql = "SELECT * FROM users"
-        cursor = conn.cursor()
-        cursor.execute(sql)
+from sqlalchemy.ext.declarative import declarative_base
+from flask_sqlalchemy import SQLAlchemy
+from app import db
+from sqlalchemy import or_
+class User(db.Model):
 
-        return cursor.fetchall()
+    __tablename__ = "users"
 
-    @classmethod
-    def create(cls, conn, data):
-        sql = """
-            INSERT INTO users (email, password, first_name, last_name)
-            VALUES (%s, %s, %s, %s)
-        """
 
-        cursor = conn.cursor()
-        cursor.execute(sql, list(data.values()))
-        conn.commit()
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(20), unique=True, nullable=False)
+    password = db.Column(db.String(120), nullable=False)
+    first_name = db.Column(db.String(20), nullable=False)
+    last_name = db.Column(db.String(20), nullable=False)
 
-        return True
-
-    @classmethod
-    def find_by_email_and_pass(cls, conn, email, password):
-        sql = """
-            SELECT * FROM users AS u
-            WHERE u.email = %s AND u.password = %s
-        """
-
-        cursor = conn.cursor()
-        cursor.execute(sql, (email, password))
-
-        return cursor.fetchone()
-
+    def create(requestform):
+         username = requestform.get("username")
+         email = requestform.get("email")
+         last_name = requestform.get("last_name")
+         first_name = requestform.get("first_name")
+         password = requestform.get("password")
+         #Verificamos si el nombre de usuario o email ya estan en uso
+         user = db.session.query(User).filter(or_(User.username == username , User.email == email)).first()
+         if  user: 
+             return False
+         else:     
+            nuevo = User(email=email, last_name=last_name, first_name=first_name, password=password,username=username)
+            db.session.add(nuevo)
+            db.session.commit() 
+            return True  
