@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, url_for, session, abort
+from flask import redirect, render_template, request, url_for, session, abort, flash
 from app.models.user import User
 from app.helpers.auth import authenticated
 from sqlalchemy.orm import sessionmaker
@@ -25,6 +25,9 @@ def create():
     if not authenticated(session):
         abort(401)
 
-    User.create(request.form)
+    if User.create(request.form):
+        flash("Usuario creado correctamente")
+    else:
+        flash("Usuario o email en uso.")    
 
     return redirect(url_for("user_index"))

@@ -3,6 +3,7 @@ from app.models.user import User
 from sqlalchemy.orm import sessionmaker
 from app import db
 
+
 def login():
     return render_template("auth/login.html")
 
@@ -10,7 +11,6 @@ def login():
 def authenticate():
     params = request.form
     user = db.session.query(User).filter_by(email=params["email"], password=params["password"]).first()
-
     if not user:
         flash("Usuario o clave incorrecto.")
         return redirect(url_for("auth_login"))

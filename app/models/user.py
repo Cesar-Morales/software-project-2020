@@ -1,7 +1,7 @@
 from sqlalchemy.ext.declarative import declarative_base
 from flask_sqlalchemy import SQLAlchemy
 from app import db
-
+from sqlalchemy import or_
 class User(db.Model):
 
     __tablename__ = "users"
@@ -20,7 +20,12 @@ class User(db.Model):
          last_name = requestform.get("last_name")
          first_name = requestform.get("first_name")
          password = requestform.get("password")
-        
-         nuevo = User(email=email, last_name=last_name, first_name=first_name, password=password,username=username)
-         db.session.add(nuevo)
-         db.session.commit()   
+         #Verificamos si el nombre de usuario o email ya estan en uso
+         user = db.session.query(User).filter(or_(User.username == username , User.email == email)).first()
+         if  user: 
+             return False
+         else:     
+            nuevo = User(email=email, last_name=last_name, first_name=first_name, password=password,username=username)
+            db.session.add(nuevo)
+            db.session.commit() 
+            return True  
