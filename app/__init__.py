@@ -31,6 +31,7 @@ db = SQLAlchemy(app)
 from app.models.user import User
 from app.models.rol import Rol
 from app.models.site import Site
+from app.models.permiso import Permiso
 db.create_all()
 
 #Creación del objeto sistema que
@@ -38,7 +39,7 @@ site = db.session.query(Site).first()
 if not site:
     site_new = Site(title='AyudAR', email='ayudar@gmail.ar' , description='Sistema de ayuda social')
     db.session.add(site_new)
-    db.session.commit()
+    db.session.commit()    
 
 #Importar las rutas de la aplicacion
 from app import routes
