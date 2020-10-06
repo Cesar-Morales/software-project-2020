@@ -11,6 +11,7 @@ def login():
 def authenticate():
     params = request.form
     user = db.session.query(User).filter_by(email=params["email"], password=params["password"]).first()
+    
     if not user:
         flash("Usuario o clave incorrecto.")
         return redirect(url_for("auth_login"))
