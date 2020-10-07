@@ -3,6 +3,7 @@ from flask import render_template
 from app.resources import issue
 from app.resources import user
 from app.resources import auth
+from app.resources import config
 from app.resources.api import issue as api_issue
 from app.helpers import handler
 from app.helpers import auth as helper_auth
@@ -25,6 +26,10 @@ app.add_url_rule("/usuarios", "user_index", user.index)
 app.add_url_rule("/usuarios/busqueda", "user_search", user.search,methods=["POST"])
 app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
 app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
+
+# Rutas de Configuracion
+app.add_url_rule("/config", "config_index", config.index)
+app.add_url_rule("/config", "config_edit", config.edit, methods=["POST"])
 
 # Ruta para el Home (usando decorator)
 @app.route("/")
