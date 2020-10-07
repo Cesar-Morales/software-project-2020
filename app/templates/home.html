@@ -6,6 +6,9 @@
 {% block content %}
   <h1>Inicio</h1>
   <p>Página de inicio de la aplicación</p>
+  {% for rol in session["roles"] %}
+  <li>{{ session["roles"][rol] }}</li>
+  {% endfor %}
   <a href="{{ url_for('issue_index') }}" class="link">Consultas</a>
   {% if is_authenticated(session) %}
     <a href="{{ url_for('user_index') }}" class="link">Usuarios</a>
