@@ -55,3 +55,8 @@ a.link {
   color: white;
   text-align: center;
 }
+.margin-a {
+  margin-left: -15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
