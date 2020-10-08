@@ -22,22 +22,28 @@
                         Contactanos
                     </a>
                 </li>
-            </ul>        
+            </ul>
+            <hr>        
             <!--Si esta registrado-->
             {% if is_authenticated(session) %}
             <div class="col-lg-2"></div>
             <div class="col-lg-2">
-                <button type="button" class="margin-a btn btn-md btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{session["user"]}}<!--Despues cambiar a session["username"]-->
-                </button>
-                <div class="dropdown-menu" >
-                    <a class="dropdown-item" href="{{ url_for('user_index') }}">
-                        Listar Usuarios
-                    </a><!--VER DONDE QUEDA AL FINAL-->
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ url_for('auth_logout') }}">
-                            Cerrar sesion
-                    </a>
+                <div class="row">
+                    <div class="col-md-12 col-lg-6"></div>
+                    <div class="col-md-12 col-lg-5">
+                        <button type="button" class="margin-a btn btn-sm btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{session["user"]}}<!--Despues cambiar a session["username"]-->
+                        </button>
+                        <div class="dropdown-menu" >
+                            <a class="dropdown-item" href="{{ url_for('user_index') }}">
+                                Listar Usuarios
+                            </a><!--VER DONDE QUEDA AL FINAL-->
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ url_for('auth_logout') }}">
+                                    Cerrar sesion
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!--Si no esta registrado-->
@@ -45,17 +51,18 @@
             <div class="col-lg-1 "></div>
             <div class="col-lg-3">
                 <div class="row">
+                    <div class="col-md-12 col-lg-6"> </div>
                     <div class="col-md-12 col-lg-5">
                         <a type="button" href="{{ url_for('auth_login') }}" class="margin-a btn btn-light btn-color btn-bg-color btn-sm col-xs-2 margin-left">
                             Iniciar sesión
                         </a>
                     </div>
-                    <div class="col-md-12 col-lg-1"> </div>
+                <!--<<div class="col-md-12 col-lg-1"> </div> Si se va a agregar esto mas adelante cambiar .col-lg o se va a romper todo
                     <div class="col-md-12 col-lg-5">
                         <a type="button" href="" class="margin-a btn btn-light btn-color btn-bg-color btn-sm col-xs-2 margin-left">
                             Registrarse
                         </a>
-                    </div>
+                    </div>-->
                 </div>
             </div>
             {% endif %}
