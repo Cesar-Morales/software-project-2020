@@ -6,7 +6,19 @@
 {% block content %}
   <h1>Inicio</h1>
   <p>Página de inicio de la aplicación</p>
+  {% for rol in session["roles"] %}
+  <li>{{ session["roles"][rol] }}</li>
+  {% endfor %}
   <a href="{{ url_for('issue_index') }}" class="link">Consultas</a>
 
+  {% if is_authenticated(session) %}
+    <!--
+      formulario para busqueda de usuarios por nombre de usuario o estado activo/bloqueado
+    -->
+    <form action="{{ url_for('user_search') }}" method="POST">
+      <input type="search" name="search" placeholder="Busqueda de usuarios" required/>
+      <input type="submit" value="Buscar">
+    </form>
+  {% endif %}
 
 {% endblock %}
