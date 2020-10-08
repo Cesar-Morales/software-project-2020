@@ -10,9 +10,8 @@
   <li>{{ session["roles"][rol] }}</li>
   {% endfor %}
   <a href="{{ url_for('issue_index') }}" class="link">Consultas</a>
+
   {% if is_authenticated(session) %}
-    <a href="{{ url_for('user_index') }}" class="link">Usuarios</a>
-    <a href="{{ url_for('auth_logout') }}" class="link">Cerrar sesión</a>
     <!--
       formulario para busqueda de usuarios por nombre de usuario o estado activo/bloqueado
     -->
@@ -20,9 +19,6 @@
       <input type="search" name="search" placeholder="Busqueda de usuarios" required/>
       <input type="submit" value="Buscar">
     </form>
-    
-  {% else %}
-    <a href="{{ url_for('auth_login') }}" class="link">Iniciar sesión</a>
   {% endif %}
 
 {% endblock %}

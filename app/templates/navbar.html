@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    
+    <div class="container-fluid container">
+        <a class="navbar-brand" href="#">LOGOAyudAR</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Ayudar Ahora <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">Quienes Somos</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">Contactanos</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="navbar-brand" style="margin-right: 15px; float:right" >
+            <div class="btn-group" style="margin-right: 50px">
+                <div class="btn-group" >
+                    <!--Si esta registrado-->
+                    {% if is_authenticated(session) %}
+                        <button type="button" class="btn btn-space btn-md btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>USER
+                        </button>
+                        <div class="dropdown-menu" >
+                            <a href="{{ url_for('user_index') }}" class="link">Usuarios</a><!--VER DONDE QUEDA AL FINAL-->
+                            <a class="dropdown-item" href="#"><span class="" style="margin-right: 10px"></span>Mi Perfil</a>
+                            <a class="dropdown-item" href="#"><span class="" style="margin-right: 10px"></span>Contactos</a>
+                            <a class="dropdown-item" href="#"><span class="" style="margin-right: 10px"></span>FAQ</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ url_for('auth_logout') }}"><span class="" style="margin-right: 10px"></span>Cerrar sesion</a>
+                        </div>
+                    {% else %}
+                        <!--Si no esta registrado-->
+                        <a href="{{ url_for('auth_login') }}" type="button" class="btn btn-primary btn-space btn-color btn-bg-color btn-sm col-xs-2 margin-left">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Iniciar sesión</a>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-color btn-bg-color btn-sm col-xs-2 margin-left">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Registrarse
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</nav>
