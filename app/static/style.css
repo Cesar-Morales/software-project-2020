@@ -60,3 +60,7 @@ a.link {
   margin-top: 5px;
   margin-bottom: 5px;
 }
+
+li {
+  list-style:none
+}
