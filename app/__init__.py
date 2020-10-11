@@ -76,7 +76,7 @@ if not rol_operador:
     db.session.add(rol_operador)
     db.session.commit()
 
-#Crea rol operador si no existe
+#Crea rol user si no existe. Este se usa cuando apenas se crea un nuevo user.
 rol_user = db.session.query(Rol).filter_by(name='user').first()
 if not rol_user:
     rol_user = Rol(name='user')
@@ -171,7 +171,8 @@ rol_admin.permisos.append(permiso_user_show)
 
 #Relacionar al admin con el rol de admin
 user.roles.append(rol_admin)
-db.session.add(rol_admin)
+user.roles.append(rol_user)
+db.session.add(user)
 db.session.commit()
 
 #Importar las rutas de la aplicacion
