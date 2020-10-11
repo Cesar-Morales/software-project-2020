@@ -30,6 +30,7 @@ def authenticate():
 
     #El mail del user que se logeo para verificar que para entrar a una pagina hay que estar logeadx    
     session["user"] = user.email
+    session["username"] = user.username
     flash("La sesión se inició correctamente.") 
 
     #Logeo del user
