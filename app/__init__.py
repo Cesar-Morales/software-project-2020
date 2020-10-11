@@ -1,3 +1,7 @@
+""" 
+Configuración de la aplicación
+"""
+
 from os import path, environ
 from flask import Flask
 from flask_session import Session

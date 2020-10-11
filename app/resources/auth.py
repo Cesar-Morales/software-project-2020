@@ -1,3 +1,7 @@
+""" 
+Manejador de la sesión
+"""
+
 from flask import redirect, render_template
 from flask import request, url_for, abort, session, flash
 from app.models.user import User

@@ -1,3 +1,12 @@
+""" 
+Modelo de user
+
+Se crea tanto el modelo del user que se va a relacionar con la tabla 
+de la base de datos como la misma tabla.
+
+Además se definen los metodos para realizar los cinco métodos del modulo
+"""
+
 from app import db
 from sqlalchemy import or_
 from app.models.usuario_tiene_rol import usuario_tiene_rol
