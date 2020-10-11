@@ -2,17 +2,13 @@ from os import path, environ
 from flask import Flask
 from flask_session import Session
 from config import config
-
-
 from flask_sqlalchemy import SQLAlchemy
-
-environment = "development"
 
 # Configuración inicial de la app
 app = Flask(__name__)
 
 # Carga de la configuración
-env = environ.get("FLASK_ENV", environment)
+env = environ.get("FLASK_ENV")
 app.config.from_object(config[env])
 
 # Server Side session
