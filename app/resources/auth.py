@@ -1,4 +1,5 @@
-from flask import redirect, render_template, request, url_for, abort, session, flash
+from flask import redirect, render_template
+from flask import request, url_for, abort, session, flash
 from app.models.user import User
 from sqlalchemy.orm import sessionmaker
 from app import db
@@ -10,24 +11,30 @@ def login():
 
 def authenticate():
     params = request.form
-    user = db.session.query(User).filter_by(email=params["email"], password=params["password"]).first()
+    user = db.session.query(User).filter_by(
+            email=params["email"], 
+            password=params["password"]).first()
     
     if not user:
         flash("Usuario o clave incorrecto.")
         return redirect(url_for("auth_login"))
 
-    #Inicio dde variables globales para manejar la sesion actual del user
-    #Los roles del user que se logeo
+    #Inicio dde variables globales para manejar la sesion actual para user
+    #Los roles para user que se logeo
     #Creo el diccionario de roles
     session["roles"] = {
         "admin": False,
         "operador": False,
+        "user" : False
     }
+
+    #Vuelvo verdadera los roles que posee user
     for rol in user.roles:
         nombre = rol.name
         session["roles"][nombre] = True
 
-    #El mail del user que se logeo para verificar que para entrar a una pagina hay que estar logeadx    
+    #El mail para user que se logeo para verificar que para entrar 
+    #a una pagina hay que estar logeadx    
     session["user"] = user.email
     flash("La sesión se inició correctamente.")  
 
