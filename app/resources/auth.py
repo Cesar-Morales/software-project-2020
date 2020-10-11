@@ -13,7 +13,8 @@ def authenticate():
     params = request.form
     user = db.session.query(User).filter_by(
             email=params["email"], 
-            password=params["password"]).first()
+            password=params["password"]
+            ).first()
     
     if not user:
         flash("Usuario o clave incorrecto.")
@@ -26,7 +27,7 @@ def authenticate():
         "admin": False,
         "operador": False,
         "user" : False
-    }
+        }
 
     #Vuelvo verdadera los roles que posee user
     for rol in user.roles:
