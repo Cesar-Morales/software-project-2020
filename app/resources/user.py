@@ -1,4 +1,9 @@
-from flask import redirect, render_template, request, url_for, session, abort, flash
+""" 
+Manejador del user
+"""
+
+from flask import redirect, render_template, request
+from flask import url_for, session, abort, flash
 from app.models.user import User
 from app.helpers.auth import authenticated
 from sqlalchemy.orm import sessionmaker
