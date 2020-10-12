@@ -20,7 +20,7 @@ class ConfigForm(FlaskForm):
 @login_required
 def index():
     if not session["roles"]["admin"]:
-        flash("Usuario o clave incorrecto.")
+        flash("No posee los permisos necesario para poder acceder a este modulo")
         return redirect(url_for("home"))
 
     site = db.session.query(Site).first()

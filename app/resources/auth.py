@@ -8,6 +8,7 @@ from app.models.user import User
 from sqlalchemy.orm import sessionmaker
 from app import db
 from flask_login import login_user, logout_user, login_required
+from app.helpers.auth import authenticated
 
 
 def login():
@@ -15,6 +16,11 @@ def login():
 
 
 def authenticate():
+
+    if not authenticated(session):
+        flash("Acceso prohibido")
+        return redirect(url_for("home"))
+
     params = request.form
     user = db.session.query(User).filter_by(
             email=params["email"], 
@@ -50,8 +56,10 @@ def authenticate():
 
     return redirect(url_for("home"))
 
-@login_required
 def logout():
+    if not authenticated(session):
+        flash("Acceso prohibido")
+        return redirect(url_for("home"))
     del session["user"]
     del session["roles"]
     del session["username"]
