@@ -21,6 +21,8 @@ def new():
     return render_template("user/new.html")
 
 def search():
+    if not authenticated(session):
+        abort(401)
     return render_template("user/index.html",users=User.search(request.form))
 
 def create():
