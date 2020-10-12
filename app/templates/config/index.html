@@ -5,7 +5,7 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
-    <form method="POST" action="{{ url_for('config_edit') }}" novalidate>
+    <form method="POST" action="{{ url_for('config_edit') }}">
         {{ form.csrf_token }}
         <div>
             {{ form.title.label }}
