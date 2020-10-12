@@ -31,6 +31,12 @@ app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
 def home():
     return render_template("home.html")
 
+#Las respuestas no van a ser cacheadas
+@app.after_request
+def after_request(response):
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    return response
+
 # Rutas de API-rest
 app.add_url_rule("/api/consultas", "api_issue_index", api_issue.index)
 
