@@ -1,4 +1,3 @@
-<<<<<<< app/models/user.py
 """ 
 Modelo de user
 
