@@ -1,3 +1,4 @@
+<<<<<<< app/models/user.py
 """ 
 Modelo de user
 
@@ -7,12 +8,16 @@ de la base de datos como la misma tabla.
 Además se definen los metodos para realizar los cinco métodos del modulo
 """
 
-from app import db
+from app import db, login_manager
 from sqlalchemy import or_
 from app.models.usuario_tiene_rol import usuario_tiene_rol
+from flask_login import UserMixin
 
+@login_manager.user_loader
+def load_user(user_id):
+    return db.session.query(User).filter_by(id=user_id).first()
 
-class User(db.Model):
+class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
