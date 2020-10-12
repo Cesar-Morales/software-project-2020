@@ -13,8 +13,6 @@ from flask_login import current_user, login_required
 # Protected resources
 @login_required
 def index():
-    if not current_user.is_authenticated:
-        abort(401)
    
     users = db.session.query(User).all()
 

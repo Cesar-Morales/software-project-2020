@@ -1,4 +1,4 @@
-from flask import render_template, session, request, redirect, url_for, abort
+from flask import render_template, session, request, redirect, url_for, abort, flash
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, SubmitField, RadioField
 from wtforms.validators import DataRequired, NumberRange
@@ -7,6 +7,7 @@ from wtforms.widgets.html5 import NumberInput
 from app import db
 from app.models.site import Site
 from app.helpers.auth import authenticated
+from flask_login import current_user, login_required
 
 class ConfigForm(FlaskForm):
     title = StringField('Titulo', validators=[DataRequired('Debe insertar un Titulo')])
@@ -16,20 +17,22 @@ class ConfigForm(FlaskForm):
     active = RadioField('Estado Del Sistema', coerce=int, choices=[(1, 'Habilitar'), (0, 'Deshabilitar')])
     submit = SubmitField('Editar')
 
+@login_required
 def index():
-	if not authenticated(session):
-		abort(401)
-	if not session["roles"]["admin"]:
-		abort(401)
-	site = db.session.query(Site).first()
-	form = ConfigForm()
-	form.title.data = site.title
-	form.description.data = site.description
-	form.email.data = site.email
-	form.pages.data = site.pages
-	form.active.data = site.active
-	return render_template("config/index.html", form=form)
+    if not session["roles"]["admin"]:
+        flash("Usuario o clave incorrecto.")
+        return redirect(url_for("home"))
 
+    site = db.session.query(Site).first()
+    form = ConfigForm()
+    form.title.data = site.title
+    form.description.data = site.description
+    form.email.data = site.email
+    form.pages.data = site.pages
+    form.active.data = site.active
+    return render_template("config/index.html", form=form)
+
+@login_required
 def edit():
     site = db.session.query(Site).first()
     form = ConfigForm()

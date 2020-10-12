@@ -7,7 +7,7 @@ from flask import request, url_for, abort, session, flash
 from app.models.user import User
 from sqlalchemy.orm import sessionmaker
 from app import db
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, login_required
 
 
 def login():
@@ -50,10 +50,11 @@ def authenticate():
 
     return redirect(url_for("home"))
 
-
+@login_required
 def logout():
     del session["user"]
     del session["roles"]
+    del session["username"]
     session.clear()
     flash("La sesión se cerró correctamente.")
 
