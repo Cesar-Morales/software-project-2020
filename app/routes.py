@@ -7,7 +7,8 @@ from app.resources import config
 from app.resources.api import issue as api_issue
 from app.helpers import handler
 from app.helpers import auth as helper_auth
-
+from flask_wtf import FlaskForm
+from app.static.forms import SearchForm
 # Funciones que se exportan al contexto de Jinja2
 app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
 
@@ -34,8 +35,9 @@ app.add_url_rule("/config", "config_edit", config.edit, methods=["POST"])
 # Ruta para el Home (usando decorator)
 @app.route("/")
 def home():
-    return render_template("home.html")
-
+    form = SearchForm()
+    return render_template("home.html", form=form)
+    
 #Las respuestas no van a ser cacheadas
 @app.after_request
 def after_request(response):

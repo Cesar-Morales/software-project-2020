@@ -11,7 +11,7 @@ from app import db, login_manager
 from sqlalchemy import or_
 from app.models.usuario_tiene_rol import usuario_tiene_rol
 from flask_login import UserMixin
-
+from app.models.rol import Rol
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.query(User).filter_by(id=user_id).first()
@@ -40,6 +40,8 @@ class User(db.Model, UserMixin):
              return False
          else:     
             nuevo = User(email=email, last_name=last_name, first_name=first_name, password=password,username=username)
+            roles = db.session.query(Rol).filter_by(name="user").first()
+            nuevo.roles.append(roles)
             db.session.add(nuevo)
             db.session.commit() 
             return True  
@@ -49,5 +51,11 @@ class User(db.Model, UserMixin):
     #pero esto una vez que este lista la tabla de usuarios con los campos necesarios
     def search(requestform):
          usernam = requestform.get("search")
-         users = db.session.query(User).filter(User.username.like('%'+usernam+'%')).all()
+         actdeact = requestform.get("active")
+         #Si no ingresan string a buscar, traigo todos los usuarios, verificando si mandaron activos o bloqueados.
+
+         if not usernam:
+             users = db.session.query(User).filter(User.active == actdeact).all()
+         else: 
+             users = db.session.query(User).filter(User.username.like('%'+usernam+'%'),User.active == actdeact).all()
          return users
