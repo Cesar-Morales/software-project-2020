@@ -6,11 +6,14 @@ de la base de datos como la misma tabla.
 
 Además se definen los metodos para realizar los cinco métodos del modulo
 """
-
+import os
 from app import db, login_manager
 from sqlalchemy import or_
 from app.models.usuario_tiene_rol import usuario_tiene_rol
+from flask import current_app
 from flask_login import UserMixin
+from werkzeug.utils import secure_filename
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -26,8 +29,7 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(20), nullable=False)
     active = db.Column(db.Boolean, default=True)
     deleted = db.Column(db.Boolean, default=False)
-    image_data = db.Column(db.LargeBinary(50000000))
-    image_name = db.Column(db.String(200))
+    image_path = db.Column(db.String(300), default='')
 
     roles = db.relationship('Rol', secondary=usuario_tiene_rol, back_populates='users')
 
@@ -37,14 +39,21 @@ class User(db.Model, UserMixin):
          last_name = requestform.get("last_name")
          first_name = requestform.get("first_name")
          password = requestform.get("password")
-         image_name = file.filename
-         image_data = file.read()
+
+         #Guardar la imagen
+         if file.filename == '':
+            image_path = ''
+         else:
+            image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], file.filename)
+            file.save(image_path)
+
+
          #Verificamos si el nombre de usuario o email ya estan en uso
          user = db.session.query(User).filter(or_(User.username == username , User.email == email)).first()
          if  user: 
              return False
          else:     
-            nuevo = User(email=email, last_name=last_name, first_name=first_name, password=password,username=username, image_name=image_name, image_data=image_data)
+            nuevo = User(email=email, last_name=last_name, first_name=first_name, password=password,username=username, image_path=image_path)
             db.session.add(nuevo)
             db.session.commit() 
             return True  
