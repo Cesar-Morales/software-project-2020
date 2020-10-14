@@ -78,4 +78,14 @@ class User(db.Model, UserMixin):
         user.active = 1 
         db.session.commit()
         return  True
-
+        
+    def trash(requestForm):
+        idUser = requestForm.get("borrar")
+        user = db.session.query(User).filter(User.id == idUser).first()
+        #Reviso si el usuario a borrar es un administrador. Si es, devuelvo false para que no puedan bloquearlo, si no, lo bloqueo.
+        for rol in user.roles:
+           if (rol.name == "admin"):
+              return False  
+        user.deleted = 1 
+        db.session.commit()
+        return  True    
