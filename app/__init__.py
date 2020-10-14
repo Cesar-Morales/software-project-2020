@@ -26,7 +26,7 @@ Session(app)
 #Configuracion del login
 login_manager = LoginManager(app)
 login_manager.login_view = "auth_login"
-login_manager.login_message = "Este mesaje se muestra cuando volves de una pagina a la que queres acceder sin estar loged. Se puede modificar el estilo cambiando la categoria en __init__"
+login_manager.login_message = "No esta autorizado para realizar esta operacion"
 login_manager.login_message_category = "info"
 
 
