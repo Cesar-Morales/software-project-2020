@@ -34,7 +34,7 @@ def create():
     if not authenticated(session):
         abort(401)
 
-    if User.create(request.form):
+    if User.create(request.form, request.files['image']):
         flash("Usuario creado correctamente")
     else:
         flash("Usuario o email en uso.")    
