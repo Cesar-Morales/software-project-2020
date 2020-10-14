@@ -13,7 +13,7 @@ class ConfigForm(FlaskForm):
     title = StringField('Titulo', validators=[DataRequired('Debe insertar un Titulo')])
     description = StringField('Descripcion', validators=[DataRequired('Debe Insertar Una Descripcion')])
     email = EmailField('Email', validators=[DataRequired('Debe InsertarUn email')])
-    pages = IntegerField('Cantidad De Elementos por Pagina', validators=[NumberRange(min=1, message="Como minimo se debe mostrar 1 elemento por pagina")], widget=NumberInput(min=1, step=1))
+    pages = IntegerField('Cantidad De Elementos por Pagina', validators=[NumberRange(min=1, max=100, message="Como minimo se debe mostrar 1 elemento por pagina")], widget=NumberInput(min=1, max=100, step=1))
     active = RadioField('Estado Del Sistema', coerce=int, choices=[(1, 'Habilitar'), (0, 'Deshabilitar')])
     submit = SubmitField('Editar')
 
