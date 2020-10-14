@@ -63,6 +63,10 @@ class User(db.Model, UserMixin):
     def block(requestForm):
         idUser = requestForm.get("bloquear")
         user = db.session.query(User).filter(User.id == idUser).first()
+        #Reviso si el usuario a bloquear es un administrador. Si es, devuelvo false para que no puedan bloquearlo, si no, lo bloqueo.
+        for rol in user.roles:
+           if (rol.name == "admin"):
+              return False  
         user.active = 0 
         db.session.commit()
         return  True

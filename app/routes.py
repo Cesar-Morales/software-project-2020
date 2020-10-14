@@ -24,8 +24,8 @@ app.add_url_rule("/consultas/nueva", "issue_new", issue.new)
 
 # Rutas de Usuarios
 app.add_url_rule("/usuarios", "user_index", user.index)
-app.add_url_rule("/usuarios", "user_block", user.block,methods=["POST"])
-app.add_url_rule("/usuarios", "user_activ", user.activate,methods=["POST"])
+app.add_url_rule("/usuarios/block", "user_block", user.block,methods=["POST"])
+app.add_url_rule("/usuarios/active", "user_activ", user.activate,methods=["POST"])
 app.add_url_rule("/usuarios/busqueda", "user_search", user.search,methods=["POST"])
 app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
 app.add_url_rule("/usuarios/nuevo", "user_new", user.new)

@@ -51,9 +51,11 @@ def create():
 
 @login_required
 def block():
-    if User.block(request.form):
-     flash("Bloqueado correctamente")
-    return index()
+        if User.block(request.form):
+            flash("Bloqueado correctamente")
+        else:
+            flash("No puedes bloquear a un administrador")    
+        return index()
 
 @login_required
 def activate():
