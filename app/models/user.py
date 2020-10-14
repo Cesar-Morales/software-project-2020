@@ -29,7 +29,7 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(20), nullable=False)
     active = db.Column(db.Boolean, default=True)
     deleted = db.Column(db.Boolean, default=False)
-    image_path = db.Column(db.String(300), default='')
+    image_name = db.Column(db.String(300), default='')
 
     roles = db.relationship('Rol', secondary=usuario_tiene_rol, back_populates='users')
 
@@ -42,9 +42,10 @@ class User(db.Model, UserMixin):
 
          #Guardar la imagen
          if file.filename == '':
-            image_path = ''
+            image_name = ''
          else:
-            image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], file.filename)
+            image_name = file.filename
+            image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], image_name)
             file.save(image_path)
 
 
@@ -53,7 +54,7 @@ class User(db.Model, UserMixin):
          if  user: 
              return False
          else:     
-            nuevo = User(email=email, last_name=last_name, first_name=first_name, password=password,username=username, image_path=image_path)
+            nuevo = User(email=email, last_name=last_name, first_name=first_name, password=password,username=username, image_name=image_name)
             db.session.add(nuevo)
             db.session.commit() 
             return True  

@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template
+from flask import render_template, send_from_directory
 from app.resources import user
 from app.resources import auth
 from app.resources import config
@@ -27,6 +27,12 @@ app.add_url_rule("/config", "config_edit", config.edit, methods=["POST"])
 @app.route("/")
 def home():
     return render_template("home.html")
+
+#Rutas estaticas de las imagenes
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
 
 #Las respuestas no van a ser cacheadas
 @app.after_request

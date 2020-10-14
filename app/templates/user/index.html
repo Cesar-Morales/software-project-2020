@@ -7,8 +7,8 @@
   <h1>usuarios</h1>
   {% for user in users %}
   <li>{{ user.email }} - {{ user.first_name }} - {{ user.last_name }} - {{ user.password }} - {{ user.image_name }}
-  {% if user.image_path %}  
-    <img source={{user.image_path}} alt='Imagen usuario'>
+  {% if user.image_name %}  
+    <img width=50px  src="{{url_for('static', filename='uploads/' + user.image_name)}}" alt="Imagen usuario">
   {% else %}  
      <li>No tenes imagen</li>
   {% endif %}   
