@@ -26,6 +26,7 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(20), nullable=False)
     last_name = db.Column(db.String(20), nullable=False)
     active = db.Column(db.Boolean, default=True)
+    deleted = db.Column(db.Boolean, default=False)
 
     roles = db.relationship('Rol', secondary=usuario_tiene_rol, back_populates='users')
 
