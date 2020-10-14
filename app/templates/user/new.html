@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
   <h1>Crear un usuario</h1>
-  <form action="{{ url_for('user_create') }}" method="POST">
+  <form action="{{ url_for('user_create') }}" method="POST" enctype="multipart/form-data">
     <p>
       <label>Email<label></br>
       <input name="email" placeholder="Correo"/>
@@ -25,6 +25,10 @@
     <p>
       <label>Apellido<label></br>
       <input name="last_name" placeholder="Apellido"/>
+    </p>
+    <p>
+      <label>Imagen<label></br>
+      <input type="file" name="image"/>
     </p>
     <p>
       <input type="submit" value="Crear">

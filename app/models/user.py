@@ -26,21 +26,25 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(20), nullable=False)
     active = db.Column(db.Boolean, default=True)
     deleted = db.Column(db.Boolean, default=False)
+    image_data = db.Column(db.LargeBinary(50000000))
+    image_name = db.Column(db.String(200))
 
     roles = db.relationship('Rol', secondary=usuario_tiene_rol, back_populates='users')
 
-    def create(requestform):
+    def create(requestform, file):
          username = requestform.get("username")
          email = requestform.get("email")
          last_name = requestform.get("last_name")
          first_name = requestform.get("first_name")
          password = requestform.get("password")
+         image_name = file.filename
+         image_data = file.read()
          #Verificamos si el nombre de usuario o email ya estan en uso
          user = db.session.query(User).filter(or_(User.username == username , User.email == email)).first()
          if  user: 
              return False
          else:     
-            nuevo = User(email=email, last_name=last_name, first_name=first_name, password=password,username=username)
+            nuevo = User(email=email, last_name=last_name, first_name=first_name, password=password,username=username, image_name=image_name, image_data=image_data)
             db.session.add(nuevo)
             db.session.commit() 
             return True  
