@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}Configuracion{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+    <form method="POST" action="{{ url_for('config_edit') }}">
+        {{ form.csrf_token }}
+        <div>
+            {{ form.title.label }}
+            {{ form.title }}<br>
+            {% for error in form.title.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div>
+            {{ form.description.label }}
+            {{ form.description }}<br>
+            {% for error in form.description.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div>
+            {{ form.email.label }}
+            {{ form.email }}<br>
+            {% for error in form.email.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div>
+            {{ form.pages.label }}
+            {{ form.pages }}<br>
+            {% for error in form.pages.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div>
+            {{ form.active.label }}
+            {{ form.active }}<br>
+            {% for error in form.active.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div>
+            {{ form.submit() }}
+        </div>
+    </form>
+
+{% endblock %}

@@ -1,4 +1,9 @@
-from flask import redirect, render_template, request, url_for, session, abort, flash
+""" 
+Manejador del user
+"""
+
+from flask import redirect, render_template, request
+from flask import url_for, session, abort, flash
 from app.models.user import User
 from app.helpers.auth import authenticated
 from sqlalchemy.orm import sessionmaker
@@ -8,8 +13,6 @@ from flask_login import current_user, login_required
 # Protected resources
 @login_required
 def index():
-    if not current_user.is_authenticated:
-        abort(401)
    
     users = db.session.query(User).all()
 
