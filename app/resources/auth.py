@@ -17,10 +17,6 @@ def login():
 
 def authenticate():
 
-    if not authenticated(session):
-        flash("Acceso prohibido")
-        return redirect(url_for("home"))
-
     params = request.form
     user = db.session.query(User).filter_by(
             email=params["email"], 
