@@ -48,11 +48,13 @@ def create():
         flash("Usuario o email en uso.")    
 
     return redirect(url_for("user_index"))
+
 @login_required
 def block():
     if User.block(request.form):
      flash("Bloqueado correctamente")
     return index()
+
 @login_required
 def activate():
     if User.activate(request.form):
