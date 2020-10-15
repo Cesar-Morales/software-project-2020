@@ -4,36 +4,45 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
-  <h1>Crear un usuario</h1>
-  <form action="{{ url_for('user_create') }}" method="POST" enctype="multipart/form-data">
-    <p>
-      <label>Email<label></br>
-      <input name="email" placeholder="Correo"/>
-    </p>
-    <p>
-      <label>Nombre de Usuario<label></br>
-      <input name="username" placeholder="Nombre de Usuario"/>
-    </p>
-    <p>
-      <label>Clave<label></br>
-      <input type="password" name="password" placeholder="Clave"/>
-    </p>
-    <p>
-      <label>Nombre<label></br>
-      <input name="first_name" placeholder="Nombre"/>
-    </p>
-    <p>
-      <label>Apellido<label></br>
-      <input name="last_name" placeholder="Apellido"/>
-    </p>
-    <p>
-      <label>Imagen<label></br>
-      <input type="file" name="image"/>
-    </p>
-    <p>
-      <input type="submit" value="Crear">
-      <button type="reset">Limpiar</button>
-    </p>
-  </form>
-  <a href="{{ url_for('user_index') }}" class="link">Volver</a>
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-sm-12 col-12 col-md-8 col-lg-12 p-4 rounded" style="background: #cccccc">
+      <h1 style="text-align: center">Crear un usuario</h1>
+      <hr>
+      <form action="{{ url_for('user_create') }}" method="POST">
+        <div class="row">
+          <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
+            <b>Email</b>
+            <input class="col-12" name="email" placeholder="Correo">
+          </div>
+          <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
+            <b> Nombre de Usuario </b>
+            <input class="col-12" name="username" placeholder="Nombre de Usuario">
+          </div>
+          <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
+            <b>Clave</b>
+            <input class="col-12" type="password" name="password" placeholder="Clave">
+          </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>Nombre</b>
+            <input class="col-12" name="first_name" placeholder="Nombre">
+          </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b> Apellido</b>
+            <input class="col-12" name="last_name" placeholder="Apellido">
+          </div>
+          <div class="mt-5 col-12 mb-3 col-sm-12 col-md-12 col-lg-12">
+            <div class="row ml-3">
+              <input class="col-3 btn btn-success btn-sm" type="button submit" value="Crear">
+              <div class="col-1"></div>
+              <button class="btn col-3 btn-warning btn-sm" type="button reset">Limpiar</button>
+              <div class="col-1"></div>
+              <a class="btn btn-danger col-3 btn-sm" type="button" href="{{ url_for('user_index') }}">Volver</a>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-2"></div>
+  </div>
 {% endblock %}
