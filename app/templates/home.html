@@ -12,8 +12,22 @@
       formulario para busqueda de usuarios por nombre de usuario o estado activo/bloqueado
     -->
     <form action="{{ url_for('user_search') }}" method="POST">
-      <input type="search" name="search" placeholder="Busqueda de usuarios" required/>
-      <input type="submit" value="Buscar">
+      {{ form.csrf_token }}
+    <div>
+        {{ form.search }}
+        {% for error in form.search.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form.active }}<br>
+        {% for error in form.active.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form.submit() }}
+    </div>
     </form>
   {% endif %}
 
