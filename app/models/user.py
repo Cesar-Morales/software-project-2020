@@ -64,5 +64,5 @@ class User(db.Model, UserMixin):
     #pero esto una vez que este lista la tabla de usuarios con los campos necesarios
     def search(requestform):
          usernam = requestform.get("search")
-         users = db.session.query(User).filter_by(username = usernam).all()
+         users = db.session.query(User).filter(User.username.like('%'+usernam+'%')).all()
          return users

@@ -27,6 +27,8 @@ def new():
 
 @login_required
 def search():
+    if not authenticated(session):
+        abort(401)
     return render_template("user/index.html",users=User.search(request.form))
 
 @login_required
