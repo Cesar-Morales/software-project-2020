@@ -4,10 +4,44 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
-  <h1>usuarios</h1>
-  {% for user in users %}
-  <li>{{ user.email }} - {{ user.first_name }} - {{ user.last_name }} - {{ user.password }}</li>
-  {% endfor %}
-  <a href="{{ url_for('home') }}" class="link">Volver</a>
-  <a href="{{ url_for('user_new') }}" class="link">Nuevo</a>
+<div class="row">
+  <div class="col-2"></div>
+  <div class="col-sm-12 col-12 col-md-8 col-lg-12 p-4 rounded" style="background: #cccccc">
+      <h1 style="text-align: center">Usuarios</h1>
+      <hr>
+      <div class="container">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Pic</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Mail</th>
+            <th scope="col">More</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+            <tr>
+              <th scope="row">%pic%</th>
+              <td>{{ user.first_name }}</td>
+              <td>{{ user.last_name }}</td>
+              <td>{{ user.email }}</td>
+              <td>InsertModal</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+      <div class="row">
+        <div class="col-2"></div>  
+        <a href="{{ url_for('user_new') }}" class="col-3 btn btn-success btn-sm">Nuevo</a>
+        <div class="col-2"></div>
+        <a href="{{ url_for('home') }}" class="col-3 btn btn-dark btn-sm">Volver</a>
+        <div class="col-2"></div>
+      </div>
+    </div>
+  
+  <div class="col-2"></div>
+</div>
 {% endblock %}
