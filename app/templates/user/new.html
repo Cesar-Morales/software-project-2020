@@ -9,7 +9,7 @@
     <div class="col-sm-12 col-12 col-md-8 col-lg-12 p-4 rounded" style="background: #cccccc">
       <h1 style="text-align: center">Crear un usuario</h1>
       <hr>
-      <form action="{{ url_for('user_create') }}" method="POST">
+      <form action="{{ url_for('user_create') }}" method="POST" enctype="multipart/form-data">
         <div class="row">
           <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
             <b>Email</b>
@@ -31,6 +31,10 @@
             <b> Apellido</b>
             <input class="col-12" name="last_name" placeholder="Apellido">
           </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+              <b>Imagen</b>
+              <input class="col-12" type="file" name="image"/>
+          </div>
           <div class="mt-5 col-12 mb-3 col-sm-12 col-md-12 col-lg-12">
             <div class="row ml-3">
               <input class="col-3 btn btn-success btn-sm" type="submit" value="Crear">
@@ -45,4 +49,5 @@
     </div>
     <div class="col-2"></div>
   </div>
+  
 {% endblock %}
