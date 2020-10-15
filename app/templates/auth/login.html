@@ -5,8 +5,8 @@
 {% endblock %}
 {% block content %}
   <div class="row">
-    <div class="col-lg-4 col-md-2 col-sm-1"></div>
-    <div class="col-lg-4 col-md-8 col-sm-10 mt-4 rounded" style="background: #cccccc">
+    <div class="col-lg-2 col-md-2 col-sm-1"></div>
+    <div class="col-lg-8 col-md-8 col-sm-10 mt-4 rounded" style="background: #cccccc">
       <h1 class="mt-4" style="text-align: center;">Iniciar sesión</h1>
       <hr>
       <!--FORM-->
@@ -15,9 +15,9 @@
         <div class="col-lg-8 col-md-6 col-sm-8 col-8">
           <form action="{{ url_for('auth_authenticate') }}" class="mb-4" method="POST">
             <h4>Correo</h4>
-            <input class="" name="email" placeholder="example@mail.com" required/>
+            <input class="col-12" name="email" placeholder="example@mail.com" required/>
             <h4 class="mt-4">Clave</h4>
-            <input type="password" name="password" placeholder="*******" required/>
+            <input class="col-12" type="password" name="password" placeholder="***********" required/>
             <hr>
             <div class="row">
                 <div class="col-4"></div>
@@ -31,6 +31,6 @@
         <div class="col-lg-2 col-md-3 col-sm-2 col-2"></div>
       </div>
     </div>
-    <div class="col-lg-4 col-md-2 col-sm-1"></div>
+    <div class="col-lg-2 col-md-2 col-sm-1"></div>
   </div>
 {% endblock %}

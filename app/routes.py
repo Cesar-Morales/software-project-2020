@@ -4,7 +4,8 @@ from app.resources import user
 from app.resources import auth
 from app.resources import config
 from app.helpers import auth as helper_auth
-
+from flask_wtf import FlaskForm
+from app.static.forms import SearchForm
 # Funciones que se exportan al contexto de Jinja2
 app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
 
@@ -15,6 +16,9 @@ app.add_url_rule("/autenticacion", "auth_authenticate", auth.authenticate, metho
 
 # Rutas de Usuarios
 app.add_url_rule("/usuarios", "user_index", user.index)
+app.add_url_rule("/usuarios/block", "user_block", user.block,methods=["POST"])
+app.add_url_rule("/usuarios/trash", "user_trash", user.trash,methods=["POST"])
+app.add_url_rule("/usuarios/active", "user_activ", user.activate,methods=["POST"])
 app.add_url_rule("/usuarios/busqueda", "user_search", user.search,methods=["POST"])
 app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
 app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
@@ -26,13 +30,16 @@ app.add_url_rule("/config", "config_edit", config.edit, methods=["POST"])
 # Ruta para el Home (usando decorator)
 @app.route("/")
 def home():
-    return render_template("home.html")
+    form = SearchForm()
+    return render_template("home.html", form=form)
 
 #Rutas estaticas de las imagenes
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
                                filename)
+
+
 
 #Las respuestas no van a ser cacheadas
 @app.after_request
