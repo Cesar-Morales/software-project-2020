@@ -13,8 +13,6 @@ from flask_login import current_user, login_required
 # Protected resources
 @login_required
 def index():
-    if not current_user.is_authenticated:
-        abort(401)
    
     users = db.session.query(User).all()
 
@@ -38,7 +36,7 @@ def create():
     if not authenticated(session):
         abort(401)
 
-    if User.create(request.form):
+    if User.create(request.form, request.files['image']):
         flash("Usuario creado correctamente")
     else:
         flash("Usuario o email en uso.")    

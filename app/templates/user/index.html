@@ -6,7 +6,13 @@
 {% block content %}
   <h1>usuarios</h1>
   {% for user in users %}
-  <li>{{ user.email }} - {{ user.first_name }} - {{ user.last_name }} - {{ user.password }}</li>
+  <li>{{ user.email }} - {{ user.first_name }} - {{ user.last_name }} - {{ user.password }} - {{ user.image_name }}
+  {% if user.image_name %}  
+    <img width=50px  src="{{url_for('static', filename='uploads/' + user.image_name)}}" alt="Imagen usuario">
+  {% else %}  
+     <li>No tenes imagen</li>
+  {% endif %}   
+  </li>
   {% endfor %}
   <a href="{{ url_for('home') }}" class="link">Volver</a>
   <a href="{{ url_for('user_new') }}" class="link">Nuevo</a>

@@ -15,6 +15,10 @@ app = Flask(__name__)
 #Secret key para que ande el log-in
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
+#Path de descarga
+UPLOAD_FOLDER = './app/static/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 # Carga de la configuración
 env = environ.get("FLASK_ENV")
 app.config.from_object(config[env])
