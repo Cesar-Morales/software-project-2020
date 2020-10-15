@@ -7,9 +7,3 @@ class Permiso(db.Model):
     name = db.Column(db.String(20), unique=True, nullable=False)
 
     roles = db.relationship('Rol', secondary=rol_tiene_permiso, back_populates='permisos')
-
-    def __eq__(self, other):
-        if not isinstance(other, Permiso):
-            # don't attempt to compare against unrelated types
-            return NotImplemented
-        return self.name == other.name
