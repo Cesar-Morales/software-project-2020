@@ -13,6 +13,7 @@ from app.models.usuario_tiene_rol import usuario_tiene_rol
 from flask_login import UserMixin
 from app.models.rol import Rol
 from flask_sqlalchemy import SQLAlchemy
+import json
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.query(User).filter_by(id=user_id).first()
@@ -80,12 +81,12 @@ class User(db.Model, UserMixin):
         return  True
         
     def trash(requestForm):
-        idUser = requestForm.get("borrar")
+        idUser = requestForm['id']
         user = db.session.query(User).filter(User.id == idUser).first()
         #Reviso si el usuario a borrar es un administrador. Si es, devuelvo false para que no puedan bloquearlo, si no, lo bloqueo.
         for rol in user.roles:
            if (rol.name == "admin"):
-              return False  
+               return False
         user.deleted = 1 
         db.session.commit()
-        return  True    
+        return True
