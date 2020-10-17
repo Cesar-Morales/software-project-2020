@@ -64,14 +64,14 @@ def block():
 @login_required
 def activate():
     if User.activate(request.form):
-        flash("activado correctamente")
+        flash("Activado correctamente")
     return index()
 
 
 @login_required
 def trash():
     if User.trash(request.form):
-        flash("borrado correctamente")
+        flash("Borrado correctamente")
     else:
         flash("No puedes borrar a un administrador")
     return index()

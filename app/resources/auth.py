@@ -23,12 +23,13 @@ def authenticate():
             password=params["password"]
             ).first()
     #Agregado condicion para que si el usuario que intenta acceder esta bloqueado, no pueda.
-    if user.active == 0 :
-        flash("Usted esta bloqueado. Contactese con un administrador")
-        return redirect(url_for("auth_login"))
     if not user:
         flash("Usuario o clave incorrecto.")
         return redirect(url_for("auth_login"))
+    if user.active == 0 :
+        flash("Usted esta bloqueado. Contactese con un administrador")
+        return redirect(url_for("auth_login"))
+    
 
     #Inicio dde variables globales para manejar la sesion actual para user
     #Los roles para user que se logeo
