@@ -131,8 +131,9 @@ class User(db.Model, UserMixin):
          form.last_name = requestform.get("last_name")
          form.first_name = requestform.get("first_name")
          form.password = requestform.get("password")
+         idUser = requestform.get("idUser")
          if form.validate():
-            user = db.session.query(User).filter(or_(User.username == form.username, User.email == form.email)).first()
+            user = db.session.query(User).filter(User.id  == idUser).first()
             #verifico que el email haya cambiado, si cambio verifico el nombre de usuario, si cambio, hago todo el update
             if ((form.email != user.email)or(form.username != user.username)):
                 if (form.email != user.email):
@@ -146,7 +147,7 @@ class User(db.Model, UserMixin):
                     if (db.session.query(User).filter(User.username == form.username).first()):
                         return 0  
                     else: 
-                        user.usernam = form.username
+                        user.username = form.username
             user.first_name = form.first_name
             user.last_name = form.last_name
             user.password = form.password
