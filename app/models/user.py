@@ -17,6 +17,7 @@ from werkzeug.utils import secure_filename
 from app.models.rol import Rol
 from flask_sqlalchemy import SQLAlchemy
 import json
+import os
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.query(User).filter_by(id=user_id).first()
@@ -31,24 +32,10 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(20), nullable=False)
     active = db.Column(db.Boolean, default=True)
     deleted = db.Column(db.Boolean, default=False)
+    image_name = db.Column(db.String(300), default='')
     roles = db.relationship('Rol', secondary=usuario_tiene_rol, back_populates='users')
 
-    def __init__(self,username,email,password,first_name,last_name,active,deleted):
-        self.username =''
-        self.email =''
-        self.password = ''
-        self.first_name = ''
-        self.last_name = ''
-        self.active = 1
-        self.deleted = 0
-
-    def getAll():
-        return db.session.query(User).all()
-
-    def getUserByEmailAndPassword(em,pas):
-        return  db.session.query(User).filter_by(email=em,password=pas).first() 
-
-    def create(requestform):
+    def create(requestform, file):
          username = requestform.get("username")
          email = requestform.get("email")
          last_name = requestform.get("last_name")
@@ -76,6 +63,14 @@ class User(db.Model, UserMixin):
             db.session.commit()
             return True
 
+
+    def getAll():
+        return db.session.query(User).all()
+
+    def getUserByEmailAndPassword(em,pas):
+        return  db.session.query(User).filter_by(email=em,password=pas).first() 
+
+    
     #Funcion de busqueda de usuarios
     #inicialmente busco por nombre de usuario que es unico, luego voy a buscar por activo o bloqueado, que trae mas resultados
     #pero esto una vez que este lista la tabla de usuarios con los campos necesarios
