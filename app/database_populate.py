@@ -164,7 +164,7 @@ rol_admin.permisos.append(permiso_user_destroy)
 rol_admin.permisos.append(permiso_user_update)
 rol_admin.permisos.append(permiso_user_show)
 
-#Relacionar al admin con el rol de admin
+#Relacionar users con el roles
 user.roles.append(rol_admin)
 user.roles.append(rol_user)
 user_operator.append(rol_user)
