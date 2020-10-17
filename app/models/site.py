@@ -17,7 +17,7 @@ class Site(db.Model):
     def update_data(title, description, email, pages, active):
         site = obtain_site()
         site.title = title
-                site.description = description
+        site.description = description
         site.email = email
         site.pages = pages
         site.active = active
