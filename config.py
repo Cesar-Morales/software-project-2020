@@ -1,8 +1,4 @@
 from os import environ
-from dotenv import load_dotenv
-
-#Cargar variables de entorno
-load_dotenv()
 
 class BaseConfig(object):
     """Base configuration."""
