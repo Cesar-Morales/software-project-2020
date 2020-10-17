@@ -15,7 +15,7 @@ class Site(db.Model):
         return db.session.query(Site).first()
         
     def update_data(title, description, email, pages, active):
-        site = obtain_site()
+        site = db.session.query(Site).first()
         site.title = title
         site.description = description
         site.email = email
