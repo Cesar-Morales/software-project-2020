@@ -113,3 +113,5 @@ flask_session
 .vim
 coc-settings.json
 .vscode
+
+/app/static/uploads
