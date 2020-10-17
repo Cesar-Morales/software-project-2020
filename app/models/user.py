@@ -6,7 +6,8 @@ de la base de datos como la misma tabla.
 
 Además se definen los metodos para realizar los cinco métodos del modulo
 """
-
+from flask.json import JSONEncoder
+from flask import jsonify
 from app import db, login_manager
 from sqlalchemy import or_
 from app.models.usuario_tiene_rol import usuario_tiene_rol
@@ -28,8 +29,22 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(20), nullable=False)
     active = db.Column(db.Boolean, default=True)
     deleted = db.Column(db.Boolean, default=False)
-
     roles = db.relationship('Rol', secondary=usuario_tiene_rol, back_populates='users')
+
+    def __init__(self,username,email,password,first_name,last_name,active,deleted):
+        self.username =''
+        self.email =''
+        self.password = ''
+        self.first_name = ''
+        self.last_name = ''
+        self.active = 1
+        self.deleted = 0
+
+    def getAll():
+        return db.session.query(User).all()
+
+    def getUserByEmailAndPassword(em,pas):
+        return  db.session.query(User).filter_by(email=em,password=pas).first() 
 
     def create(requestform):
          username = requestform.get("username")
@@ -90,3 +105,21 @@ class User(db.Model, UserMixin):
         user.deleted = 1 
         db.session.commit()
         return True
+    
+    def getUserById(requestForm):
+        idUser = requestForm
+        user = db.session.query(User).filter(User.id == idUser).first()
+        return  user
+
+    def updateUser(requestform):
+        idUser = requestform.get("idUser")    
+        username = requestform.get("username")
+        email = requestform.get("email")
+        last_name = requestform.get("last_name")
+        first_name = requestform.get("first_name")   
+        user = db.session.query(User).filter(User.id == idUser).first()
+        user.username = username
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        db.session.commit()

@@ -11,21 +11,20 @@ from app import db
 from flask_login import current_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 from app.static.constantes import ITEMS_PERPAGE
+import json
 # Protected resources
 @login_required
 def index():
     if not current_user.is_authenticated:
         abort(401)
-   
-    users = db.session.query(User).all()
-
+    users = User.getAll()
     return render_template("user/index.html", users=users)
+    
 
 @login_required
 def new():
     if not authenticated(session):
         abort(401)
-
     return render_template("user/new.html")
 
 @login_required
@@ -66,7 +65,22 @@ def activate():
 @login_required
 def trash():
     if User.trash(request.form):
-        flash("borrado correctamente")
+        return json.dumps({'status':'OK'})
     else:
-        flash("No puedes borrar a un administrador")      
-    return index()        
+        return json.dumps({'status':'No puedes borrar a un administrador'})    
+
+@login_required
+def edit():
+    userDetails = User.getUserById(request.form.get('idUser'))
+    return render_template("user/editar.html",userDetails = userDetails)
+
+def confirmEdit():
+    if User.updateUser(request.form):
+        flash("editado correctamente")
+    else:
+        flash("ha ocurrido un error")  
+    userDetails = User.getUserById(request.form.get('idUser'))    
+    return render_template("user/editar.html",userDetails = userDetails)
+
+
+   

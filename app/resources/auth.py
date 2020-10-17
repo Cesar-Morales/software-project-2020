@@ -16,10 +16,7 @@ def login():
 
 def authenticate():
     params = request.form
-    user = db.session.query(User).filter_by(
-            email=params["email"], 
-            password=params["password"]
-            ).first()
+    user = User.getUserByEmailAndPassword(params["email"],params["password"])
     #Agregado condicion para que si el usuario que intenta acceder esta bloqueado, no pueda.
     if user.active == 0 :
         flash("Usted esta bloqueado. Contactese con un administrador")
