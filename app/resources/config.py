@@ -30,7 +30,7 @@ def edit():
     form = ConfigForm()
     
     if not check_permission('config_update'):
-        flash("No posee los permisos necesario para poder editar el sitio"
+        flash("No posee los permisos necesario para poder editar el sitio")
         return render_template("config/index.html", form=form)
         
     if form.validate():
