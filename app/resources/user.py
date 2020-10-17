@@ -21,11 +21,13 @@ def index():
     return render_template("user/index.html", users=users)
     
 
+
 @login_required
 def new():
     if not authenticated(session):
         abort(401)
     return render_template("user/new.html")
+
 
 @login_required
 def search():
@@ -34,33 +36,37 @@ def search():
     #CESAR aca te dejo el comentario para que se entienda.... le mando al template los usuarios que requieren en la busqueda
     # y le mando la cantidad de registros por pagina, segun la configuracion del sitio, lo atrapas en el html como la variable:
     # porPagina     
-    return render_template("user/index.html",users=User.search(request.form), porPagina=ITEMS_PERPAGE)
+    return render_template("user/index.html", users=User.search(request.form),
+                           porPagina=ITEMS_PERPAGE)
+
 
 @login_required
 def create():
     if not authenticated(session):
         abort(401)
 
-    if User.create(request.form):
+    if User.create(request.form, request.files['image']):
         flash("Usuario creado correctamente")
     else:
-        flash("Usuario o email en uso.")    
-
+        flash("Usuario o email en uso.")
     return redirect(url_for("user_index"))
+
 
 @login_required
 def block():
-        if User.block(request.form):
-            flash("Bloqueado correctamente")
-        else:
-            flash("No puedes bloquear a un administrador")    
-        return index()
+    if User.block(request.form):
+        flash("Bloqueado correctamente")
+    else:
+        flash("No puedes bloquear a un administrador")
+    return index()
+
 
 @login_required
 def activate():
     if User.activate(request.form):
-        flash("activado correctamente")
-    return index()    
+        flash("Activado correctamente")
+    return index()
+
 
 @login_required
 def trash():

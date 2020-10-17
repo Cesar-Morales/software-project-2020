@@ -15,6 +15,10 @@ app = Flask(__name__)
 #Secret key para que ande el log-in
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
+#Path de descarga
+UPLOAD_FOLDER = './app/static/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 # Carga de la configuración
 env = environ.get("FLASK_ENV")
 app.config.from_object(config[env])
@@ -26,7 +30,7 @@ Session(app)
 #Configuracion del login
 login_manager = LoginManager(app)
 login_manager.login_view = "auth_login"
-login_manager.login_message = "Este mesaje se muestra cuando volves de una pagina a la que queres acceder sin estar loged. Se puede modificar el estilo cambiando la categoria en __init__"
+login_manager.login_message = "No esta autorizado para realizar esta operacion"
 login_manager.login_message_category = "info"
 
 

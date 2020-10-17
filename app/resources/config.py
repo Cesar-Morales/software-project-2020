@@ -1,49 +1,44 @@
-from flask import render_template, session, request, redirect, url_for, abort
-from flask_wtf import FlaskForm
-from wtforms.fields import StringField, SubmitField, RadioField
-from wtforms.validators import DataRequired, NumberRange
-from wtforms.fields.html5 import EmailField, IntegerField
-from wtforms.widgets.html5 import NumberInput
+""" 
+Manejador de la configuracion
+"""
+from flask import render_template, session, redirect, url_for, flash
+from app.helpers.forms import ConfigForm
 from app import db
 from app.models.site import Site
-from app.helpers.auth import authenticated
+from flask_login import login_required
+from app.validators.user_validators import check_permission
 
-class ConfigForm(FlaskForm):
-    title = StringField('Titulo', validators=[DataRequired('Debe insertar un Titulo')])
-    description = StringField('Descripcion', validators=[DataRequired('Debe Insertar Una Descripcion')])
-    email = EmailField('Email', validators=[DataRequired('Debe InsertarUn email')])
-    pages = IntegerField('Cantidad De Elementos por Pagina', validators=[NumberRange(min=1, message="Como minimo se debe mostrar 1 elemento por pagina")], widget=NumberInput(min=1, step=1))
-    active = RadioField('Estado Del Sistema', coerce=int, choices=[(1, 'Habilitar'), (0, 'Deshabilitar')])
-    submit = SubmitField('Editar')
 
+@login_required
 def index():
-	if not authenticated(session):
-		abort(401)
-	if not session["roles"]["admin"]:
-		abort(401)
-	site = db.session.query(Site).first()
-	form = ConfigForm()
-	form.title.data = site.title
-	form.description.data = site.description
-	form.email.data = site.email
-	form.pages.data = site.pages
-	form.active.data = site.active
-	return render_template("config/index.html", form=form)
+    if not check_permission('config_show'):
+        flash("No posee los permisos necesario para poder ver los datos del sitio")
+        return redirect(url_for("home"))
 
-def edit():
-    site = db.session.query(Site).first()
+    site = Site.obtain_site()
     form = ConfigForm()
+    form.title.data = site.title
+    form.description.data = site.description
+    form.email.data = site.email
+    form.pages.data = site.pages
+    form.active.data = site.active
+    return render_template("config/index.html", form=form)
+
+
+@login_required
+def edit():
+    form = ConfigForm()
+    
+    if not check_permission('config_update'):
+        flash("No posee los permisos necesario para poder editar el sitio")
+        return render_template("config/index.html", form=form)
+        
     if form.validate():
         title = form.title.data
         description = form.description.data
         email = form.email.data
         pages = form.pages.data
         active = form.active.data
-        site.title = title
-        site.description = description
-        site.email = email
-        site.pages = pages
-        site.active = active
-        db.session.commit()
+        Site.update_data(title,description,email,pages,active)
         return redirect(url_for('home'))
     return render_template("config/index.html", form=form)

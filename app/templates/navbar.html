@@ -1,12 +1,12 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark"> 
-    <div class="container-fluid container p-1">
-        <a class="navbar-brand ml-3" href="/">LOGOAyudAR</a>
+<nav class="navbar navbar-expand-lg p-0 navbar-dark bg-dark"> 
+    <div class="container-fluid container">
+        <a class="navbar-brand ml-3" href="/"><img height="90px" src="{{url_for('static', filename='logos/logo.png')}}"  alt="logoAyudAr"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse row navbar-collapse " id="navbarNav">
+        <div class="collapse row navbar-collapse ml-3" id="navbarNav">
             <hr>
-            <ul class="navbar-nav nav col-lg-8 justify-content-around">
+            <!--<ul class="navbar-nav nav col-lg-8 justify-content-around">
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         Ayudar Ahora
@@ -23,7 +23,7 @@
                     </a>
                 </li>
             </ul>
-            <hr>        
+            <hr>-->        
             <!--Si esta registrado-->
             {% if is_authenticated(session) %}
             <div class="col-lg-2"></div>
@@ -32,12 +32,13 @@
                     <div class="col-md-12 col-lg-6"></div>
                     <div class="col-md-12 col-lg-5">
                         <button type="button" class="margin-a btn btn-sm btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{session["user"]}}<!--Despues cambiar a session["username"]-->
+                            {{session["username"]}}<!--Despues cambiar a session["username"]-->
                         </button>
                         <div class="dropdown-menu" >
                             <a class="dropdown-item" href="{{ url_for('user_index') }}">
                                 Listar Usuarios
                             </a><!--VER DONDE QUEDA AL FINAL-->
+                            <a class="dropdown-item" href="{{ url_for('config_index') }}">Configuracion</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ url_for('auth_logout') }}">
                                     Cerrar sesion
@@ -51,10 +52,10 @@
             <div class="col-lg-1 "></div>
             <div class="col-lg-3">
                 <div class="row">
-                    <div class="col-md-12 col-lg-6"> </div>
-                    <div class="col-md-12 col-lg-5">
-                        <a type="button" href="{{ url_for('auth_login') }}" class="margin-a btn btn-light btn-color btn-bg-color btn-sm col-xs-2 margin-left">
-                            Iniciar sesión
+                    <div class="col-md-12 col-12 col-lg-6"> </div>
+                    <div class="col-md-12 col-12 col-lg-6">
+                        <a type="button" href="{{ url_for('auth_login') }}" class="margin-a p-1 btn btn-light btn-color btn-bg-color btn-sm ">
+                            Iniciar Sesión
                         </a>
                     </div>
                 <!--<<div class="col-md-12 col-lg-1"> </div> Si se va a agregar esto mas adelante cambiar .col-lg o se va a romper todo
