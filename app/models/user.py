@@ -6,7 +6,8 @@ de la base de datos como la misma tabla.
 
 Además se definen los metodos para realizar los cinco métodos del modulo
 """
-import os
+from flask.json import JSONEncoder
+from flask import jsonify
 from app import db, login_manager
 from sqlalchemy import or_
 from app.models.usuario_tiene_rol import usuario_tiene_rol
@@ -15,6 +16,9 @@ from flask_login import UserMixin
 from werkzeug.utils import secure_filename
 from app.models.rol import Rol
 from flask_sqlalchemy import SQLAlchemy
+import json
+import os
+from app.helpers.forms import UserForm
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -31,38 +35,48 @@ class User(db.Model, UserMixin):
     active = db.Column(db.Boolean, default=True)
     deleted = db.Column(db.Boolean, default=False)
     image_name = db.Column(db.String(300), default='')
-
-
     roles = db.relationship('Rol', secondary=usuario_tiene_rol, back_populates='users')
 
     def create(requestform, file):
-         username = requestform.get("username")
-         email = requestform.get("email")
-         last_name = requestform.get("last_name")
-         first_name = requestform.get("first_name")
-         password = requestform.get("password")
-         #Guardar la imagen
-         if file.filename == '':
-            image_name = ''
+         form = UserForm()
+         form.username = requestform.get("username")
+         form.email = requestform.get("email")
+         form.last_name = requestform.get("last_name")
+         form.first_name = requestform.get("first_name")
+         form.password = requestform.get("password")
+         if form.validate():
+            #Guardar la imagen
+            if file.filename == '':
+                image_name = ''
+            else:
+                image_name = secure_filename(file.filename)
+                image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], image_name)
+                file.save(image_path)
+            #Verificamos si el nombre de usuario o email ya estan en uso
+            user = db.session.query(User).filter(or_(User.username == form.username, User.email == form.email)).first()
+            if  user:
+                return False
+            else:
+                nuevo = User(
+                        email=form.email, last_name=form.last_name, first_name=form.first_name,
+                        password=form.password, username=form.username,
+                        image_name=image_name)
+                roles = db.session.query(Rol).filter_by(name="user").first()
+                nuevo.roles.append(roles)
+                db.session.add(nuevo)
+                db.session.commit()
+                return True
          else:
-            image_name = secure_filename(file.filename)
-            image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], image_name)
-            file.save(image_path)
-         #Verificamos si el nombre de usuario o email ya estan en uso
-         user = db.session.query(User).filter(or_(User.username == username, User.email == email)).first()
-         if  user:
-             return False
-         else:
-            nuevo = User(
-                    email=email, last_name=last_name, first_name=first_name,
-                    password=password, username=username,
-                    image_name=image_name)
-            roles = db.session.query(Rol).filter_by(name="user").first()
-            nuevo.roles.append(roles)
-            db.session.add(nuevo)
-            db.session.commit()
-            return True
+             return "Debe completar todos los campos"       
 
+
+    def getAll():
+        return db.session.query(User).all()
+
+    def getUserByEmailAndPassword(em,pas):
+        return  db.session.query(User).filter_by(email=em,password=pas).first() 
+
+    
     #Funcion de busqueda de usuarios
     #inicialmente busco por nombre de usuario que es unico, luego voy a buscar por activo o bloqueado, que trae mas resultados
     #pero esto una vez que este lista la tabla de usuarios con los campos necesarios
@@ -95,12 +109,49 @@ class User(db.Model, UserMixin):
         return True
 
     def trash(requestForm):
-        idUser = requestForm.get("borrar")
+        idUser = requestForm['id']
         user = db.session.query(User).filter(User.id == idUser).first()
         #Reviso si el usuario a borrar es un administrador. Si es, devuelvo false para que no puedan bloquearlo, si no, lo bloqueo.
         for rol in user.roles:
-            if (rol.name == "admin"):
-                return False
-        user.deleted = 1
+           if (rol.name == "admin"):
+               return False
+        user.deleted = 1 
         db.session.commit()
         return True
+    
+    def getUserById(requestForm):
+        idUser = requestForm
+        user = db.session.query(User).filter(User.id == idUser).first()
+        return  user
+
+    def updateUser(requestform):
+         form = UserForm()
+         form.username = requestform.get("username")
+         form.email = requestform.get("email")
+         form.last_name = requestform.get("last_name")
+         form.first_name = requestform.get("first_name")
+         form.password = requestform.get("password")
+         idUser = requestform.get("idUser")
+         if form.validate():
+            user = db.session.query(User).filter(User.id  == idUser).first()
+            #verifico que el email haya cambiado, si cambio verifico el nombre de usuario, si cambio, hago todo el update
+            if ((form.email != user.email)or(form.username != user.username)):
+                if (form.email != user.email):
+                    #verifico que el email no esta en uso
+                    if (db.session.query(User).filter(User.email == form.email).first()):
+                        return 0
+                    else:
+                        user.email = form.email
+                if (form.username != user.username):
+                    #verifico que el username no esta en uso
+                    if (db.session.query(User).filter(User.username == form.username).first()):
+                        return 0  
+                    else: 
+                        user.username = form.username
+            user.first_name = form.first_name
+            user.last_name = form.last_name
+            user.password = form.password
+            db.session.commit()
+            return 1
+         else:   
+            return 2 
