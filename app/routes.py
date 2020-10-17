@@ -31,7 +31,8 @@ app.add_url_rule("/config", "config_edit", config.edit, methods=["POST"])
 @app.route("/")
 def home():
     form = SearchForm()
-    return render_template("home.html", form=form)
+    site = Site.obtain_site()
+    return render_template("home.html", form=form, site=site)
 
 #Rutas estaticas de las imagenes
 @app.route('/uploads/<filename>')
