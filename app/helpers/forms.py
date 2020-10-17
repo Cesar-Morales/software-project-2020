@@ -34,3 +34,22 @@ class SearchForm(FlaskForm):
     active = RadioField('active', coerce=int,
                         choices=[(1, 'Activos'), (0, 'Bloqueados')], default=1)
     submit = SubmitField('Buscar')
+
+class UserForm(FlaskForm):
+        email = EmailField(
+            'Email',
+            validators=[DataRequired('Debe Insertar un email')])
+        first_name = StringField(
+            'Nombre',
+            validators=[DataRequired('Debe insertar un nombre')])
+        last_name = StringField(
+            'Apellido',
+            validators=[DataRequired('Debe insertar un apellido')])
+        username = StringField(
+            'Nombre de Usuario',
+            validators=[DataRequired('Debe insertar un nombre de usuario')])
+        submit = SubmitField('Enviar')    
+        password = StringField(
+            'Contraseña',
+            validators=[DataRequired('Debe insertar una contraseña')])
+                      

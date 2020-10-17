@@ -12,6 +12,8 @@ from flask_login import current_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 from app.static.constantes import ITEMS_PERPAGE
 import json
+from app.helpers.forms import UserForm
+
 # Protected resources
 @login_required
 def index():
@@ -26,7 +28,9 @@ def index():
 def new():
     if not authenticated(session):
         abort(401)
-    return render_template("user/new.html")
+    form = UserForm()
+    return render_template("user/new.html", form=form)     
+
 
 
 @login_required
@@ -44,12 +48,12 @@ def search():
 def create():
     if not authenticated(session):
         abort(401)
-
     if User.create(request.form, request.files['image']):
         flash("Usuario creado correctamente")
     else:
         flash("Usuario o email en uso.")
     return redirect(url_for("user_index"))
+  
 
 
 @login_required

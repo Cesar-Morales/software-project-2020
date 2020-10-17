@@ -10,26 +10,42 @@
       <h1 style="text-align: center">Crear un usuario</h1>
       <hr>
       <form action="{{ url_for('user_create') }}" method="POST" enctype="multipart/form-data">
+        {{ form.csrf_token }}
         <div class="row">
           <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
-            <b>Email</b>
-            <input class="col-12" name="email" placeholder="Correo">
+            <b>{{ form.email.label }}</b>
+            {{ form.email(class="col-12 mb-2") }}
+            {% for error in form.email.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
           </div>
           <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
-            <b> Nombre de Usuario </b>
-            <input class="col-12" name="username" placeholder="Nombre de Usuario">
+            <b>{{ form.username.label }}</b>
+            {{ form.username(class="col-12 mb-2") }}
+            {% for error in form.username.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
           </div>
           <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
-            <b>Clave</b>
-            <input class="col-12" type="password" name="password" placeholder="Clave">
+            <b>{{form.password.label}}</b>
+            {{ form.password(class="col-12 mb-2") }}
+            {% for error in form.password.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
           </div>
           <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
-            <b>Nombre</b>
-            <input class="col-12" name="first_name" placeholder="Nombre">
+            <b>{{form.first_name.label}}</b>
+            {{ form.first_name(class="col-12 mb-2") }}
+            {% for error in form.first_name.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
           </div>
           <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
-            <b> Apellido</b>
-            <input class="col-12" name="last_name" placeholder="Apellido">
+            <b> {{form.last_name.label}}</b>
+            {{ form.last_name(class="col-12 mb-2") }}
+            {% for error in form.last_name.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
           </div>
           <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
               <b>Imagen</b>
@@ -37,7 +53,7 @@
           </div>
           <div class="mt-5 col-12 mb-3 col-sm-12 col-md-12 col-lg-12">
             <div class="row ml-3">
-              <input class="col-3 btn btn-success btn-sm" type="submit" value="Crear">
+              {{ form.submit() }}
               <div class="col-1"></div>
               <button class="btn col-3 btn-danger btn-sm" type="reset">Limpiar</button>
               <div class="col-1"></div>
