@@ -14,7 +14,7 @@ def index():
         flash("No posee los permisos necesario para poder acceder a este modulo")
         return redirect(url_for("home"))
 
-    site = Site.obtain_model()
+    site = Site.obtain_site()
     form = ConfigForm()
     form.title.data = site.title
     form.description.data = site.description
