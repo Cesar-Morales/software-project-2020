@@ -6,11 +6,12 @@ from app.helpers.forms import ConfigForm
 from app import db
 from app.models.site import Site
 from flask_login import login_required
+from app.validators.user_validators import check_permission
 
 
 @login_required
 def index():
-    if not session["roles"]["admin"]:
+    if not check_permission('config_index'):
         flash("No posee los permisos necesario para poder acceder a este modulo")
         return redirect(url_for("home"))
 
@@ -27,6 +28,11 @@ def index():
 @login_required
 def edit():
     form = ConfigForm()
+    
+    if not check_permission('config_update'):
+        flash("No posee los permisos necesario para poder acceder a este modulo"
+        return render_template("config/index.html", form=form)
+        
     if form.validate():
         title = form.title.data
         description = form.description.data
