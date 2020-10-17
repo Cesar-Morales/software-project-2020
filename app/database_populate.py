@@ -31,10 +31,21 @@ if not user:
         last_name='Marcos', 
         first_name='Carlos', 
         password='123123', 
-        username='admin')    
+        username='admin')
     db.session.add(user)
     db.session.commit()
-
+    
+#Creacion operator para probar permisos  
+user_operator = db.session.query(User).filter_by(email='operator').first()
+if not user_operator:
+    user_operator = User(
+        email = 'operator', 
+        last_name = 'Maria', 
+        first_name = 'Marta', 
+        password = '123123', 
+        username = 'operator')
+    db.session.add(user_operator)
+    db.session.commit()
 
 #Creacion de roles
 #Crea rol admin si no existe
@@ -154,8 +165,11 @@ rol_admin.permisos.append(permiso_user_destroy)
 rol_admin.permisos.append(permiso_user_update)
 rol_admin.permisos.append(permiso_user_show)
 
-#Relacionar al admin con el rol de admin
+#Relacionar users con el roles
 user.roles.append(rol_admin)
 user.roles.append(rol_user)
+user_operator.roles.append(rol_user)
+user_operator.roles.append(rol_operador)
 db.session.add(user)
+db.session.add(user_operator)
 db.session.commit()

@@ -5,6 +5,7 @@ from app.resources import auth
 from app.resources import config
 from app.helpers import auth as helper_auth
 from flask_wtf import FlaskForm
+from app.models.site import Site
 from app.helpers.forms import SearchForm
 # Funciones que se exportan al contexto de Jinja2
 app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
@@ -31,7 +32,8 @@ app.add_url_rule("/config", "config_edit", config.edit, methods=["POST"])
 @app.route("/")
 def home():
     form = SearchForm()
-    return render_template("home.html", form=form)
+    site = Site.obtain_site()
+    return render_template("home.html", form=form, site=site)
 
 #Rutas estaticas de las imagenes
 @app.route('/uploads/<filename>')
