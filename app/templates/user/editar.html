@@ -1,16 +1,17 @@
 {% extends "layout.html" %}
-{% block title %}Usuarios{% endblock %}
+{% block title %}Edicion de Usuario{% endblock %}
 {% block head %}
   {{ super() }}
-  {% endblock %}
+{% endblock %}    
 {% block content %}
-  <div class="row">
+<div class="row">
     <div class="col-2"></div>
     <div class="col-sm-12 col-12 col-md-8 col-lg-12 p-4 rounded" style="background: #cccccc">
       <h1 style="text-align: center">Crear un usuario</h1>
       <hr>
-      <form action="{{ url_for('user_create') }}" method="POST" enctype="multipart/form-data">
+      <form form action="{{ url_for('user_confirmEdit') }}" method="POST" enctype="multipart/form-data">
         {{ form.csrf_token }}
+        {{form.idUser}}
         <div class="row">
           <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
             <b>{{ form.email.label }}</b>
@@ -65,4 +66,6 @@
     </div>
     <div class="col-2"></div>
   </div>
+
+   
 {% endblock %}

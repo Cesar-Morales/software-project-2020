@@ -4,14 +4,44 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
-  <h1>Inicio</h1>
-  <p>Página de inicio de la aplicación</p>
-  <a href="{{ url_for('issue_index') }}" class="link">Consultas</a>
-  {% if is_authenticated(session) %}
-    <a href="{{ url_for('user_index') }}" class="link">Usuarios</a>
-    <a href="{{ url_for('auth_logout') }}" class="link">Cerrar sesión</a>
-  {% else %}
-    <a href="{{ url_for('auth_login') }}" class="link">Iniciar sesión</a>
-  {% endif %}
-
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-8 col-lg-12 p-4 rounded" style="background: #cccccc">
+      <h1 style="text-align: center">AyudAR</h1>
+      <hr>
+      <p>Cambiar lo que va a ir aca!!!!!!!</p>
+      {% if is_authenticated(session) %}
+        <hr>
+        <h3 style="text-align: center">Busqueda de Usuarios</h3>
+        <div class="row">
+          <!--
+            formulario para busqueda de usuarios por nombre de usuario o estado activo/bloqueado
+          -->
+          <form class="col-12" action="{{ url_for('user_search') }}" method="POST">
+            {{ form.csrf_token }}
+            <div>
+                {{ form.search (class="col-12 mb-2") }}
+                {% for error in form.search.errors %}
+                <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-3 col-md-4"></div>
+              <div class="col-12 col-sm-6 col-md-4">
+                  {{ form.active (class="mb-0")}}<br>
+                  {% for error in form.active.errors %}
+                  <span style="color: red;">{{ error }}</span>
+                  {% endfor %}
+              </div>
+            </div>
+            <div>
+                {{ form.submit(class="col-12") }}
+            </div>
+          </form>
+        </div>
+      {% endif %}
+      
+    </div>
+    <div class="col-2"></div>
+  </div>
 {% endblock %}
