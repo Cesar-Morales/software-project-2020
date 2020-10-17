@@ -10,3 +10,15 @@ class Site(db.Model):
     description = db.Column(db.String(200), nullable=False)
     pages = db.Column(db.Integer, nullable=False, default=25)
     active = db.Column(db.Boolean, default=True)
+    
+    def obtain_site():
+        return db.session.query(Site).first()
+        
+    def update_data(title, description, email, pages, active):
+        site = obtain_site()
+        site.title = title
+                site.description = description
+        site.email = email
+        site.pages = pages
+        site.active = active
+        db.session.commit()
