@@ -125,14 +125,32 @@ class User(db.Model, UserMixin):
         return  user
 
     def updateUser(requestform):
-        idUser = requestform.get("idUser")    
-        username = requestform.get("username")
-        email = requestform.get("email")
-        last_name = requestform.get("last_name")
-        first_name = requestform.get("first_name")   
-        user = db.session.query(User).filter(User.id == idUser).first()
-        user.username = username
-        user.first_name = first_name
-        user.last_name = last_name
-        user.email = email
-        db.session.commit()
+         form = UserForm()
+         form.username = requestform.get("username")
+         form.email = requestform.get("email")
+         form.last_name = requestform.get("last_name")
+         form.first_name = requestform.get("first_name")
+         form.password = requestform.get("password")
+         if form.validate():
+            user = db.session.query(User).filter(or_(User.username == form.username, User.email == form.email)).first()
+            #verifico que el email haya cambiado, si cambio verifico el nombre de usuario, si cambio, hago todo el update
+            if ((form.email != user.email)or(form.username != user.username)):
+                if (form.email != user.email):
+                    #verifico que el email no esta en uso
+                    if (db.session.query(User).filter(User.email == form.email).first()):
+                        return 0
+                    else:
+                        user.email = form.email
+                if (form.username != user.username):
+                    #verifico que el username no esta en uso
+                    if (db.session.query(User).filter(User.username == form.username).first()):
+                        return 0  
+                    else: 
+                        user.usernam = form.username
+            user.first_name = form.first_name
+            user.last_name = form.last_name
+            user.password = form.password
+            db.session.commit()
+            return 1
+         else:   
+            return 2 

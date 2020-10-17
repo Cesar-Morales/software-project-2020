@@ -81,16 +81,35 @@ def trash():
 
 @login_required
 def edit():
-    userDetails = User.getUserById(request.form.get('idUser'))
-    return render_template("user/editar.html",userDetails = userDetails)
+    form = UserForm()
+    usuario = User.getUserById(request.form.get('idUser'))
+    form.username.data = usuario.username
+    form.last_name.data= usuario.last_name
+    form.first_name.data = usuario.first_name
+    form.email.data = usuario.email
+    form.password.data = usuario.password
+    form.idUser.data = usuario.id
+    #userDetails = User.getUserById(request.form.get('idUser'))
+    return render_template("user/editar.html",form = form)
 
 def confirmEdit():
-    if User.updateUser(request.form):
+    resu = User.updateUser(request.form) 
+    if resu == 1:
         flash("editado correctamente")
     else:
-        flash("ha ocurrido un error")  
-    userDetails = User.getUserById(request.form.get('idUser'))    
-    return render_template("user/editar.html",userDetails = userDetails)
+        if resu == 2:
+            flash("Debe Completar Todos Los Datos")
+        else:
+            flash("Usuario o Email en uso")      
+    form = UserForm()
+    usuario = User.getUserById(request.form.get('idUser'))
+    form.username.data = usuario.username
+    form.last_name.data= usuario.last_name
+    form.first_name.data = usuario.first_name
+    form.email.data = usuario.email
+    form.password.data = usuario.password 
+    form.idUser.data = usuario.id
+    return render_template("user/editar.html", form = form)
 
 
    

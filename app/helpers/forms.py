@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, SubmitField, RadioField
+from wtforms.fields import StringField, SubmitField, RadioField, HiddenField
 from wtforms.validators import DataRequired, NumberRange
 from wtforms.fields.html5 import EmailField, IntegerField, SearchField
 from wtforms.widgets.html5 import NumberInput
@@ -52,4 +52,7 @@ class UserForm(FlaskForm):
         password = StringField(
             'Contraseña',
             validators=[DataRequired('Debe insertar una contraseña')])
+        idUser = HiddenField('idUser')    
+
+
                       
