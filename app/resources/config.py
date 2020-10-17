@@ -14,7 +14,7 @@ def index():
         flash("No posee los permisos necesario para poder acceder a este modulo")
         return redirect(url_for("home"))
 
-    site = db.session.query(Site).first()
+    site = Site.obtain_model()
     form = ConfigForm()
     form.title.data = site.title
     form.description.data = site.description
@@ -26,7 +26,6 @@ def index():
 
 @login_required
 def edit():
-    site = db.session.query(Site).first()
     form = ConfigForm()
     if form.validate():
         title = form.title.data
@@ -34,11 +33,6 @@ def edit():
         email = form.email.data
         pages = form.pages.data
         active = form.active.data
-        site.title = title
-        site.description = description
-        site.email = email
-        site.pages = pages
-        site.active = active
-        db.session.commit()
+        Site.update_data(title,description,email,pages,active)
         return redirect(url_for('home'))
     return render_template("config/index.html", form=form)
