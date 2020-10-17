@@ -11,8 +11,8 @@ from app.validators.user_validators import check_permission
 
 @login_required
 def index():
-    if not check_permission('config_index'):
-        flash("No posee los permisos necesario para poder acceder a este modulo")
+    if not check_permission('config_show'):
+        flash("No posee los permisos necesario para poder ver los datos del sitio")
         return redirect(url_for("home"))
 
     site = Site.obtain_site()
@@ -30,7 +30,7 @@ def edit():
     form = ConfigForm()
     
     if not check_permission('config_update'):
-        flash("No posee los permisos necesario para poder acceder a este modulo"
+        flash("No posee los permisos necesario para poder editar el sitio"
         return render_template("config/index.html", form=form)
         
     if form.validate():
