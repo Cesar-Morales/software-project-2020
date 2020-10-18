@@ -49,16 +49,17 @@ def authenticate():
         session["user"] = user.email
         session["username"] = user.username
         session["idUserLogged"] = user.id
-        flash("La sesión se inició correctamente.") 
+        flash("La sesión se inició correctamente.")
 
         #Logeo del user
         login_user(user)
 
         return redirect(url_for("home"))
     else:
+        del session["roles"]
+        session.clear()
         flash("Debe poseer el rol de admin cuando la pagina esta deshabilitada")
         return redirect(url_for("auth_login"))
-
 
 def logout():
     if not authenticated(session):
@@ -67,6 +68,7 @@ def logout():
     del session["user"]
     del session["roles"]
     del session["username"]
+    del session["idUserLogged"]
     session.clear()
     flash("La sesión se cerró correctamente.")
 

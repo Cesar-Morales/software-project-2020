@@ -3,15 +3,18 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block content %}
-  <div class="container">
-    <img class="image col-12" src="{{url_for('static', filename='logos/ayudar.jpg')}}" alt="home">
-    <div class="overlay">
-      <img class="image col-12" src="{{url_for('static', filename='logos/esFacil.jpg')}}" alt="home">
+{% block content %} 
+  {% if site.active %}  
+    <div class="container">
+      <img class="image col-12" src="{{url_for('static', filename='logos/ayudar.jpg')}}" alt="home">
+      <div class="overlay">
+        <img class="image col-12" src="{{url_for('static', filename='logos/esFacil.jpg')}}" alt="home">
+      </div>
     </div>
-  </div>
-  {% if site.active %}
-    {% if is_authenticated(session) %}
+  {% else %}
+    <h3 style="text-align: center">La Pagina actualmente esta desactivada. Vuelve a intentar mas tarde.</h3>
+  {% endif %} 
+  {% if is_authenticated(session) %}
       <hr>
       <div class="row">
         <div class="col-2 col-lg-2"></div>
@@ -49,7 +52,4 @@
         <div class="col-2 "></div>
       </div>
     {% endif %}
-  {% else %}
-    <h3 style="text-align: center">La Pagina actualmente esta desactivada. Vuelve a intentar mas tarde.</h3> 
-  {% endif %}
 {% endblock %}
