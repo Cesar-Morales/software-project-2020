@@ -52,6 +52,10 @@
               <b>Imagen</b>
               <input class="col-12" type="file" name="image"/>
           </div>
+          {% for rol in roles %}
+          <input type="checkbox" id="{{rol.name}}" name="{{rol.name}}" value="{{rol.id}}">
+          <label for="{{rol.name}}"> Rol de {{rol.name}}</label><br>
+          {% endfor %}
           <div class="mt-5 col-12 mb-3 col-sm-12 col-md-12 col-lg-12">
             <div class="row ml-3">
               {{ form.submit(class="btn col-3 btn-success btn-sm") }}

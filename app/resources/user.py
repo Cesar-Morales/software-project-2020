@@ -4,7 +4,7 @@ Manejador del user
 
 from flask import redirect, render_template, request
 from flask import url_for, session, abort, flash
-from app.models.user import User
+from app.models.user import User,Rol
 from app.helpers.auth import authenticated
 from sqlalchemy.orm import sessionmaker
 from app import db
@@ -118,8 +118,10 @@ def edit():
     form.email.data = usuario.email
     form.password.data = usuario.password
     form.idUser.data = usuario.id
+    roles = Rol.getRoles()
+    rolesUser = usuario.roles
     #userDetails = User.getUserById(request.form.get('idUser'))
-    return render_template("user/editar.html",form = form)
+    return render_template("user/editar.html",form = form,roles = roles, rolesUser = rolesUser)
 
 def confirmEdit():
     if not check_permission('user_update'):
