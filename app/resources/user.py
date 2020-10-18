@@ -27,7 +27,7 @@ def index():
         return redirect(url_for("home"))
     permiso = check_permission('user_show')
     users = User.getAll()
-    return render_template("user/index.html", users=users,sessionIdUser = session["idUserLogged"],tienePermiso=permiso )
+    return render_template("user/index.html", users=users,sessionIdUser = session["idUserLogged"],tienePermiso=permiso, porPagina=ITEMS_PERPAGE )
     
 
 
@@ -50,8 +50,9 @@ def search():
     if not check_permission('user_index'):
         flash("No posee los permisos necesarios para poder ver la lista de usuarios")
         return redirect(url_for("home"))    
+    permiso = check_permission('user_show')
     return render_template("user/index.html", users=User.search(request.form),
-                           porPagina=ITEMS_PERPAGE,sessionIdUser = session["idUserLogged"])
+                           porPagina=ITEMS_PERPAGE,tienePermiso=permiso,sessionIdUser = session["idUserLogged"])
 
 
 @login_required
