@@ -13,14 +13,21 @@ from flask_sqlalchemy import SQLAlchemy
 from app.static.constantes import ITEMS_PERPAGE
 import json
 from app.helpers.forms import UserForm
+from app.validators.user_validators import check_permission
+
+
 
 # Protected resources
 @login_required
 def index():
     if not current_user.is_authenticated:
         abort(401)
+    if not check_permission('user_index'):
+        flash("No posee los permisos necesarios para poder ver la lista de usuarios")
+        return redirect(url_for("home"))
+    permiso = check_permission('user_show')
     users = User.getAll()
-    return render_template("user/index.html", users=users,sessionIdUser = session["idUserLogged"] )
+    return render_template("user/index.html", users=users,sessionIdUser = session["idUserLogged"],tienePermiso=permiso, porPagina=ITEMS_PERPAGE )
     
 
 
@@ -28,6 +35,9 @@ def index():
 def new():
     if not authenticated(session):
         abort(401)
+    if not check_permission('user_new'):
+        flash("No posee los permisos necesarios para crear usuarios")
+        return redirect(url_for("user_index"))
     form = UserForm()
     return render_template("user/new.html", form=form)     
 
@@ -37,27 +47,38 @@ def new():
 def search():
     if not authenticated(session):
         abort(401)
-    #CESAR aca te dejo el comentario para que se entienda.... le mando al template los usuarios que requieren en la busqueda
-    # y le mando la cantidad de registros por pagina, segun la configuracion del sitio, lo atrapas en el html como la variable:
-    # porPagina     
+    if not check_permission('user_index'):
+        flash("No posee los permisos necesarios para poder ver la lista de usuarios")
+        return redirect(url_for("home"))    
+    permiso = check_permission('user_show')
     return render_template("user/index.html", users=User.search(request.form),
-                           porPagina=ITEMS_PERPAGE,sessionIdUser = session["idUserLogged"])
+                           porPagina=ITEMS_PERPAGE,tienePermiso=permiso,sessionIdUser = session["idUserLogged"])
 
 
 @login_required
 def create():
     if not authenticated(session):
         abort(401)
-    if User.create(request.form, request.files['image']):
-        flash("Usuario creado correctamente")
-    else:
-        flash("Usuario o email en uso.")
-    return redirect(url_for("user_index"))
+    if not check_permission('user_new'):
+        flash("No posee los permisos necesarios para poder crear usuarios")
+        return redirect(url_for("user_index"))    
+    form = UserForm()
+    if form.validate():
+        if User.create(form, request.files['image']):
+            flash("Usuario creado correctamente")
+        else:
+            flash("Usuario o email en uso.")
+        return redirect(url_for("user_index"))
+    return render_template("user/new.html", form=form)
+
   
 
 
 @login_required
 def block():
+    if not check_permission('user_update'):
+        flash("No posee los permisos necesarios para modificar usuarios")
+        return redirect(url_for("user_index"))
     if User.block(request.form):
         flash("Bloqueado correctamente")
     else:
@@ -67,6 +88,9 @@ def block():
 
 @login_required
 def activate():
+    if not check_permission('user_update'):
+        flash("No posee los permisos necesarios para modificar usuarios")
+        return redirect(url_for("user_index"))
     if User.activate(request.form):
         flash("Activado correctamente")
     return index()
@@ -74,6 +98,9 @@ def activate():
 
 @login_required
 def trash():
+    if not check_permission('user_destroy'):
+        flash("No posee los permisos necesarios para eliminar usuarios")
+        return redirect(url_for("user_index"))
     if User.trash(request.form):
         return json.dumps({'status':'OK'})
     else:
@@ -81,6 +108,9 @@ def trash():
 
 @login_required
 def edit():
+    if not check_permission('user_update'):
+        flash("No posee los permisos necesarios para modificar usuarios")
+        return redirect(url_for("user_index"))
     form = UserForm()
     usuario = User.getUserById(request.form.get('idUser'))
     form.username.data = usuario.username
@@ -93,6 +123,9 @@ def edit():
     return render_template("user/editar.html",form = form)
 
 def confirmEdit():
+    if not check_permission('user_update'):
+        flash("No posee los permisos necesarios para modificar usuarios")
+        return redirect(url_for("user_index"))
     resu = User.updateUser(request.form) 
     if resu == 1:
         flash("editado correctamente")
