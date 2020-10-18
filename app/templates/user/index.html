@@ -27,101 +27,108 @@
       <h1 style="text-align: center">Usuarios</h1>
       <hr>
       <div class="container">
-      <table class="col-12 table">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Mail</th>
-            <th scope="col">More</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for user in users %}
-            {% if user.deleted == 0 %}
-              {% if sessionIdUser != user.id %} 
-              <tr>
-                <td>{{user.id}}</td>
-                <td>{{ user.first_name }}</td>
-                <td>{{ user.last_name }}</td>
-                <td>{{ user.email }}</td>
-                <td class="row">
-                    <!-- 
-                      BOTON PARA EDITAR
-                    -->
-                     <form action="{{ url_for('user_edit') }}" method="POST">
-                      <input type="hidden" id="idUser" name="idUser" hidden value="{{user.id}}"> 
-                    <button name="idUser" class="btn btn-info btn-sm"  data-id={{user.id}} >
-                      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
-                      </svg>
-                    </button>
-                    </form>  
-                    <!-- 
-                      BOTON PARA BORRAR
-                    -->
-                    
-                        <input type="hidden" id="borrar" name="borrar" hidden value="{{user.id}}"> 
-                      <button data-id={{user.id}} class="btn btn-danger btn-sm" onclick="ConfirmDelete(this)">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                          <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+      {% if users|length %} 
+        <table class="col-12 table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">First</th>
+              <th scope="col">Last</th>
+              <th scope="col">Mail</th>
+              <th scope="col">More</th>
+            </tr>
+          </thead>
+          <tbody> 
+            {% for user in users %}
+              {% if user.deleted == 0 %}
+                {% if sessionIdUser != user.id %} 
+                <tr>
+                  <td>{{user.id}}</td>
+                  <td>{{ user.first_name }}</td>
+                  <td>{{ user.last_name }}</td>
+                  <td>{{ user.email }}</td>
+                  <td class="row">
+                      <!-- 
+                        BOTON PARA EDITAR
+                      -->
+                       <form action="{{ url_for('user_edit') }}" method="POST">
+                        <input type="hidden" id="idUser" name="idUser" hidden value="{{user.id}}"> 
+                      <button name="idUser" class="btn btn-info btn-sm"  data-id={{user.id}} >
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
                         </svg>
                       </button>
-                     
-                      {% if user.active == 1 %}
-                        <!-- 
-                          BOTON PARA BLOQUEAR
-                        -->
-                        <form action="{{ url_for('user_block') }}" method="POST">
-                          <input type="hidden" id="bloquear" name="bloquear" hidden value="{{user.id}}"> 
-                          <button class="btn btn-warning btn-sm">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M11.5 8h-7a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1zm-7-1a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-7zm0-3a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
-                            </svg>
-                          </button>
-                        </form>
-                      {% else  %}
-                        <!-- 
-                          BOTON PARA ACTIVAR
-                        -->
-                        <form action="{{ url_for('user_activ') }}" method="POST">
-                          <input type="hidden" id="activar" name="activar" hidden value="{{user.id}}"> 
-                          <button class="btn btn-success btn-sm">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-unlock" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M9.655 8H2.333c-.264 0-.398.068-.471.121a.73.73 0 0 0-.224.296 1.626 1.626 0 0 0-.138.59V14c0 .342.076.531.14.635.064.106.151.18.256.237a1.122 1.122 0 0 0 .436.127l.013.001h7.322c.264 0 .398-.068.471-.121a.73.73 0 0 0 .224-.296 1.627 1.627 0 0 0 .138-.59V9c0-.342-.076-.531-.14-.635a.658.658 0 0 0-.255-.237A1.122 1.122 0 0 0 9.655 8zm.012-1H2.333C.5 7 .5 9 .5 9v5c0 2 1.833 2 1.833 2h7.334c1.833 0 1.833-2 1.833-2V9c0-2-1.833-2-1.833-2zM8.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
-                            </svg>
-                          </button>
-                        </form> 
-                      {% endif %}
-                      <!-- BOTON MODAL -->
-                      <button type="button" class="btn btn-light btn-sm" data-toggle="modal" id="{{user}}" data-target="#user{{user.id}}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M16 1.25v4.146a.25.25 0 01-.427.177L14.03 4.03l-3.75 3.75a.75.75 0 11-1.06-1.06l3.75-3.75-1.543-1.543A.25.25 0 0111.604 1h4.146a.25.25 0 01.25.25zM2.75 3.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h2a.75.75 0 01.75.75v2.19l2.72-2.72a.75.75 0 01.53-.22h4.5a.25.25 0 00.25-.25v-2.5a.75.75 0 111.5 0v2.5A1.75 1.75 0 0113.25 13H9.06l-2.573 2.573A1.457 1.457 0 014 14.543V13H2.75A1.75 1.75 0 011 11.25v-7.5C1 2.784 1.784 2 2.75 2h5.5a.75.75 0 010 1.5h-5.5z"></path></svg></button>
-                      <div class="modal col-12 fade" id="user{{user.id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-sm" role="document">
-                          <div class="modal-content">
-                              <div class="media">
-                                  {% if user.image_name %}  
-                                    <img width="150px" height="150px" class="mr-3" src="{{url_for('static', filename='uploads/' + user.image_name)}}" alt="Imagen usuario">                          
-                                  {% else %}  
-                                    <img width="150px" height="150px" src="{{url_for('static', filename='logos/noImage.png')}}" class="mr-3" alt="noImage">
-                                  {% endif %}
-                                  <div class="media-body">
-                                    <p class="mt-0"><b>Nombre:</b> {{ user.first_name }}.</p>
-                                    <p class="mt-0"><b>Apellido:</b> {{ user.last_name }}.</p>
-                                    <p class="mt-0"><b>Correo:</b> {{ user.email }}.</p>
+                      </form>  
+                      <!-- 
+                        BOTON PARA BORRAR
+                      -->
+
+                          <input type="hidden" id="borrar" name="borrar" hidden value="{{user.id}}"> 
+                        <button data-id={{user.id}} class="btn btn-danger btn-sm" onclick="ConfirmDelete(this)">
+                          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                          </svg>
+                        </button>
+                      
+                        {% if user.active == 1 %}
+                          <!-- 
+                            BOTON PARA BLOQUEAR
+                          -->
+                          <form action="{{ url_for('user_block') }}" method="POST">
+                            <input type="hidden" id="bloquear" name="bloquear" hidden value="{{user.id}}"> 
+                            <button class="btn btn-warning btn-sm">
+                              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M11.5 8h-7a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1zm-7-1a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-7zm0-3a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+                              </svg>
+                            </button>
+                          </form>
+                        {% else  %}
+                          <!-- 
+                            BOTON PARA ACTIVAR
+                          -->
+                          <form action="{{ url_for('user_activ') }}" method="POST">
+                            <input type="hidden" id="activar" name="activar" hidden value="{{user.id}}"> 
+                            <button class="btn btn-success btn-sm">
+                              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-unlock" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M9.655 8H2.333c-.264 0-.398.068-.471.121a.73.73 0 0 0-.224.296 1.626 1.626 0 0 0-.138.59V14c0 .342.076.531.14.635.064.106.151.18.256.237a1.122 1.122 0 0 0 .436.127l.013.001h7.322c.264 0 .398-.068.471-.121a.73.73 0 0 0 .224-.296 1.627 1.627 0 0 0 .138-.59V9c0-.342-.076-.531-.14-.635a.658.658 0 0 0-.255-.237A1.122 1.122 0 0 0 9.655 8zm.012-1H2.333C.5 7 .5 9 .5 9v5c0 2 1.833 2 1.833 2h7.334c1.833 0 1.833-2 1.833-2V9c0-2-1.833-2-1.833-2zM8.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+                              </svg>
+                            </button>
+                          </form> 
+                        {% endif %}
+                        <!-- BOTON MODAL -->
+                        <button type="button" class="btn btn-light btn-sm" data-toggle="modal" id="{{user}}" data-target="#user{{user.id}}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M16 1.25v4.146a.25.25 0 01-.427.177L14.03 4.03l-3.75 3.75a.75.75 0 11-1.06-1.06l3.75-3.75-1.543-1.543A.25.25 0 0111.604 1h4.146a.25.25 0 01.25.25zM2.75 3.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h2a.75.75 0 01.75.75v2.19l2.72-2.72a.75.75 0 01.53-.22h4.5a.25.25 0 00.25-.25v-2.5a.75.75 0 111.5 0v2.5A1.75 1.75 0 0113.25 13H9.06l-2.573 2.573A1.457 1.457 0 014 14.543V13H2.75A1.75 1.75 0 011 11.25v-7.5C1 2.784 1.784 2 2.75 2h5.5a.75.75 0 010 1.5h-5.5z"></path></svg></button>
+                        <div class="modal col-12 fade" id="user{{user.id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-sm" role="document">
+                            <div class="modal-content">
+                                <div class="media">
+                                    {% if user.image_name %}  
+                                      <img width="150px" height="150px" class="mr-3" src="{{url_for('static', filename='uploads/' + user.image_name)}}" alt="Imagen usuario">                          
+                                    {% else %}  
+                                      <img width="150px" height="150px" src="{{url_for('static', filename='logos/noImage.png')}}" class="mr-3" alt="noImage">
+                                    {% endif %}
+                                    <div class="media-body">
+                                      <p class="mt-0"><b>Nombre:</b> {{ user.first_name }}.</p>
+                                      <p class="mt-0"><b>Apellido:</b> {{ user.last_name }}.</p>
+                                      <p class="mt-0"><b>Correo:</b> {{ user.email }}.</p>
+                                    </div>
                                   </div>
-                                </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                </td>
-              </tr>
+                  </td>
+                </tr>
+                {% endif %}
               {% endif %}
-            {% endif %}
-          {% endfor %}
-        </tbody>
-      </table>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <div class="bg-warning p-3 m-4">
+          <h3 style="text-align: center">Esta lista no posee  usuarios</h3>
+        </div>
+        <hr>
+      {% endif %}
     </div>
       <div class="row">
         <div class="col-2"></div>  
