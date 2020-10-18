@@ -9,7 +9,6 @@ from app.models.site import Site
 from app.models.permiso import Permiso
 
 db.create_all()
-
 # ----------- Creación de datos inciales para la apliación ----------- 
 
 #Creación del objeto sistio si no existe
