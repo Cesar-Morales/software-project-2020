@@ -46,6 +46,7 @@ def authenticate():
     #a una pagina hay que estar logeadx    
     session["user"] = user.email
     session["username"] = user.username
+    session["idUserLogged"] = user.id
     flash("La sesión se inició correctamente.") 
 
     #Logeo del user

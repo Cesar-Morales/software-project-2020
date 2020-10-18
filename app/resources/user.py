@@ -20,7 +20,7 @@ def index():
     if not current_user.is_authenticated:
         abort(401)
     users = User.getAll()
-    return render_template("user/index.html", users=users)
+    return render_template("user/index.html", users=users,sessionIdUser = session["idUserLogged"] )
     
 
 
@@ -41,7 +41,7 @@ def search():
     # y le mando la cantidad de registros por pagina, segun la configuracion del sitio, lo atrapas en el html como la variable:
     # porPagina     
     return render_template("user/index.html", users=User.search(request.form),
-                           porPagina=ITEMS_PERPAGE)
+                           porPagina=ITEMS_PERPAGE,sessionIdUser = session["idUserLogged"])
 
 
 @login_required
