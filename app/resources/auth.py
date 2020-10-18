@@ -5,6 +5,7 @@ Manejador de la sesión
 from flask import redirect, render_template
 from flask import request, url_for, abort, session, flash
 from app.models.user import User
+from app.models.site import Site
 from sqlalchemy.orm import sessionmaker
 from app import db
 from flask_login import login_user, logout_user, login_required
@@ -43,16 +44,21 @@ def authenticate():
         session["roles"][nombre] = True
 
     #El mail para user que se logeo para verificar que para entrar 
-    #a una pagina hay que estar logeadx    
-    session["user"] = user.email
-    session["username"] = user.username
-    session["idUserLogged"] = user.id
-    flash("La sesión se inició correctamente.") 
+    #a una pagina hay que estar logeadx
+    if (Site.obtain_site().active or session["roles"]["admin"]):
+        session["user"] = user.email
+        session["username"] = user.username
+        session["idUserLogged"] = user.id
+        flash("La sesión se inició correctamente.") 
 
-    #Logeo del user
-    login_user(user)
+        #Logeo del user
+        login_user(user)
 
-    return redirect(url_for("home"))
+        return redirect(url_for("home"))
+    else:
+        flash("Debe poseer el rol de admin cuando la pagina esta deshabilitada")
+        return redirect(url_for("auth_login"))
+
 
 def logout():
     if not authenticated(session):
