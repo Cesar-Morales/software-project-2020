@@ -11,6 +11,10 @@ class Site(db.Model):
     pages = db.Column(db.Integer, nullable=False, default=25)
     active = db.Column(db.Boolean, default=True)
     
+    def page():
+        sitio = db.session.query(Site).first()
+        return sitio.pages
+
     def obtain_site():
         return db.session.query(Site).first()
         

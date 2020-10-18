@@ -53,7 +53,7 @@
       <h1 style="text-align: center">Usuarios</h1>
       <hr>
       <div class="container">
-      {% if users|length %} 
+      {% if users.items|length %} 
         <table class="col-12 table">
           <thead class="thead-dark">
             <tr>
@@ -65,9 +65,9 @@
             </tr>
           </thead>
           <tbody> 
-            {% for user in users %}
+            {% for user in users.items %}
               {% if user.deleted == 0 %}
-                {% if sessionIdUser != user.id %} 
+                 
                 <tr>
                   <td>{{user.id}}</td>
                   <td>{{ user.first_name }}</td>
@@ -142,7 +142,7 @@
                         {% endif %}
                   </td>
                 </tr>
-                {% endif %}
+                
               {% endif %}
             {% endfor %}
           </tbody>
@@ -165,6 +165,28 @@
   
   <div class="col-2"></div>
 </div>
+{% if(pageNumber) %}
+  <p>entro number</p>
+{%else%}
+<p>f</p>
+{%endif%}
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item">
+        <form method="POST" action="{{url_for('user_search')}}">
+          <input name="pageNumber" hidden value="2">
+          <input name="search" hidden value="{{ search }}">
+          <input name="active" hidden value="1">
+          <button class="page-link" type="submit" >2</button>
+        </form> 
+      </li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+</nav>
 <script>
   function ConfirmActivate(elem) {
     localStorage.setItem('activateId', $(elem).attr('data-id'));
