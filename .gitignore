@@ -114,4 +114,4 @@ flask_session
 coc-settings.json
 .vscode
 
-/app/static/uploads
+
