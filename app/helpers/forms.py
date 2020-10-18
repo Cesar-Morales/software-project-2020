@@ -4,7 +4,6 @@ from wtforms.validators import DataRequired, NumberRange
 from wtforms.fields.html5 import EmailField, IntegerField, SearchField
 from wtforms.widgets.html5 import NumberInput
 
-
 class ConfigForm(FlaskForm):
     title = StringField(
             'Titulo',
@@ -53,6 +52,7 @@ class UserForm(FlaskForm):
             'Contraseña',
             validators=[DataRequired('Debe insertar una contraseña')])
         idUser = HiddenField('idUser')    
+        image_name = StringField('NombreImagen')
 
 
                       

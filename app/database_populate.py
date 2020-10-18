@@ -7,7 +7,7 @@ from app.models.user import User
 from app.models.rol import Rol
 from app.models.site import Site
 from app.models.permiso import Permiso
-
+from sqlalchemy import or_
 db.create_all()
 # ----------- Creación de datos inciales para la apliación ----------- 
 
@@ -23,7 +23,7 @@ if not site:
 
 
 #Creacion admin inicial del sistema si no existe
-user = db.session.query(User).filter_by(email='admin').first()
+user = db.session.query(User).filter(or_(User.username == 'admin', User.email == 'admin')).first()
 if not user:
     user = User(
         email='admin', 
@@ -35,7 +35,7 @@ if not user:
     db.session.commit()
     
 #Creacion operator para probar permisos  
-user_operator = db.session.query(User).filter_by(email='operator').first()
+user_operator = db.session.query(User).filter(or_(User.username == 'operator', User.email == 'operator')).first()
 if not user_operator:
     user_operator = User(
         email = 'operator', 

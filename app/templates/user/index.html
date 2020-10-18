@@ -19,6 +19,32 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="blockModal" tabindex="-1" role="dialog" aria-labelledby="blockModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header" style="text-align:center;">
+                  <h4 class="modal-title" style="color:red;" id="blockModalLabel">Esta seguro que desea bloquearlo? </h4>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <button type="button" onclick="block()" class="btn btn-primary">Bloquear</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="modal fade" id="activateModal" tabindex="-1" role="dialog" aria-labelledby="activateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align:center;">
+                <h4 class="modal-title" style="color:red;" id="activateModalLabel">Esta seguro que desea activarlo? </h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" onclick="activate()" class="btn btn-primary">Activar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <div class="row">
@@ -75,26 +101,22 @@
                           <!-- 
                             BOTON PARA BLOQUEAR
                           -->
-                          <form action="{{ url_for('user_block') }}" method="POST">
                             <input type="hidden" id="bloquear" name="bloquear" hidden value="{{user.id}}"> 
-                            <button class="btn btn-warning btn-sm">
+                            <button data-id={{user.id}} class="btn btn-warning btn-sm" onclick="ConfirmBlock(this)">
                               <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M11.5 8h-7a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1zm-7-1a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-7zm0-3a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
                               </svg>
                             </button>
-                          </form>
                         {% else  %}
                           <!-- 
                             BOTON PARA ACTIVAR
                           -->
-                          <form action="{{ url_for('user_activ') }}" method="POST">
                             <input type="hidden" id="activar" name="activar" hidden value="{{user.id}}"> 
-                            <button class="btn btn-success btn-sm">
+                            <button data-id={{user.id}} class="btn btn-success btn-sm" onclick="ConfirmActivate(this)">
                               <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-unlock" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M9.655 8H2.333c-.264 0-.398.068-.471.121a.73.73 0 0 0-.224.296 1.626 1.626 0 0 0-.138.59V14c0 .342.076.531.14.635.064.106.151.18.256.237a1.122 1.122 0 0 0 .436.127l.013.001h7.322c.264 0 .398-.068.471-.121a.73.73 0 0 0 .224-.296 1.627 1.627 0 0 0 .138-.59V9c0-.342-.076-.531-.14-.635a.658.658 0 0 0-.255-.237A1.122 1.122 0 0 0 9.655 8zm.012-1H2.333C.5 7 .5 9 .5 9v5c0 2 1.833 2 1.833 2h7.334c1.833 0 1.833-2 1.833-2V9c0-2-1.833-2-1.833-2zM8.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
                               </svg>
                             </button>
-                          </form> 
                         {% endif %}
                         {% if tienePermiso %}
                         <!-- BOTON MODAL -->
@@ -144,9 +166,75 @@
   <div class="col-2"></div>
 </div>
 <script>
+  function ConfirmActivate(elem) {
+    localStorage.setItem('activateId', $(elem).attr('data-id'));
+    $('#activateModal').modal();
+}
+</script>
+<script>
+  function ConfirmBlock(elem) {
+    localStorage.setItem('blockId', $(elem).attr('data-id'));
+    $('#blockModal').modal();
+}
+</script>
+<script>
   function ConfirmDelete(elem) {
     localStorage.setItem('deleteId', $(elem).attr('data-id'));
     $('#deleteModal').modal();
+}
+</script>
+<script>
+  function activate() {
+    $.ajax({
+        url:"{{ url_for('user_activ') }}" ,
+        data: {
+            id: localStorage.getItem('activateId')
+        },
+        type:'POST',
+        success: function(res) {
+          console.log(res)
+            var result = JSON.parse(res)
+            if (result.status == 'OK') {
+               alert("usuario activado correctamente")
+               setTimeout(window.location.reload.bind(window.location), 250);
+               $('#activateModal').modal('hide');
+               
+            } else {
+                alert(result.status)
+                $('#activateModal').modal('hide');
+            }
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+</script>
+<script>
+  function block() {
+    $.ajax({
+        url:"{{ url_for('user_block') }}" ,
+        data: {
+            id: localStorage.getItem('blockId')
+        },
+        type:'POST',
+        success: function(res) {
+          console.log(res)
+            var result = JSON.parse(res)
+            if (result.status == 'OK') {
+               alert("usuario bloqueado correctamente")
+               setTimeout(window.location.reload.bind(window.location), 250);
+               $('#blockModal').modal('hide');
+               
+            } else {
+                alert(result.status)
+                $('#blockModal').modal('hide');
+            }
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
 }
 </script>
 <script>
