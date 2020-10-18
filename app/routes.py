@@ -17,12 +17,14 @@ app.add_url_rule("/autenticacion", "auth_authenticate", auth.authenticate, metho
 
 # Rutas de Usuarios
 app.add_url_rule("/usuarios", "user_index", user.index)
+app.add_url_rule("/usuarios/<int:pages>","user_index", user.index, methods=['GET'])
 app.add_url_rule("/usuarios/block", "user_block", user.block,methods=["POST"])
 app.add_url_rule("/usuarios/trash", "user_trash", user.trash,methods=["POST"])
 app.add_url_rule("/usuarios/editar", "user_edit", user.edit,methods=["POST"])
 app.add_url_rule("/usuarios/active", "user_activ", user.activate,methods=["POST"])
 app.add_url_rule("/usuarios/edicion", "user_confirmEdit", user.confirmEdit,methods=["POST"])
 app.add_url_rule("/usuarios/busqueda", "user_search", user.search,methods=["POST"])
+#app.add_url_rule("/usuarios/busqueda/?search=&active=1&submit=Buscar/<int:pages>", "user_search", user.search,methods=["GET"])
 app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
 app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
 
