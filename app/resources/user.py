@@ -4,7 +4,7 @@ Manejador del user
 
 from flask import redirect, render_template, request
 from flask import url_for, session, abort, flash
-from app.models.user import User
+from app.models.user import User,Rol
 from app.helpers.auth import authenticated
 from sqlalchemy.orm import sessionmaker
 from app import db
@@ -86,10 +86,10 @@ def block():
         flash("No posee los permisos necesarios para modificar usuarios")
         return redirect(url_for("user_index"))
     if User.block(request.form):
-        flash("Bloqueado correctamente")
+        return json.dumps({'status':'OK'})
     else:
-        flash("No puedes bloquear a un administrador")
-    return index()
+        return json.dumps({'status':'No puedes bloquear a un administrador'})
+
 
 
 @login_required
@@ -98,8 +98,7 @@ def activate():
         flash("No posee los permisos necesarios para modificar usuarios")
         return redirect(url_for("user_index"))
     if User.activate(request.form):
-        flash("Activado correctamente")
-    return index()
+        return json.dumps({'status':'OK'})
 
 
 @login_required
@@ -125,14 +124,17 @@ def edit():
     form.email.data = usuario.email
     form.password.data = usuario.password
     form.idUser.data = usuario.id
+    form.image_name= usuario.image_name
+    roles = Rol.getRoles()
+    rolesUser = usuario.roles
     #userDetails = User.getUserById(request.form.get('idUser'))
-    return render_template("user/editar.html",form = form)
+    return render_template("user/editar.html",form = form,roles = roles, rolesUser = rolesUser)
 
 def confirmEdit():
     if not check_permission('user_update'):
         flash("No posee los permisos necesarios para modificar usuarios")
         return redirect(url_for("user_index"))
-    resu = User.updateUser(request.form) 
+    resu = User.updateUser(request.form,request.files['image']) 
     if resu == 1:
         flash("editado correctamente")
     else:
@@ -146,9 +148,13 @@ def confirmEdit():
     form.last_name.data= usuario.last_name
     form.first_name.data = usuario.first_name
     form.email.data = usuario.email
-    form.password.data = usuario.password 
+    form.password.data = usuario.password
     form.idUser.data = usuario.id
-    return render_template("user/editar.html", form = form)
+    form.image_name= usuario.image_name
+    roles = Rol.getRoles()
+    rolesUser = usuario.roles
+    #userDetails = User.getUserById(request.form.get('idUser'))
+    return render_template("user/editar.html",form = form,roles = roles, rolesUser = rolesUser)
 
 
    

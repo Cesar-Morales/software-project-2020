@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-2"></div>
     <div class="col-sm-12 col-12 col-md-8 col-lg-12 p-4 rounded" style="background: #cccccc">
-      <h1 style="text-align: center">Crear un usuario</h1>
+      <h1 style="text-align: center">Editar un usuario</h1>
       <hr>
       <form form action="{{ url_for('user_confirmEdit') }}" method="POST" enctype="multipart/form-data">
         {{ form.csrf_token }}
@@ -49,9 +49,26 @@
             {% endfor %}
           </div>
           <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
-              <b>Imagen</b>
-              <input class="col-12" type="file" name="image"/>
+            {% if form.image_name %}  
+            <img width="150px" height="150px" class="mr-3" src="{{url_for('static', filename='uploads/' + form.image_name)}}" alt="Imagen usuario">                          
+            {% else %}  
+            <img width="150px" height="150px" src="{{url_for('static', filename='logos/noImage.png')}}" class="mr-3" alt="noImage">
+            {% endif %}  
+            <b>Imagen</b>
+              <input name="image_name" hidden value="{{form.image_name}}">
+              <input   class="col-12" type="file" accept="image/*" name="image"/>
           </div>
+        
+              {% for rol in roles %} 
+                {% if  rol in rolesUser  %}
+                  <input checked type="checkbox" id="{{rol.name}}" name="{{rol.name}}" value="{{rol.name}}">
+                  <label for="{{rol.name}}"> Rol de {{rol.name}}</label><br>
+                {% else %}
+                  <input  type="checkbox" id="{{rol.name}}" name="{{rol.name}}" value="{{rol.name}}">
+                  <label for="{{rol.name}}"> Rol de {{rol.name}}</label><br>
+                {% endif %}
+              {% endfor %}  
+           
           <div class="mt-5 col-12 mb-3 col-sm-12 col-md-12 col-lg-12">
             <div class="row ml-3">
               {{ form.submit(class="btn col-3 btn-success btn-sm") }}

@@ -89,7 +89,7 @@ class User(db.Model, UserMixin):
          return users
 
     def block(requestForm):
-        idUser = requestForm.get("bloquear")
+        idUser = requestForm['id']
         user = db.session.query(User).filter(User.id == idUser).first()
         #Reviso si el usuario a bloquear es un administrador. Si es, devuelvo false para que no puedan bloquearlo, si no, lo bloqueo.
         for rol in user.roles:
@@ -100,7 +100,7 @@ class User(db.Model, UserMixin):
         return True
 
     def activate(requestForm):
-        idd = requestForm.get("activar")
+        idd = requestForm['id']
         user = db.session.query(User).filter(User.id == idd).first()
         user.active = 1
         db.session.commit()
@@ -122,14 +122,16 @@ class User(db.Model, UserMixin):
         user = db.session.query(User).filter(User.id == idUser).first()
         return  user
 
-    def updateUser(requestform):
+    def updateUser(requestform,file):
          form = UserForm()
          form.username = requestform.get("username")
          form.email = requestform.get("email")
          form.last_name = requestform.get("last_name")
          form.first_name = requestform.get("first_name")
          form.password = requestform.get("password")
+         form.image_name = requestform.get("image_name")
          idUser = requestform.get("idUser")
+         roles = Rol.getRoles()
          if form.validate():
             user = db.session.query(User).filter(User.id  == idUser).first()
             #verifico que el email haya cambiado, si cambio verifico el nombre de usuario, si cambio, hago todo el update
@@ -146,6 +148,20 @@ class User(db.Model, UserMixin):
                         return 0  
                     else: 
                         user.username = form.username
+            for rol in roles:
+                if requestform.get(rol.name):
+                    user.roles.append(rol)
+                else:
+                    if rol in user.roles:
+                        user.roles.remove(rol)  
+                #Guardar la imagen
+            if file.filename == '':
+                image_name = ''
+            else:
+                image_name = secure_filename(file.filename)
+                image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], image_name)
+                file.save(image_path)
+                user.image_name=image_name                    
             user.first_name = form.first_name
             user.last_name = form.last_name
             user.password = form.password

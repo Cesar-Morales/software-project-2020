@@ -9,3 +9,6 @@ class Rol(db.Model):
 
     users = db.relationship('User', secondary=usuario_tiene_rol, back_populates='roles')
     permisos = db.relationship('Permiso', secondary=rol_tiene_permiso, back_populates='roles')
+
+    def getRoles():
+        return db.session.query(Rol).all()
