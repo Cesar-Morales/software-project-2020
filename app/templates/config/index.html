@@ -40,15 +40,16 @@
                         <span style="color: red;">{{ error }}</span>
                         {% endfor %}
                     </div>
-                    <div class="mb-2 col-12">
+                    <div class="mb-2 mt-0 col-12">
                         <b><p style="text-align: center">{{ form.active.label }}</p></b>
                         <div style="margin-left: -20px ;display: flex; justify-content: center;">{{ form.active }}</div><br>
                         {% for error in form.active.errors %}
                         <span style="color: red;">{{ error }}</span>
                         {% endfor %}
+                        <hr>
                     </div>
                     <div class="mb-2 col-12" style="display: flex; justify-content: center;">
-                        {{ form.submit() }}
+                        {{ form.submit(class="btn col-3 btn-warning btn-sm") }}
                     </div>
                 </div>
             </form>
