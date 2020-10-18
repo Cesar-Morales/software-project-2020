@@ -48,11 +48,15 @@ def search():
 def create():
     if not authenticated(session):
         abort(401)
-    if User.create(request.form, request.files['image']):
-        flash("Usuario creado correctamente")
-    else:
-        flash("Usuario o email en uso.")
-    return redirect(url_for("user_index"))
+    form = UserForm()
+    if form.validate():
+        if User.create(form, request.files['image']):
+            flash("Usuario creado correctamente")
+        else:
+            flash("Usuario o email en uso.")
+        return redirect(url_for("user_index"))
+    return render_template("user/new.html", form=form)
+
   
 
 

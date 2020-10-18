@@ -38,36 +38,34 @@ class User(db.Model, UserMixin):
     roles = db.relationship('Rol', secondary=usuario_tiene_rol, back_populates='users')
 
     def create(requestform, file):
-         form = UserForm()
-         form.username = requestform.get("username")
-         form.email = requestform.get("email")
-         form.last_name = requestform.get("last_name")
-         form.first_name = requestform.get("first_name")
-         form.password = requestform.get("password")
-         if form.validate():
-            #Guardar la imagen
-            if file.filename == '':
-                image_name = ''
-            else:
-                image_name = secure_filename(file.filename)
-                image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], image_name)
-                file.save(image_path)
-            #Verificamos si el nombre de usuario o email ya estan en uso
-            user = db.session.query(User).filter(or_(User.username == form.username, User.email == form.email)).first()
-            if  user:
-                return False
-            else:
-                nuevo = User(
-                        email=form.email, last_name=form.last_name, first_name=form.first_name,
-                        password=form.password, username=form.username,
-                        image_name=image_name)
-                roles = db.session.query(Rol).filter_by(name="user").first()
-                nuevo.roles.append(roles)
-                db.session.add(nuevo)
-                db.session.commit()
-                return True
-         else:
-             return "Debe completar todos los campos"       
+        username = requestform.username.data
+        email = requestform.email.data
+        last_name = requestform.last_name.data
+        first_name = requestform.first_name.data
+        password = requestform.password.data
+         
+        #Guardar la imagen
+        if file.filename == '':
+            image_name = ''
+        else:
+            image_name = secure_filename(file.filename)
+            image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], image_name)
+            file.save(image_path)
+        #Verificamos si el nombre de usuario o email ya estan en uso
+        user = db.session.query(User).filter(or_(User.username == username, User.email == email)).first()
+        if  user:
+            return False
+        else:
+            nuevo = User(
+                    email=email, last_name=last_name, first_name=first_name,
+                    password=password, username=username,
+                    image_name=image_name)
+            roles = db.session.query(Rol).filter_by(name="user").first()
+            nuevo.roles.append(roles)
+            db.session.add(nuevo)
+            db.session.commit()
+            return True
+  
 
 
     def getAll():
