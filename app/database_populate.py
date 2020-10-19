@@ -26,7 +26,7 @@ if not site:
 user = db.session.query(User).filter(or_(User.username == 'admin', User.email == 'admin')).first()
 if not user:
     user = User(
-        email='admin', 
+        email='admin@admin.com', 
         last_name='Marcos', 
         first_name='Carlos', 
         password='123123', 
@@ -38,7 +38,7 @@ if not user:
 user_operator = db.session.query(User).filter(or_(User.username == 'operator', User.email == 'operator')).first()
 if not user_operator:
     user_operator = User(
-        email = 'operator', 
+        email = 'operator@operator.com', 
         last_name = 'Maria', 
         first_name = 'Marta', 
         password = '123123', 
