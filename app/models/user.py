@@ -87,16 +87,16 @@ class User(db.Model, UserMixin):
     
 
     def search(requestform):
-            """Funcion de busqueda de usuarios: se obtiene el string en el campo search, y si se busca por activo o bloqueado en el campo active:
-            si no esta seteado el username, solo se busca segun criterio de activado/desactivado. Caso contrario, se busca tanto por string como por estado"""
-         usernam = requestform.get("search")
-         actdeact = requestform.get("active")
-         #Si no ingresan string a buscar, traigo todos los usuarios, verificando si mandaron activos o bloqueados.
-         if not usernam:
-             users = db.session.query(User).filter(User.active == actdeact, User.id!=session["idUserLogged"])
-         else: 
-             users = db.session.query(User).filter(User.username.like('%'+usernam+'%'), User.active == actdeact, User.id!=session["idUserLogged"])
-         return users
+        """Funcion de busqueda de usuarios: se obtiene el string en el campo search, y si se busca por activo o bloqueado en el campo active:
+        si no esta seteado el username, solo se busca segun criterio de activado/desactivado. Caso contrario, se busca tanto por string como por estado"""
+        usernam = requestform.get("search")
+        actdeact = requestform.get("active")
+        #Si no ingresan string a buscar, traigo todos los usuarios, verificando si mandaron activos o bloqueados.
+        if not usernam:
+            users = db.session.query(User).filter(User.active == actdeact, User.id!=session["idUserLogged"])
+        else: 
+            users = db.session.query(User).filter(User.username.like('%'+usernam+'%'), User.active == actdeact, User.id!=session["idUserLogged"])
+        return users
 
     def block(requestForm):
         """Metodo que recibe un id de usuario a bloquear a traves de un formulario."""
