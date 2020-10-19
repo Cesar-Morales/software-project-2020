@@ -15,7 +15,6 @@ import json
 from app.helpers.forms import UserForm
 from app.validators.user_validators import check_permission
 from app.models.site import Site
-from flask_paginate import Pagination
 import math
 
 
@@ -31,10 +30,10 @@ def index(pages=1):
         return redirect(url_for("home"))
     permiso = check_permission('user_show')
     per_page = Site.page()
+    total=User.getAll().count()
     users = User.getAll().paginate(pages,per_page,False)
-    pagination = Pagination(page=pages,per_page=per_page,total=User.getAll().count())
-    total_pages=int(math.ceil(pagination.total/pagination.per_page))
-    return render_template("user/index.html", users=users, total_pages=total_pages, pagination= pagination,tienePermiso=permiso)
+    total_pages=int(math.ceil(total/per_page))
+    return render_template("user/index.html", users=users, total_pages=total_pages,tienePermiso=permiso)
     
 
 
@@ -67,8 +66,8 @@ def search():
     active = request.form.get("active")
     pagesNumber=int(request.form.get("pageNumber"))
     users=User.search(request.form).paginate(pagesNumber,per_page,False)
-    pagination = Pagination(page=pagesNumber,per_page=per_page,total=User.search(request.form).count())
-    total_pages=int(math.ceil(pagination.total/pagination.per_page))
+    total=User.search(request.form).count()
+    total_pages=int(math.ceil(total/per_page))
     return render_template("user/index.html", active=active, search=search ,
                              pageNumber=pagesNumber, total_pages=total_pages,
                              users=users,tienePermiso=permiso)
