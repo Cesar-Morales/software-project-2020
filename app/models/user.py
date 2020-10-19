@@ -84,8 +84,6 @@ class User(db.Model, UserMixin):
         """Metodo que busca y retorna el usuario con email y password pasados como parametros"""
         return  db.session.query(User).filter_by(email=em,password=pas).first() 
 
-    
-
     def search(requestform):
         """
         Funcion de busqueda de usuarios: se obtiene el string en el campo search,
