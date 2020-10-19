@@ -87,8 +87,12 @@ class User(db.Model, UserMixin):
     
 
     def search(requestform):
-        """Funcion de busqueda de usuarios: se obtiene el string en el campo search, y si se busca por activo o bloqueado en el campo active:
-        si no esta seteado el username, solo se busca segun criterio de activado/desactivado. Caso contrario, se busca tanto por string como por estado"""
+        """
+        Funcion de busqueda de usuarios: se obtiene el string en el campo search,
+        y si se busca por activo o bloqueado en el campo active:
+        si no esta seteado el username, solo se busca segun criterio de activado/desactivado.
+        Caso contrario, se busca tanto por string como por estado
+        """
         usernam = requestform.get("search")
         actdeact = requestform.get("active")
         #Si no ingresan string a buscar, traigo todos los usuarios, verificando si mandaron activos o bloqueados.
