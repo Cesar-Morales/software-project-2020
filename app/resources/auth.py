@@ -17,7 +17,8 @@ def login():
 
 
 def authenticate():
-
+    """Controlador que se encarga de autenticar al usuario que intenta loguearse. Si pasa la autenticacion, se procede a guardar los datos
+    del usuario en la sesion asi como tambien los roles que posee."""
     params = request.form
     user = User.getUserByEmailAndPassword(params["email"],params["password"])
     #Agregado condicion para que si el usuario que intenta acceder esta bloqueado, no pueda.
@@ -62,6 +63,8 @@ def authenticate():
         return redirect(url_for("auth_login"))
 
 def logout():
+    """Controlador que se encarga de cerrar la sesion del usuario actual logueado. Verifica que se este autenticado; si pasa, se procede a eliminar 
+    los datos de la session"""
     if not authenticated(session):
         flash("Acceso prohibido")
         return redirect(url_for("home"))

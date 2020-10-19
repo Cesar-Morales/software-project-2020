@@ -12,9 +12,11 @@ class Site(db.Model):
     active = db.Column(db.Boolean, default=True)
     
     def obtain_site():
+        """Metodo que devuelve objeto de configuracion del sitio"""
         return db.session.query(Site).first()
         
     def update_data(title, description, email, pages, active):
+        """Funcion que actualiza los datos del sitio, segun parametros."""
         site = db.session.query(Site).first()
         site.title = title
         site.description = description

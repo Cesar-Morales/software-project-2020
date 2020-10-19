@@ -37,14 +37,19 @@ class User(db.Model, UserMixin):
     image_name = db.Column(db.String(300), default='')
     roles = db.relationship('Rol', secondary=usuario_tiene_rol, back_populates='users')
 
+
     def create(requestform, file):
+        """Modulo para creacion de usuarios: se reciben los parametros que son ingresados en 
+        el formulario de creacion, se verifica que la imagen no sea vacia, luego verificamos
+        que el nombre de usuario y/o email enviados no estan ya en uso; de ser asi, se procede a
+        la creacion y almacenamiento del nuevo usuario en la base de datos """
         username = requestform.username.data
         email = requestform.email.data
         last_name = requestform.last_name.data
         first_name = requestform.first_name.data
         password = requestform.password.data
          
-        #Guardar la imagen
+        #Guardamos la imagen#
         if file.filename == '':
             image_name = ''
         else:
@@ -54,8 +59,12 @@ class User(db.Model, UserMixin):
         #Verificamos si el nombre de usuario o email ya estan en uso
         user = db.session.query(User).filter(or_(User.username == username, User.email == email)).first()
         if  user:
+            #En este punto se devuelve automaticamente que el usuario no puede crearse ya que el email o nombre
+            #de usuario se encuentran en uso
             return False
         else:
+            #En este punto, el usuario con nombre de usuario y email enviados, se procede a crear
+            #ya que esta disponible
             nuevo = User(
                     email=email, last_name=last_name, first_name=first_name,
                     password=password, username=username,
@@ -67,18 +76,19 @@ class User(db.Model, UserMixin):
             return True
   
 
-
     def getAll():
+        """Metodo que devuelve todos los usuarios creados en la base de datos: sin filtros"""
         return db.session.query(User).all()
 
     def getUserByEmailAndPassword(em,pas):
+        """Metodo que busca y retorna el usuario con email y password pasados como parametros"""
         return  db.session.query(User).filter_by(email=em,password=pas).first() 
 
     
-    #Funcion de busqueda de usuarios
-    #inicialmente busco por nombre de usuario que es unico, luego voy a buscar por activo o bloqueado, que trae mas resultados
-    #pero esto una vez que este lista la tabla de usuarios con los campos necesarios
+
     def search(requestform):
+            """Funcion de busqueda de usuarios: se obtiene el string en el campo search, y si se busca por activo o bloqueado en el campo active:
+            si no esta seteado el username, solo se busca segun criterio de activado/desactivado. Caso contrario, se busca tanto por string como por estado"""
          usernam = requestform.get("search")
          actdeact = requestform.get("active")
          #Si no ingresan string a buscar, traigo todos los usuarios, verificando si mandaron activos o bloqueados.
@@ -89,6 +99,7 @@ class User(db.Model, UserMixin):
          return users
 
     def block(requestForm):
+        """Metodo que recibe un id de usuario a bloquear a traves de un formulario."""
         idUser = requestForm['id']
         user = db.session.query(User).filter(User.id == idUser).first()
         #Reviso si el usuario a bloquear es un administrador. Si es, devuelvo false para que no puedan bloquearlo, si no, lo bloqueo.
@@ -100,6 +111,7 @@ class User(db.Model, UserMixin):
         return True
 
     def activate(requestForm):
+        """Metodo que recibe un id de usuario a activar a traves de un formulario. Se busca, y se activa"""
         idd = requestForm['id']
         user = db.session.query(User).filter(User.id == idd).first()
         user.active = 1
@@ -107,9 +119,10 @@ class User(db.Model, UserMixin):
         return True
 
     def trash(requestForm):
+        """Metodo que recibe un id de usuario a borrar a traves de un formulario."""
         idUser = requestForm['id']
         user = db.session.query(User).filter(User.id == idUser).first()
-        #Reviso si el usuario a borrar es un administrador. Si es, devuelvo false para que no puedan bloquearlo, si no, lo bloqueo.
+        #Reviso si el usuario a borrar es un administrador. Si es, devuelvo false para que no puedan borrarlo, si no, lo bloqueo.
         for rol in user.roles:
            if (rol.name == "admin"):
                return False
@@ -118,11 +131,13 @@ class User(db.Model, UserMixin):
         return True
     
     def getUserById(requestForm):
+        """Este metodo devuelve el usuario con id a buscar pasado como parametro. No confirmamos si existe o no, porque lo manejamos desde el llamado. Por ende, busco y devuelvo"""
         idUser = requestForm
         user = db.session.query(User).filter(User.id == idUser).first()
         return  user
 
     def updateUser(requestform,file):
+        """Metodo para actualizar usuario. Se recibe formulario e imagen """
          form = UserForm()
          form.username = requestform.get("username")
          form.email = requestform.get("email")

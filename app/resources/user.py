@@ -20,6 +20,8 @@ from app.validators.user_validators import check_permission
 # Protected resources
 @login_required
 def index():
+    """Funcion que muestra el listado de usuarios. Verifica si el usuario esta autenticado, si esta, verifica los permisos, si no tiene, lo devuelve al home, si los tiene
+    lo dejo ver el listado. Si no esta autenticado, le mostramos que no tiene autorizacion """
     if not current_user.is_authenticated:
         abort(401)
     if not check_permission('user_index'):
@@ -33,6 +35,8 @@ def index():
 
 @login_required
 def new():
+    """Controlador que renderiza el template para creacion de usuario. Se verifica que se este autenticado y que se tengan los permisos. Si
+    alguna verificacion no pasa, se redirecciona segun corresponda"""
     if not authenticated(session):
         abort(401)
     if not check_permission('user_new'):
@@ -45,6 +49,8 @@ def new():
 
 @login_required
 def search():
+    """Controlador que lista usuarios segun criterios de busca. Se verifica que se este autenticado y que se tengan los permisos. Si
+    alguna verificacion no pasa, se redirecciona segun corresponda"""
     if not authenticated(session):
         abort(401)
     if not check_permission('user_index'):
@@ -57,6 +63,8 @@ def search():
 
 @login_required
 def create():
+    """Controlador que realiza el intento de creacion de usuario Se verifica que se este autenticado y que se tengan los permisos. Si
+    alguna verificacion no pasa, se redirecciona segun corresponda"""
     if not authenticated(session):
         abort(401)
     if not check_permission('user_new'):
@@ -76,6 +84,8 @@ def create():
 
 @login_required
 def block():
+    """Controlador que realiza el intento de bloqueo de usuario. Se verifica que se este autenticado y que se tengan los permisos. Si
+    alguna verificacion no pasa, se redirecciona segun corresponda. Si pasa las verificaciones, informa estado de operacion segun corresponda"""
     if not check_permission('user_update'):
         flash("No posee los permisos necesarios para modificar usuarios")
         return redirect(url_for("user_index"))
@@ -88,6 +98,8 @@ def block():
 
 @login_required
 def activate():
+     """Controlador que realiza el intento de activacion de usuario. Se verifica que se este autenticado y que se tengan los permisos. Si
+    alguna verificacion no pasa, se redirecciona segun corresponda. Si pasa las verificaciones, informa estado de operacion segun corresponda"""
     if not check_permission('user_update'):
         flash("No posee los permisos necesarios para modificar usuarios")
         return redirect(url_for("user_index"))
@@ -97,6 +109,8 @@ def activate():
 
 @login_required
 def trash():
+     """Controlador que realiza el intento de borrado de usuario. Se verifica que se este autenticado y que se tengan los permisos. Si
+    alguna verificacion no pasa, se redirecciona segun corresponda. Si pasa las verificaciones, informa estado de operacion segun corresponda"""
     if not check_permission('user_destroy'):
         flash("No posee los permisos necesarios para eliminar usuarios")
         return redirect(url_for("user_index"))
@@ -107,6 +121,9 @@ def trash():
 
 @login_required
 def edit():
+    """Controlador que se encarga de renderizar el template correspondiente a la edicion del usuario seleccionado. Se obtienen a partir del model, los datos en cuestion
+    se muestra el formulario, y las opciones para editar los mismos. Se verifica que se este autenticado y que se tengan los permisos. Si
+    alguna verificacion no pasa, se redirecciona segun corresponda. Si pasa las verificaciones, informa estado de operacion segun corresponda """
     if not check_permission('user_update'):
         flash("No posee los permisos necesarios para modificar usuarios")
         return redirect(url_for("user_index"))
@@ -125,6 +142,8 @@ def edit():
     return render_template("user/editar.html",form = form,roles = roles, rolesUser = rolesUser)
 
 def confirmEdit():
+    """Controlador que recibe los datos del template de editar usuario e intenta hacer el update correspondiente. Se verifica que se este autenticado y que se tengan los permisos. Si
+    alguna verificacion no pasa, se redirecciona segun corresponda. Si pasa las verificaciones, informa estado de operacion segun corresponda"""
     if not check_permission('user_update'):
         flash("No posee los permisos necesarios para modificar usuarios")
         return redirect(url_for("user_index"))

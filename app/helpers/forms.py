@@ -5,6 +5,8 @@ from wtforms.fields.html5 import EmailField, IntegerField, SearchField
 from wtforms.widgets.html5 import NumberInput
 
 class ConfigForm(FlaskForm):
+    """Clase que se encarga de generar formulario para edicion y configuracion del sitio para luego realizar validaciones correspondientes, tanto del lado
+    del servidor como del cliente."""
     title = StringField(
             'Titulo',
             validators=[DataRequired('Debe insertar un Titulo')])
@@ -27,6 +29,8 @@ class ConfigForm(FlaskForm):
 
 
 class SearchForm(FlaskForm):
+    """Clase que se encarga de generar formulario para busqueda de usuarios para luego realizar validaciones correspondientes, tanto del lado
+    del servidor como del cliente."""
     search = SearchField(
              'search',
              render_kw={"placeholder": "Ingrese nombre de usuario a buscar"})
@@ -35,6 +39,8 @@ class SearchForm(FlaskForm):
     submit = SubmitField('Buscar')
 
 class UserForm(FlaskForm):
+    """Clase que se encarga de generar formulario para edicion y creacion de usuarios para luego realizar validaciones correspondientes, tanto del lado
+    del servidor como del cliente."""
         email = EmailField(
             'Email',
             validators=[DataRequired('Debe Insertar un email')])
