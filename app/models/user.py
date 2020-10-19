@@ -138,16 +138,16 @@ class User(db.Model, UserMixin):
 
     def updateUser(requestform,file):
         """Metodo para actualizar usuario. Se recibe formulario e imagen """
-         form = UserForm()
-         form.username = requestform.get("username")
-         form.email = requestform.get("email")
-         form.last_name = requestform.get("last_name")
-         form.first_name = requestform.get("first_name")
-         form.password = requestform.get("password")
-         form.image_name = requestform.get("image_name")
-         idUser = requestform.get("idUser")
-         roles = Rol.getRoles()
-         if form.validate():
+        form = UserForm()
+        form.username = requestform.get("username")
+        form.email = requestform.get("email")
+        form.last_name = requestform.get("last_name")
+        form.first_name = requestform.get("first_name")
+        form.password = requestform.get("password")
+        form.image_name = requestform.get("image_name")
+        idUser = requestform.get("idUser")
+        roles = Rol.getRoles()
+        if form.validate():
             user = db.session.query(User).filter(User.id  == idUser).first()
             #verifico que el email haya cambiado, si cambio verifico el nombre de usuario, si cambio, hago todo el update
             if ((form.email != user.email)or(form.username != user.username)):
@@ -182,5 +182,5 @@ class User(db.Model, UserMixin):
             user.password = form.password
             db.session.commit()
             return 1
-         else:   
+        else:   
             return 2 

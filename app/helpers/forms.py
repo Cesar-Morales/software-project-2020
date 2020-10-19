@@ -41,24 +41,24 @@ class SearchForm(FlaskForm):
 class UserForm(FlaskForm):
     """Clase que se encarga de generar formulario para edicion y creacion de usuarios para luego realizar validaciones correspondientes, tanto del lado
     del servidor como del cliente."""
-        email = EmailField(
+    email = EmailField(
             'Email',
             validators=[DataRequired('Debe Insertar un email')])
-        first_name = StringField(
+    first_name = StringField(
             'Nombre',
             validators=[DataRequired('Debe insertar un nombre')])
-        last_name = StringField(
+    last_name = StringField(
             'Apellido',
             validators=[DataRequired('Debe insertar un apellido')])
-        username = StringField(
+    username = StringField(
             'Nombre de Usuario',
             validators=[DataRequired('Debe insertar un nombre de usuario')])
-        submit = SubmitField('Enviar')    
-        password = StringField(
+    submit = SubmitField('Enviar')    
+    password = StringField(
             'Contraseña',
             validators=[DataRequired('Debe insertar una contraseña')])
-        idUser = HiddenField('idUser')    
-        image_name = StringField('NombreImagen')
+    idUser = HiddenField('idUser')    
+    image_name = StringField('NombreImagen')
 
 
                       

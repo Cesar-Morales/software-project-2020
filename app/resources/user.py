@@ -104,7 +104,7 @@ def block():
 
 @login_required
 def activate():
-     """Controlador que realiza el intento de activacion de usuario. Se verifica que se este autenticado y que se tengan los permisos. Si
+    """Controlador que realiza el intento de activacion de usuario. Se verifica que se este autenticado y que se tengan los permisos. Si
     alguna verificacion no pasa, se redirecciona segun corresponda. Si pasa las verificaciones, informa estado de operacion segun corresponda"""
     if not check_permission('user_update'):
         flash("No posee los permisos necesarios para modificar usuarios")
@@ -115,7 +115,7 @@ def activate():
 
 @login_required
 def trash():
-     """Controlador que realiza el intento de borrado de usuario. Se verifica que se este autenticado y que se tengan los permisos. Si
+    """Controlador que realiza el intento de borrado de usuario. Se verifica que se este autenticado y que se tengan los permisos. Si
     alguna verificacion no pasa, se redirecciona segun corresponda. Si pasa las verificaciones, informa estado de operacion segun corresponda"""
     if not check_permission('user_destroy'):
         flash("No posee los permisos necesarios para eliminar usuarios")
