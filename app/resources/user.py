@@ -14,12 +14,12 @@ from app.static.constantes import ITEMS_PERPAGE
 import json
 from app.helpers.forms import UserForm
 from app.validators.user_validators import check_permission
-
+from app.models.site import Site
 
 
 # Protected resources
 @login_required
-def index():
+def index(pages=1):
     """Funcion que muestra el listado de usuarios. Verifica si el usuario esta autenticado, si esta, verifica los permisos, si no tiene, lo devuelve al home, si los tiene
     lo dejo ver el listado. Si no esta autenticado, le mostramos que no tiene autorizacion """
     if not current_user.is_authenticated:
@@ -28,8 +28,9 @@ def index():
         flash("No posee los permisos necesarios para poder ver la lista de usuarios")
         return redirect(url_for("home"))
     permiso = check_permission('user_show')
-    users = User.getAll()
-    return render_template("user/index.html", users=users,sessionIdUser = session["idUserLogged"],tienePermiso=permiso, porPagina=ITEMS_PERPAGE )
+    per_page = Site.page()
+    users = User.getAll().paginate(pages,per_page,False)
+    return render_template("user/index.html", users=users,tienePermiso=permiso)
     
 
 
@@ -57,8 +58,13 @@ def search():
         flash("No posee los permisos necesarios para poder ver la lista de usuarios")
         return redirect(url_for("home"))    
     permiso = check_permission('user_show')
-    return render_template("user/index.html", users=User.search(request.form),
-                           porPagina=ITEMS_PERPAGE,tienePermiso=permiso,sessionIdUser = session["idUserLogged"])
+    per_page = Site.page()
+    search = request.form.get("search")
+    active = request.form.get("active")
+    users=User.search(request.form).paginate(int(request.form.get("pageNumber")),per_page,False)
+    return render_template("user/index.html", active=active, search=search ,
+                             pageNumber=int(request.form.get("pageNumber")), 
+                             users=users,tienePermiso=permiso)
 
 
 @login_required
