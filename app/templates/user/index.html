@@ -165,28 +165,28 @@
   
   <div class="col-2"></div>
 </div>
-{% if(pageNumber) %}
-  <p>entro number</p>
-{%else%}
-<p>f</p>
-{%endif%}
 
 <nav aria-label="Page navigation example">
     <ul class="pagination">
-      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item">
-        <form method="POST" action="{{url_for('user_search')}}">
-          <input name="pageNumber" hidden value="2">
-          <input name="search" hidden value="{{ search }}">
-          <input name="active" hidden value="1">
-          <button class="page-link" type="submit" >2</button>
-        </form> 
-      </li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      {% for i in range(total_pages)  %}
+        {% if(pageNumber) %}
+            <li class="page-item">
+              <form method="POST" action="{{url_for('user_search')}}">
+                <input name="pageNumber" hidden value="{{ i+1 }}">
+                <input name="search" hidden value="{{ search }}">
+                <input name="active" hidden value="{{ active}}">
+                <button class="page-link" type="submit" >{{ i+1 }}</button>
+              </form> 
+            </li>
+        {%else%}  
+          <li class="page-item"><a class="page-link" href="{{url_for('user_index')}}/{{ i+1 }}">{{ i+1 }}</a></li>
+        {%endif%}
+      {% endfor %}
     </ul>
 </nav>
+
+
+
 <script>
   function ConfirmActivate(elem) {
     localStorage.setItem('activateId', $(elem).attr('data-id'));
