@@ -49,3 +49,6 @@ from app import database_populate
 
 #Importar las rutas de la aplicacion
 from app import routes
+
+def create_app():
+    return app

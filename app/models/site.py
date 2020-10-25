@@ -11,10 +11,16 @@ class Site(db.Model):
     pages = db.Column(db.Integer, nullable=False, default=25)
     active = db.Column(db.Boolean, default=True)
     
+    def page():
+        sitio = db.session.query(Site).first()
+        return sitio.pages
+
     def obtain_site():
+        """Metodo que devuelve objeto de configuracion del sitio"""
         return db.session.query(Site).first()
         
     def update_data(title, description, email, pages, active):
+        """Funcion que actualiza los datos del sitio, segun parametros."""
         site = db.session.query(Site).first()
         site.title = title
         site.description = description

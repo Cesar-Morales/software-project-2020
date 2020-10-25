@@ -2,7 +2,7 @@ from app import db
 from app.models.rol_tiene_permiso import rol_tiene_permiso
 
 class Permiso(db.Model):
-
+    """Creacion de clase para modelar los permisos del sitio"""
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     name = db.Column(db.String(20), unique=True, nullable=False)
 
