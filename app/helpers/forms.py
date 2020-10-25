@@ -4,8 +4,9 @@ from wtforms.validators import DataRequired, NumberRange
 from wtforms.fields.html5 import EmailField, IntegerField, SearchField
 from wtforms.widgets.html5 import NumberInput
 
-
 class ConfigForm(FlaskForm):
+    """Clase que se encarga de generar formulario para edicion y configuracion del sitio para luego realizar validaciones correspondientes, tanto del lado
+    del servidor como del cliente."""
     title = StringField(
             'Titulo',
             validators=[DataRequired('Debe insertar un Titulo')])
@@ -28,6 +29,8 @@ class ConfigForm(FlaskForm):
 
 
 class SearchForm(FlaskForm):
+    """Clase que se encarga de generar formulario para busqueda de usuarios para luego realizar validaciones correspondientes, tanto del lado
+    del servidor como del cliente."""
     search = SearchField(
              'search',
              render_kw={"placeholder": "Ingrese nombre de usuario a buscar"})
@@ -36,23 +39,26 @@ class SearchForm(FlaskForm):
     submit = SubmitField('Buscar')
 
 class UserForm(FlaskForm):
-        email = EmailField(
+    """Clase que se encarga de generar formulario para edicion y creacion de usuarios para luego realizar validaciones correspondientes, tanto del lado
+    del servidor como del cliente."""
+    email = EmailField(
             'Email',
             validators=[DataRequired('Debe Insertar un email')])
-        first_name = StringField(
+    first_name = StringField(
             'Nombre',
             validators=[DataRequired('Debe insertar un nombre')])
-        last_name = StringField(
+    last_name = StringField(
             'Apellido',
             validators=[DataRequired('Debe insertar un apellido')])
-        username = StringField(
+    username = StringField(
             'Nombre de Usuario',
             validators=[DataRequired('Debe insertar un nombre de usuario')])
-        submit = SubmitField('Enviar')    
-        password = StringField(
+    submit = SubmitField('Enviar')    
+    password = StringField(
             'Contraseña',
             validators=[DataRequired('Debe insertar una contraseña')])
-        idUser = HiddenField('idUser')    
+    idUser = HiddenField('idUser')    
+    image_name = StringField('NombreImagen')
 
 
                       

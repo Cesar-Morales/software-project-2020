@@ -6,8 +6,7 @@ __pycache__/
 # C extensions
 *.so
 
-#Uploads de la aplicación
-/app/static/uploads/
+
 
 # Distribution / packaging
 .Python
@@ -114,4 +113,4 @@ flask_session
 coc-settings.json
 .vscode
 
-/app/static/uploads
+
