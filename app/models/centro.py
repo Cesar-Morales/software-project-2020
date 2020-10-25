@@ -15,7 +15,7 @@ class Centro(db.Model):
     name = db.Column(db.String(80), nullable=False)
     location = db.Column(db.String(80), nullable=False)
     phone_number = db.Column(db.String(50), nullable=False)
-    start_time = db.Column(db.String(80), nullable=False, deafult='09:00')
+    start_time = db.Column(db.String(80), nullable=False, default='09:00')
     final_time = db.Column(db.String(80), nullable=False, default='16:00')
     municipality = db.Column(db.String(80), nullable=False)
     web = db.Column(db.String(80), default='')
@@ -25,7 +25,7 @@ class Centro(db.Model):
     estado = db.Column(db.String(80), default='pendiente')
 
     
-    tipo = db.Column(db.Integer, 
+    tipoId = db.Column(db.Integer, 
                      db.ForeignKey('tipo.id'),
                      nullable=False)
     turnos = db.relationship('Turno', backref='centro', lazy=True)
