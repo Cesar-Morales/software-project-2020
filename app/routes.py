@@ -29,6 +29,7 @@ app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
 app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
 
 # Rutas de Configuracion
+app.add_url_rule("/config/centers","config_center_index",config.center_index)
 app.add_url_rule("/config", "config_index", config.index)
 app.add_url_rule("/config", "config_edit", config.edit, methods=["POST"])
 

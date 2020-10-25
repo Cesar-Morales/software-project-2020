@@ -44,3 +44,6 @@ def edit():
         Site.update_data(title,description,email,pages,active)
         return redirect(url_for('home'))
     return render_template("config/index.html", form=form)
+
+def center_index():
+    return render_template("config/centers.html")
