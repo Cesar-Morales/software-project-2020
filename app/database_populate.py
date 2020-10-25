@@ -8,6 +8,10 @@ from app.models.rol import Rol
 from app.models.site import Site
 from app.models.permiso import Permiso
 from sqlalchemy import or_
+from app.models.centro import Centro
+from app.models.tipo import Tipo
+from app.models.turno import Turno
+from app.models.reseva import Reserva
 db.create_all()
 # ----------- Creación de datos inciales para la apliación ----------- 
 

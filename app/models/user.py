@@ -15,7 +15,6 @@ from flask import current_app
 from flask_login import UserMixin
 from werkzeug.utils import secure_filename
 from app.models.rol import Rol
-from flask_sqlalchemy import SQLAlchemy
 import json
 import os
 from app.helpers.forms import UserForm
@@ -27,11 +26,11 @@ def load_user(user_id):
 class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    username = db.Column(db.String(20), unique=True, nullable=False)
-    email = db.Column(db.String(20), unique=True, nullable=False)
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    email = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
-    first_name = db.Column(db.String(20), nullable=False)
-    last_name = db.Column(db.String(20), nullable=False)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
     active = db.Column(db.Boolean, default=True)
     deleted = db.Column(db.Boolean, default=False)
     image_name = db.Column(db.String(300), default='')
