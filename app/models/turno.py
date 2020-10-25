@@ -3,7 +3,7 @@ Turnos creados por operator para que luego en la app publica seleccionen
 """
 from app import db
 
-class Centro(db.Model):
+class Turno(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, 
                    nullable=False, 

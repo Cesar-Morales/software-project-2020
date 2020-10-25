@@ -3,7 +3,7 @@ Reservas de centros
 """
 from app import db
 
-class Centro(db.Model):
+class Reserva(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, 
                    nullable=False, 
