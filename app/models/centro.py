@@ -26,7 +26,6 @@ class Centro(db.Model):
 
     
     tipoId = db.Column(db.Integer, 
-                     db.ForeignKey('tipo.id'),
-                     nullable=False)
+                     db.ForeignKey('tipo.id'))
     turnos = db.relationship('Turno', backref='centro', lazy=True)
     reservas = db.relationship('Reserva', backref='centro', lazy=True)
