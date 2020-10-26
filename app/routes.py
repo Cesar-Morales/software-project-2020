@@ -3,6 +3,7 @@ from flask import render_template, send_from_directory
 from app.resources import user
 from app.resources import auth
 from app.resources import config
+from app.resources import turno
 from app.helpers import auth as helper_auth
 from flask_wtf import FlaskForm
 from app.models.site import Site
@@ -31,6 +32,10 @@ app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
 # Rutas de Configuracion
 app.add_url_rule("/config", "config_index", config.index)
 app.add_url_rule("/config", "config_edit", config.edit, methods=["POST"])
+
+#Rutas de turnos
+app.add_url_rule("/centros/<int:id>/turnos/<int:pages>", "turno_index", turno.index)
+app.add_url_rule("/turno/crear", "turno_create", turno.create, methods=["POST"])
 
 # Ruta para el Home (usando decorator)
 @app.route("/")

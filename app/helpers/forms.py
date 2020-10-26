@@ -3,6 +3,18 @@ from wtforms.fields import StringField, SubmitField, RadioField, HiddenField
 from wtforms.validators import DataRequired, NumberRange
 from wtforms.fields.html5 import EmailField, IntegerField, SearchField
 from wtforms.widgets.html5 import NumberInput
+from wtforms.validators import ValidationError
+from wtforms_components import DateField, TimeField, DateRange
+from datetime import time, date, timedelta
+
+class Form(FlaskForm):
+    startdate_field = DateField('Start Date', format='%Y-%m-%d')
+    enddate_field = DateField('End Date', format='%Y-%m-%d')
+    submit_field = SubmitField('Next')
+
+    def validate_enddate_field(form, field):
+        if field.data < form.startdate_field.data:
+            raise ValidationError("End date must not be earlier than start date.")
 
 class ConfigForm(FlaskForm):
     """Clase que se encarga de generar formulario para edicion y configuracion del sitio para luego realizar validaciones correspondientes, tanto del lado
@@ -60,5 +72,30 @@ class UserForm(FlaskForm):
     idUser = HiddenField('idUser')    
     image_name = StringField('NombreImagen')
 
+class TurnoForm(FlaskForm):
+    """Clase que se encarga de generar formulario para edicion y creacion de turnos para luego realizar validaciones correspondientes, tanto del lado
+    del servidor como del cliente."""
+    center_id = HiddenField(
+            'ID centro', 
+            validators=[DataRequired('Falta ID centro')])
+    start_time = TimeField(
+            'Hora de inicio',
+            validators=[DateRange(
+                                min=time.fromisoformat('09:00:00'),
+                                max=time.fromisoformat('15:30:00')), 
+                        DataRequired('Falta horario de comienzo')])
+    date = DateField(
+            'Fecha', 
+            validators=[DateRange(min=date.today()), 
+                        DataRequired('Falta fecha')])
+    submit = SubmitField('Crear')
+
+    def validate_start_time(form, field):
+        time = time.fromisoformat('field.data')
+        time_delta =  timedelta(minutes=time.minute, houres=time.hour)
+        multiplo = timedelta(minutes=30)
+        #Si no es multiplo de 30 minutos, tirar error.
+        if 0 != (time_delta % multiplo):
+            raise ValidationError("El horario no es multiplo de 30")
 
                       

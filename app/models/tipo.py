@@ -10,4 +10,4 @@ class Tipo(db.Model):
                    autoincrement=True)
     name = db.Column(db.String(80), nullable=False)
 
-    centros = db.relationship('Centro', backref='tipo', lazy=True)
+    centros = db.relationship('Centro', backref='tipo', lazy='dynamic')

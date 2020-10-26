@@ -16,3 +16,5 @@ class Turno(db.Model):
     centro_id = db.Column(db.Integer, 
                           db.ForeignKey('centro.id'),
                           nullable=False)
+
+    

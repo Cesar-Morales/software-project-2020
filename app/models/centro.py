@@ -27,5 +27,9 @@ class Centro(db.Model):
     
     tipoId = db.Column(db.Integer, 
                      db.ForeignKey('tipo.id'))
-    turnos = db.relationship('Turno', backref='centro', lazy=True)
-    reservas = db.relationship('Reserva', backref='centro', lazy=True)
+    turnos = db.relationship('Turno', backref='centro', lazy='dynamic')
+    reservas = db.relationship('Reserva', backref='centro', lazy='dynamic')
+
+    def getAllTurnos(id):
+        centro = db.session.query(Centro).filter_by(id = id).first()
+        return centro.turnos
