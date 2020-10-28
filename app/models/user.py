@@ -77,7 +77,7 @@ class User(db.Model, UserMixin):
 
     def getAll():
         """Metodo que devuelve todos los usuarios creados en la base de datos: sin filtros"""
-        return db.session.query(User).filter(User.id!=session["idUserLogged"])
+        return db.session.query(User).filter(User.deleted == False,User.id!=session["idUserLogged"])
 
     def getUserByEmailAndPassword(em,pas):
         """Metodo que busca y retorna el usuario con email y password pasados como parametros"""
