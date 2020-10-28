@@ -29,3 +29,8 @@ class Centro(db.Model):
                      db.ForeignKey('tipo.id'))
     turnos = db.relationship('Turno', backref='centro', lazy=True)
     reservas = db.relationship('Reserva', backref='centro', lazy=True)
+
+    
+    def getAll():
+        """Metodo que devuelve todos los centros creados en la base de datos: sin filtros"""
+        return db.session.query(Centro).all()
