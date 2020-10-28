@@ -94,9 +94,9 @@ class User(db.Model, UserMixin):
         actdeact = requestform.get("active")
         #Si no ingresan string a buscar, traigo todos los usuarios, verificando si mandaron activos o bloqueados.
         if not usernam:
-            users = db.session.query(User).filter(User.active == actdeact, User.id!=session["idUserLogged"])
+            users = db.session.query(User).filter(User.deleted == False,User.active == actdeact, User.id!=session["idUserLogged"])
         else: 
-            users = db.session.query(User).filter(User.username.like('%'+usernam+'%'), User.active == actdeact, User.id!=session["idUserLogged"])
+            users = db.session.query(User).filter(User.deleted == False,User.username.like('%'+usernam+'%'), User.active == actdeact, User.id!=session["idUserLogged"])
         return users
 
     def block(requestForm):
