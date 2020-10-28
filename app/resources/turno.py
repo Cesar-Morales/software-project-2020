@@ -46,8 +46,9 @@ def create():
 
 
 @login_required
-def edit(turno):
+def edit(centro_id, turno_id):
     form = TurnoForm()
+    turno = db.session.query(Turno).filter_by(id=turno_id).first()
     form.center_id.data = turno.centro_id
     form.start_time.data = turno.start_time
     form.date.data = turno.date
@@ -63,4 +64,11 @@ def update():
         else:
             flash('El horario ya se encuentra ocupado para la fecha')
         return redirect(url_for('turno_index', id=form.center_id.data, page=1))
-    return render_template('turno/new.html', form=form)
+    return render_template('turno/edit.html', form=form)
+
+
+@login_required
+def trash(id):
+    """Controlador que realiza el intento de borrado de usuario. Se verifica que se este autenticado y que se tengan los permisos. Si
+    alguna verificacion no pasa, se redirecciona segun corresponda. Si pasa las verificaciones, informa estado de operacion segun corresponda"""
+    Turno.trash(id)

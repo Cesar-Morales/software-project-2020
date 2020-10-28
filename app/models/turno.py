@@ -2,7 +2,6 @@
 Turnos creados por operator para que luego en la app publica seleccionen
 """
 from app import db
-from app.helpers.forms import TurnoForm
 from datetime import time, timedelta
 
 class Turno(db.Model):
@@ -19,35 +18,44 @@ class Turno(db.Model):
                           db.ForeignKey('centro.id'),
                           nullable=False)
 
-    def create(form):
-        """ Creción del turno para un centro específico """
-        # Datos recibidos del formulario
+
+    def buscarTurno(form):
         start_time = form.start_time.data
         date = form.date.data
         center_id = int(form.center_id.data)
 
-        # Creacion del horario de finalización
+        # Primero se revisa que el horario para la fecha no exista
+        turno = db.session.query(Turno).filter_by(
+                start_time=start_time.strftime("%H:%M:%S"),
+                date=date.strftime("%d/%m/%y"),
+                center_id=center_id).first()
+        return turno
+
+    def crearHorarioDeFinalizacion(start_time):
         deltatime = timedelta(minutes=30)
         aux_time = timedelta(hours=start_time.hour, minutes=start_time.minute)
         aux_time = aux_time + deltatime
         hours = aux_time.seconds // 3600
-        minutes = (aux_time.seconds // 60)%60
+        minutes = (aux_time.seconds // 60) % 60
         final_time = time(hours, minutes)
+        return final_time
 
-        #Primero se revisa que el horario para la fecha no exista
-        turno = db.session.query(Turno).filter_by(
-                start_time=start_time.strftime("%H:%M:%S"), 
-                date=date.strftime("%d/%m/%y")).first()
+    def create(form):
+        """ Creción del turno para un centro específico """
+        # Datos recibidos del formulario
+        turno = Turno.buscarTurno(form)
+        # Creacion del horario de finalización
+        final_time = Turno.crearHorarioDeFinalizacion(form.start_time)
 
         if turno:
             # El turno ya existe
             return False
         else:
             # Se crea el nuevo turno
-            turno = Turno(centro_id=center_id, 
-                          start_time=start_time.strftime("%H:%M:%S"),
+            turno = Turno(centro_id=form.center_id,
+                          start_time=form.start_time.strftime("%H:%M:%S"),
                           final_time=final_time.strftime("%H:%M:%S"),
-                          date=date.strftime("%d/%m/%y"))
+                          date=form.date.strftime("%d/%m/%y"))
             db.session.add(turno)
             db.session.commit()
             return True
@@ -55,29 +63,23 @@ class Turno(db.Model):
     def update(form):
         """ Creción del turno para un centro específico """
         # Datos recibidos del formulario
-        start_time = form.start_time.data
-        date = form.date.data
-        center_id = int(form.center_id.data)
+        turno = Turno.buscarTurno(form)
         # Creacion del horario de finalización
-        deltatime = timedelta(minutes=30)
-        aux_time = timedelta(hours=start_time.hour, minutes=start_time.minute)
-        aux_time = aux_time + deltatime
-        hours = aux_time.seconds // 3600
-        minutes = (aux_time.seconds // 60) % 60
-        final_time = time(hours, minutes)
-
-        # Primero se revisa que el horario para la fecha no exista
-        turno = db.session.query(Turno).filter_by(
-                start_time=start_time.strftime("%H:%M:%S"),
-                date=date.strftime("%d/%m/%y")).first()
-
+        final_time = Turno.crearHorarioDeFinalizacion(form.start_time)
         if turno:
             # El turno ya existe
             return False
         else:
             # Se crea el nuevo turno
-            turno.start_time = start_time.strftime("%H:%M:%S")
+            turno.start_time = form.start_time.strftime("%H:%M:%S")
             turno.final_time = final_time.strftime("%H:%M:%S")
-            turno.date = date.strftime("%d/%m/%y")
+            turno.date = form.date.strftime("%d/%m/%y")
             db.session.commit()
             return True
+
+
+    def trash(id):
+        """Metodo que recibe un id de turno a borrar"""
+        turno = db.session.query(Turno).filter(id=id).first()
+        db.session.delete(turno)
+        db.session.commit()
