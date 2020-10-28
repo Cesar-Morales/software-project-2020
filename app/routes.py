@@ -1,6 +1,7 @@
 from app import app
 from flask import render_template, send_from_directory
 from app.resources import user
+from app.resources import center
 from app.resources import auth
 from app.resources import config
 from app.helpers import auth as helper_auth
@@ -29,9 +30,12 @@ app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
 app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
 
 # Rutas de Configuracion
-app.add_url_rule("/config/centers","config_center_index",config.center_index)
 app.add_url_rule("/config", "config_index", config.index)
 app.add_url_rule("/config", "config_edit", config.edit, methods=["POST"])
+
+# Rutas de Centros
+app.add_url_rule("/config/centers","config_center_index",config.center_index)
+app.add_url_rule("/centros/nuevo","centros_new",center.new_center)
 
 # Ruta para el Home (usando decorator)
 @app.route("/")

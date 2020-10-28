@@ -60,5 +60,19 @@ class UserForm(FlaskForm):
     idUser = HiddenField('idUser')    
     image_name = StringField('NombreImagen')
 
+class CenterNewForm(FlaskForm):
+        """ sdadsad """
+        nombre = StringField('Nombre')
+        direccion = StringField("Nombre")
+        telefono = StringField("Telefono")
+        horarios = StringField("Horarios")
+        municipalidad = StringField("Municipalidad")
+        web = StringField("Web")
+        email = EmailField("Email")
+        coordenadas = StringField("Coordenadas")
+        instrucciones = StringField("Instrucciones")
+        tipo = StringField("Tipo")
+        estado = StringField("Estado")
+
 
                       

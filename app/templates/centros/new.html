@@ -1,0 +1,118 @@
+{% extends "layout.html" %}
+{% block title %}Usuarios{% endblock %}
+{% block head %}
+  {{ super() }}
+  {% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-sm-12 col-12 col-md-8 col-lg-12 p-4 rounded" style="background: #cccccc">
+      <h1 style="text-align: center">Crear un Centro </h1>
+      <hr>
+      <form action="" method="POST" >
+        {{ form.csrf_token }}
+        <div class="row">
+          <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.nombre.label}}</b>
+            {{ form.nombre(class="col-12 mb-2") }}
+            {% for error in form.nombre.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.direccion.label}}</b>
+            {{ form.direccion(class="col-12 mb-2") }}
+            {% for error in form.direccion.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.municipalidad.label}}</b>
+            {{ form.municipalidad(class="col-12 mb-2") }}
+            {% for error in form.municipalidad.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.telefono.label}}</b>
+            {{ form.telefono(class="col-12 mb-2") }}
+            {% for error in form.telefono.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.horarios.label}}</b>
+            {{ form.horarios(class="col-12 mb-2") }}
+            {% for error in form.horarios.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.web.label}}</b>
+            {{ form.web(class="col-12 mb-2") }}
+            {% for error in form.web.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.email.label}}</b>
+            {{ form.email(class="col-12 mb-2") }}
+            {% for error in form.email.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.coordenadas.label}}</b>
+            {{ form.coordenadas(class="col-12 mb-2") }}
+            {% for error in form.coordenadas.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.instrucciones.label}}</b>
+            {{ form.instrucciones(class="col-12 mb-2") }}
+            {% for error in form.instrucciones.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.tipo.label}}</b>
+            {{ form.tipo(class="col-12 mb-2") }}
+            {% for error in form.tipo.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.estado.label}}</b>
+            {{ form.estado(class="col-12 mb-2") }}
+            {% for error in form.estado.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+           
+          </div>
+         
+          <div class="mt-5 col-12 mb-3 col-sm-12 col-md-12 col-lg-12">
+            <div class="row ml-3">
+              <div class="col-1"></div>
+              <button class="btn col-3 btn-danger btn-sm" type="reset">Limpiar</button>
+              <div class="col-1"></div>
+              <a class="btn btn-dark col-3 btn-sm" type="button" href="{{ url_for('config_center_index') }}">Volver</a>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-2"></div>
+</div> 
+{% endblock %}

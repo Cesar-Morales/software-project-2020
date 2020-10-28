@@ -150,7 +150,6 @@ def edit():
     form.image_name= usuario.image_name
     roles = Rol.getRoles()
     rolesUser = usuario.roles
-    #userDetails = User.getUserById(request.form.get('idUser'))
     return render_template("user/editar.html",form = form,roles = roles, rolesUser = rolesUser)
 
 def confirmEdit():
@@ -178,7 +177,6 @@ def confirmEdit():
     form.image_name= usuario.image_name
     roles = Rol.getRoles()
     rolesUser = usuario.roles
-    #userDetails = User.getUserById(request.form.get('idUser'))
     return render_template("user/editar.html",form = form,roles = roles, rolesUser = rolesUser)
 
 
