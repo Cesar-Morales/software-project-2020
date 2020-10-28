@@ -5,6 +5,7 @@
 {% endblock %}
 {% block content %}
 
+{% if turnos.items|length %}
   {% for turno in turnos.items %}
     {% if turno.selected == 0 %}
       <div>
@@ -14,6 +15,11 @@
       </div>
     {% endif %}
   {% endfor %}
+{% else %}  
+  <div class="bg-warning p-3 m-4">
+    <h3 style="text-align: center">Este centro no posee turnos</h3>
+  </div>
+{% endif %}
 
 <a href="{{ url_for('turno_new', id=id) }}" class="col-3 btn btn-success btn-sm">Nuevo</a>
 
