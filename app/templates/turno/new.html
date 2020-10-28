@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block title %}Turnos{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+
+<form novalidate action="{{ url_for('turno_create') }}" method="POST">
+    {{ form.csrf_token }}
+    {{ form.center_id }}
+
+    <div class="row">    
+      <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
+        <b>{{ form.start_time.label }}</b>
+        {{ form.start_time(class="col-12 mb-2") }}
+        {% for error in form.start_time.errors %}
+        <p style="color: red;">{{ error }}</p>
+        {% endfor %}
+      </div>
+      <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
+        <b>{{ form.date.label }}</b>
+        {{ form.date(class="col-12 mb-2") }}
+        {% for error in form.date.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+      </div>
+      <div class="mt-5 col-12 mb-3 col-sm-12 col-md-12 col-lg-12">
+        <div class="row ml-3">
+          {{ form.submit(class="btn col-3 btn-success btn-sm") }}
+          <div class="col-1"></div>
+          <button class="btn col-3 btn-danger btn-sm" type="reset">Limpiar</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  {% endblock %}

@@ -17,7 +17,8 @@ class Form(FlaskForm):
             raise ValidationError("End date must not be earlier than start date.")
 
 class ConfigForm(FlaskForm):
-    """Clase que se encarga de generar formulario para edicion y configuracion del sitio para luego realizar validaciones correspondientes, tanto del lado
+    """Clase que se encarga de generar formulario para edicion y configuracion del 
+    sitio para luego realizar validaciones correspondientes, tanto del lado
     del servidor como del cliente."""
     title = StringField(
             'Titulo',
@@ -41,7 +42,8 @@ class ConfigForm(FlaskForm):
 
 
 class SearchForm(FlaskForm):
-    """Clase que se encarga de generar formulario para busqueda de usuarios para luego realizar validaciones correspondientes, tanto del lado
+    """Clase que se encarga de generar formulario para busqueda de usuarios para luego 
+    realizar validaciones correspondientes, tanto del lado
     del servidor como del cliente."""
     search = SearchField(
              'search',
@@ -51,7 +53,8 @@ class SearchForm(FlaskForm):
     submit = SubmitField('Buscar')
 
 class UserForm(FlaskForm):
-    """Clase que se encarga de generar formulario para edicion y creacion de usuarios para luego realizar validaciones correspondientes, tanto del lado
+    """Clase que se encarga de generar formulario para edicion y creacion de usuarios 
+    para luego realizar validaciones correspondientes, tanto del lado
     del servidor como del cliente."""
     email = EmailField(
             'Email',
@@ -73,29 +76,33 @@ class UserForm(FlaskForm):
     image_name = StringField('NombreImagen')
 
 class TurnoForm(FlaskForm):
-    """Clase que se encarga de generar formulario para edicion y creacion de turnos para luego realizar validaciones correspondientes, tanto del lado
+    """Clase que se encarga de generar formulario para edicion y creacion de 
+    turnos para luego realizar validaciones correspondientes, tanto del lado
     del servidor como del cliente."""
+    
     center_id = HiddenField(
-            'ID centro', 
-            validators=[DataRequired('Falta ID centro')])
+            'idUser' ,
+            validators=[DataRequired('El id no esta presente')])
+
     start_time = TimeField(
             'Hora de inicio',
-            validators=[DateRange(
-                                min=time.fromisoformat('09:00:00'),
-                                max=time.fromisoformat('15:30:00')), 
+            validators=[DateRange(message='Horario debe estar entre 09:00 y 15:30', 
+                                  min=time.fromisoformat('09:00:00'),
+                                  max=time.fromisoformat('15:30:00')), 
                         DataRequired('Falta horario de comienzo')])
     date = DateField(
             'Fecha', 
-            validators=[DateRange(min=date.today()), 
+            validators=[DateRange(message='Indique fecha de hoy o posterior', 
+                                  min=date.today()), 
                         DataRequired('Falta fecha')])
     submit = SubmitField('Crear')
 
     def validate_start_time(form, field):
-        time = time.fromisoformat('field.data')
-        time_delta =  timedelta(minutes=time.minute, houres=time.hour)
+        time = field.data
+        time_delta =  timedelta(minutes=time.minute)
         multiplo = timedelta(minutes=30)
         #Si no es multiplo de 30 minutos, tirar error.
-        if 0 != (time_delta % multiplo):
+        if timedelta() != (time_delta % multiplo):
             raise ValidationError("El horario no es multiplo de 30")
 
                       
