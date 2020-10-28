@@ -12,21 +12,24 @@ from app.helpers.forms import TurnoForm
 import math
 from datetime import time, timedelta
 
+
 @login_required
-def index(id=1,page=1):
+def index(id=1, page=1):
     """Funcion que muestra el listado de turnos para un determinado centro """
     per_page = Site.page()
     total = Centro.getAllTurnos(id).count()
-    turnos = Centro.getAllTurnos(id).paginate(page,per_page,False)
+    turnos = Centro.getAllTurnos(id).paginate(page, per_page, False)
     total_pages=int(math.ceil(total/per_page))
     return render_template('turno/index.html', turnos=turnos, total_pages=total_pages, id=id)
 
+
 @login_required
-def new(id = 1):
+def new(id=1):
     """Funcion que muestra el listado de turnos para un determinado centro """
     form = TurnoForm()
     form.center_id.data = id
     return render_template('turno/new.html', form=form)
+
 
 @login_required
 def create():
@@ -39,5 +42,25 @@ def create():
         else:
             flash('El horario ya se encuentra ocupado para la fecha')
         return redirect(url_for('turno_index', id=form.center_id.data, page=1))
-    
+    return render_template('turno/new.html', form=form)
+
+
+@login_required
+def edit(turno):
+    form = TurnoForm()
+    form.center_id.data = turno.centro_id
+    form.start_time.data = turno.start_time
+    form.date.data = turno.date
+    return render_template('turno/edit.html', form=form)
+
+
+@login_required
+def update():
+    form = TurnoForm()
+    if form.validate():
+        if Turno.update(form):
+            flash('Turno modificado correctamente')
+        else:
+            flash('El horario ya se encuentra ocupado para la fecha')
+        return redirect(url_for('turno_index', id=form.center_id.data, page=1))
     return render_template('turno/new.html', form=form)

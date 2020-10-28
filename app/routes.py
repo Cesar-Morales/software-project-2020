@@ -36,7 +36,9 @@ app.add_url_rule("/config", "config_edit", config.edit, methods=["POST"])
 #Rutas de turnos
 app.add_url_rule("/centros/<int:id>/turnos/<int:page>", "turno_index", turno.index)
 app.add_url_rule("/centros/<int:id>/turnos/new", "turno_new", turno.new)
+app.add_url_rule("/centros/<int:turno.centro_id>/turnos/<int:turno.id>", "turno_edit", turno.edit)
 app.add_url_rule("/turno/create", "turno_create", turno.create, methods=["POST"])
+app.add_url_rule("/turno/update", "turno_update", turno.update, methods=["POST"])
 
 # Ruta para el Home (usando decorator)
 @app.route("/")

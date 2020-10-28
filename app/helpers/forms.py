@@ -32,8 +32,8 @@ class ConfigForm(FlaskForm):
     pages = IntegerField(
             'Elementos por Pagina',
             validators=[NumberRange(
-                        min=1,
-                        message="Como minimo se debe mostrar 1 elemento por pagina")],
+                        min=1, max=100,
+                        message="Como minimo se debe mostrar 1 elemento por pagina y como maximo 100 por pagina")],
             widget=NumberInput(min=1, max=100, step=1))
     active = RadioField(
              'Estado Del Sistema', coerce=int,
@@ -95,7 +95,7 @@ class TurnoForm(FlaskForm):
             validators=[DateRange(message='Indique fecha de hoy o posterior', 
                                   min=date.today()), 
                         DataRequired('Falta fecha')])
-    submit = SubmitField('Crear')
+    submit = SubmitField('Confirmar')
 
     def validate_start_time(form, field):
         time = field.data
@@ -104,5 +104,4 @@ class TurnoForm(FlaskForm):
         #Si no es multiplo de 30 minutos, tirar error.
         if timedelta() != (time_delta % multiplo):
             raise ValidationError("El horario no es multiplo de 30")
-
-                      
+ 

@@ -179,5 +179,4 @@ def confirmEdit():
     rolesUser = usuario.roles
     return render_template("user/editar.html",form = form,roles = roles, rolesUser = rolesUser)
 
-
-   
+  

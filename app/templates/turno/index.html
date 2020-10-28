@@ -12,6 +12,7 @@
         <td>{{turno.start_time}}</td>
         <td>{{turno.final_time}}</td>
         <td>{{turno.date}}</td>
+        <a href="{{ url_for('turno_edit', turno=turno) }}" class="col-3 btn btn-success btn-sm">Editar</a>
       </div>
     {% endif %}
   {% endfor %}
