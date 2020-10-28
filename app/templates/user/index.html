@@ -58,7 +58,7 @@
         <table class="col-12 table">
           <thead class="thead-dark">
             <tr>
-              <th scope="col">ID</th>
+              <th scope="col">User Name</th>
               <th scope="col">First</th>
               <th scope="col">Last</th>
               <th scope="col">Mail</th>
@@ -70,7 +70,7 @@
               {% if user.deleted == 0 %}
                  
                 <tr>
-                  <td>{{user.id}}</td>
+                  <td>{{user.username}}</td>
                   <td>{{ user.first_name }}</td>
                   <td>{{ user.last_name }}</td>
                   <td>{{ user.email }}</td>
