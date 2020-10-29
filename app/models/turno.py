@@ -2,6 +2,7 @@
 Turnos creados por operator para que luego en la app publica seleccionen
 """
 from app import db
+from sqlalchemy import asc
 from datetime import time, timedelta, date, datetime
 
 class Turno(db.Model):
@@ -62,10 +63,12 @@ class Turno(db.Model):
 
 
     def getTurnosByDate(centro_id):
-        dosDiasFuturo = date.today() + timedelta(days=2)
-        return Turno.query.filter((Turno.date >= date.today().strftime("%Y-%m-%d"))
-                                            & (Turno.date <= dosDiasFuturo.strftime("%Y-%m-%d"))
-                                            & (Turno.centro_id == centro_id))
+        dos_dias_futuro = date.today() + timedelta(days=2)
+        turnos = Turno.query.filter((
+            Turno.date >= date.today().strftime("%Y-%m-%d")) & 
+            (Turno.date <= dos_dias_futuro.strftime("%Y-%m-%d")) & 
+            (Turno.centro_id == centro_id))
+        return turnos.order_by(asc(Turno.date)).order_by(asc(Turno.start_time))
 
 
     def buscarTurnoPorId(id):
