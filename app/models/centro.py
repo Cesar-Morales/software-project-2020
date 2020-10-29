@@ -3,7 +3,7 @@ Modulo que contra la relacion con la tabla de centros de ayuda
 de la base de datos y el manejo de los mismos.
 """
 from app import db
-from sqlalchemy import or_
+from sqlalchemy import and_
 from flask import current_app
 from werkzeug.utils import secure_filename
 
@@ -26,6 +26,10 @@ class Centro(db.Model):
 
     
     tipoId = db.Column(db.Integer, 
-                     db.ForeignKey('tipo.id'))
-    turnos = db.relationship('Turno', backref='centro', lazy=True)
-    reservas = db.relationship('Reserva', backref='centro', lazy=True)
+             db.ForeignKey('tipo.id'))
+    turnos = db.relationship('Turno', backref='centro', lazy='dynamic')
+    reservas = db.relationship('Reserva', backref='centro', lazy='dynamic')
+
+    def getAllTurnos(id):
+        centro = db.session.query(Centro).filter_by(id=id).first()
+        return centro.turnos

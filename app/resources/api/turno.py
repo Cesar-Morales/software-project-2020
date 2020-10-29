@@ -1,0 +1,57 @@
+""" API de turnos """
+
+from flask import jsonify
+from flask import request
+from app.models.centro import Centro
+from app.models.reseva import Reserva
+from flask import request
+from datetime import date
+from flask import abort
+
+def index(id):
+    """ Endpoint para devolver todos los turnos de un centro """
+
+    #Valor por defecto si fecha no existe
+    search_date = date.today()
+
+    #Obtener la fecha si viene como parametro
+    if request.args.get('fecha'):
+        search_date = date.fromisoformat(request.args.get('fecha'))    
+
+    #Obtner los turnos del centro segun la fecha    
+    turnos = Centro.getAllTurnosByDate(id)
+    data = []
+
+    #Armar la lista para convertirla a json
+    for turno in turnos:
+        if turno.date == search_date.strftime("%Y-%m-%d"):
+            data.append(
+                {"centro_id": turno.centro_id, 
+                "hora_inicio": turno.start_time, 
+                "hora_fin": turno.final_time, 
+                "fecha": turno.date}
+            )
+
+    return jsonify(turnos=data), 200
+
+def reserva(id):
+
+    #Crear la reserva del turno
+    if Reserva.create(request.form):
+
+        #Crear el json a devolver
+        data = []
+
+        #Armar la lista para convertirla a json
+        data.append(
+            {"centro_id": request.form.get('centro_id'),
+            "email_donante": request.form.get('email_donante'),
+            "telefono_donante": request.form.get('telefono_donante'), 
+            "hora_inicio": request.form.get('hora_inicio'), 
+            "hora_fin": request.form.get('hora_fin'), 
+            "fecha": request.form.get('fecha')}
+        )
+
+        return jsonify(atributos=data), 201
+    else:
+        return "abort(404)"
