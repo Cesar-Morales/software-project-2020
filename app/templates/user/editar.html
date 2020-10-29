@@ -5,8 +5,8 @@
 {% endblock %}    
 {% block content %}
 <div class="row">
-    <div class="col-2"></div>
-    <div class="col-sm-12 col-12 col-md-8 col-lg-12 p-4 rounded" style="background: #cccccc">
+    <div class="col-3 col-md-2 col-lg-3"></div>
+    <div class="col-sm-12 col-12 col-md-8 col-lg-6 p-4 rounded" style="background: #cccccc">
       <h1 style="text-align: center">Editar un usuario</h1>
       <hr>
       <form form action="{{ url_for('user_confirmEdit') }}" method="POST" enctype="multipart/form-data">
@@ -58,15 +58,19 @@
               <input name="image_name" hidden value="{{form.image_name}}">
               <input   class="col-12" type="file" accept="image/*" name="image"/>
           </div>
-        
+          <hr>
+          <b class="col-12">Roles: </b> <br>
               {% for rol in roles %} 
-                {% if  rol in rolesUser  %}
-                  <input checked type="checkbox" id="{{rol.name}}" name="{{rol.name}}" value="{{rol.name}}">
-                  <label for="{{rol.name}}"> Rol de {{rol.name}}</label><br>
-                {% else %}
-                  <input  type="checkbox" id="{{rol.name}}" name="{{rol.name}}" value="{{rol.name}}">
-                  <label for="{{rol.name}}"> Rol de {{rol.name}}</label><br>
-                {% endif %}
+                <div class="col-1"></div>
+                <div class="col-11">
+                  {% if  rol in rolesUser  %}
+                    <input checked type="checkbox" id="{{rol.name}}" name="{{rol.name}}" value="{{rol.name}}">
+                    <label for="{{rol.name}}"> Rol de {{rol.name}}</label><br>
+                  {% else %}
+                    <input  type="checkbox" id="{{rol.name}}" name="{{rol.name}}" value="{{rol.name}}">
+                    <label for="{{rol.name}}"> Rol de {{rol.name}}</label><br>
+                  {% endif %}
+                </div>
               {% endfor %}  
            
           <div class="mt-5 col-12 mb-3 col-sm-12 col-md-12 col-lg-12">
@@ -81,7 +85,7 @@
         </div>
       </form>
     </div>
-    <div class="col-2"></div>
+    <div class="col-3 col-md-2"></div>
   </div>
 
    
