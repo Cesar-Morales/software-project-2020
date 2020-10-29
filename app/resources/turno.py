@@ -10,7 +10,7 @@ from app.validators.user_validators import check_permission
 from app.models.site import Site
 from app.helpers.forms import TurnoForm
 import math
-from datetime import time, timedelta
+from datetime import time, date, timedelta
 
 
 @login_required
@@ -50,8 +50,8 @@ def edit(centro_id, turno_id):
     form = TurnoForm()
     turno = db.session.query(Turno).filter_by(id=turno_id).first()
     form.center_id.data = turno.centro_id
-    form.start_time.data = turno.start_time
-    form.date.data = turno.date
+    form.start_time.data = time.fromisoformat(turno.start_time)
+    form.date.data = date.fromisoformat(turno.date)
     return render_template('turno/edit.html', form=form)
 
 

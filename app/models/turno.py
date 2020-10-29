@@ -28,7 +28,7 @@ class Turno(db.Model):
         turno = db.session.query(Turno).filter_by(
                 start_time=start_time.strftime("%H:%M:%S"),
                 date=date.strftime("%d/%m/%y"),
-                center_id=center_id).first()
+                centro_id=center_id).first()
         return turno
 
     def crearHorarioDeFinalizacion(start_time):
@@ -45,17 +45,17 @@ class Turno(db.Model):
         # Datos recibidos del formulario
         turno = Turno.buscarTurno(form)
         # Creacion del horario de finalización
-        final_time = Turno.crearHorarioDeFinalizacion(form.start_time)
+        final_time = Turno.crearHorarioDeFinalizacion(form.start_time.data)
 
         if turno:
             # El turno ya existe
             return False
         else:
             # Se crea el nuevo turno
-            turno = Turno(centro_id=form.center_id,
-                          start_time=form.start_time.strftime("%H:%M:%S"),
+            turno = Turno(centro_id=int(form.center_id.data),
+                          start_time=form.start_time.data.strftime("%H:%M:%S"),
                           final_time=final_time.strftime("%H:%M:%S"),
-                          date=form.date.strftime("%d/%m/%y"))
+                          date=form.date.data.strftime("%Y-%m-%d"))
             db.session.add(turno)
             db.session.commit()
             return True
