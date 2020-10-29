@@ -33,3 +33,8 @@ class Centro(db.Model):
     def getAllTurnos(id):
         centro = db.session.query(Centro).filter_by(id = id).first()
         return centro.turnos
+
+    def getAllTurnosByDate(id):
+        centro = db.session.query(Centro).filter_by(id = id).first()
+        return centro.turnos
+

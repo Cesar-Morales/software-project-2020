@@ -4,6 +4,7 @@ from app.resources import user
 from app.resources import auth
 from app.resources import config
 from app.resources import turno
+from app.resources.api import turno as api_turno
 from app.helpers import auth as helper_auth
 from flask_wtf import FlaskForm
 from app.models.site import Site
@@ -47,6 +48,9 @@ def home():
     form = SearchForm()
     site = Site.obtain_site()
     return render_template("home.html", form=form, site=site)
+
+# Rutas de API-rest
+app.add_url_rule("/centros/<int:id>/turnos_disponibles", "api_turno_index", api_turno.index, methods=["GET"])
 
 #Rutas estaticas de las imagenes
 @app.route('/uploads/<filename>')
