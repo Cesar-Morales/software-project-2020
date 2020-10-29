@@ -6,16 +6,16 @@
 {% block content %}
 
 
-              <!-- modal de confirmacion de eliminacion de usuario-->
+      <!-- modal de confirmacion de eliminacion de usuario-->
       <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="text-align:center;">
-                    <h4 class="modal-title" style="color:red;" id="deleteModalLabel">Esta seguro que desea borrarlo? </h4>
+                    <h4 class="modal-title" id="deleteModalLabel">Esta seguro que desea borrarlo? </h4>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" onclick="Delete()" class="btn btn-primary">Delete</button>
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                    <button type="button" onclick="Delete()" class="btn btn-danger">Borrar</button>
                 </div>
             </div>
         </div>
@@ -24,11 +24,11 @@
       <div class="modal-dialog">
           <div class="modal-content">
               <div class="modal-header" style="text-align:center;">
-                  <h4 class="modal-title" style="color:red;" id="blockModalLabel">Esta seguro que desea bloquearlo? </h4>
+                  <h4 class="modal-title" id="blockModalLabel">Esta seguro que desea bloquearlo? </h4>
               </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                  <button type="button" onclick="block()" class="btn btn-primary">Bloquear</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                  <button type="button" onclick="block()" class="btn btn-warning">Bloquear</button>
               </div>
           </div>
       </div>
@@ -37,11 +37,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="text-align:center;">
-                <h4 class="modal-title" style="color:red;" id="activateModalLabel">Esta seguro que desea activarlo? </h4>
+                <h4 class="modal-title" id="activateModalLabel">Esta seguro que desea activarlo? </h4>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" onclick="activate()" class="btn btn-primary">Activar</button>
+                <button type="button" onclick="activate()" class="btn btn-success">Activar</button>
             </div>
         </div>
     </div>
@@ -50,7 +50,7 @@
 
 <div class="row">
   <div class="col-2"></div>
-  <div class="col-sm-12 col-12 col-md-8 col-lg-12 p-4 rounded" style="background: #cccccc">
+  <div class="col-sm-12 col-12 col-md-12 col-lg-8 p-4 rounded" style="background: #cccccc">
       <h1 style="text-align: center">Usuarios</h1>
       <hr>
       <div class="container">
@@ -125,7 +125,10 @@
                         <div class="modal col-12 fade" id="user{{user.id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                           <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
-                                <div class="media">
+                                <div class="modal-header mb-3" style="text-align:center;">
+                                    <h4 class="modal-title" id="deleteModalLabel">Detalles del Usuario</h4>
+                                </div>
+                                <div class="media m-3">
                                     {% if user.image_name %}  
                                       <img width="200px" height="200px" style="max-width: 100%; height: auto;" class="mr-3" src="{{url_for('static', filename='uploads/' + user.image_name)}}" alt="Imagen usuario">                          
                                     {% else %}  
@@ -137,6 +140,9 @@
                                       <p class="mt-0"><b>Apellido:</b> {{ user.last_name }}.</p>
                                       <p class="mt-0"><b>Correo:</b> {{ user.email }}.</p>
                                     </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-dark" data-dismiss="modal">Volver</button>
                                   </div>
                             </div>
                           </div>
@@ -174,7 +180,9 @@
   <div class="col-2"></div>
 </div>
 
-<nav aria-label="Page navigation example">
+<div class="row">
+  <div class="col-5"></div>
+  <div class="col-2" aria-label="Page navigation example">
     <ul class="pagination">
       {% for i in range(total_pages)  %}
         {% if(pageNumber) %}
@@ -191,8 +199,9 @@
         {%endif%}
       {% endfor %}
     </ul>
-</nav>
-
+  </div>
+  <div class="col-5"></div>
+</div>
 
 
 <script>
