@@ -150,8 +150,14 @@
           </tbody>
         </table>
       {% else %}
-        <div class="bg-warning p-3 m-4">
-          <h3 style="text-align: center">Esta lista no posee  usuarios</h3>
+        <div class=" p-3 m-4">  
+          {% if active == '0' %}
+            <h3 style="text-align: center">No se encuentran usuarios Bloqueados</h3>
+          {% elif active == '1' %}
+            <h3 style="text-align: center">No se encuentran usuarios Activos</h3>
+          {% else %}
+            <h3 style="text-align: center">El sistema no posee usuario</h3>
+          {% endif %}
         </div>
         <hr>
       {% endif %}
