@@ -1,10 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
 @import url('https://fonts.googleapis.com/css?family=Catamaran:400,800');
-body {
-  background-color: #4B7399;
-  font-family: 'Montserrat', Helvetica, sans-serif;
-  font-size: 14px;
-}
+
 
 .clear {
   clear: both;
@@ -93,10 +89,6 @@ li {
   transition: .5s ease;
 }
 
-.body{
-  background-image: url(/home/name/grupo12/app/static/logos/background.png)
-}
-
 .container:hover .overlay {
   bottom: 0;
   height: 100%;
@@ -115,7 +107,7 @@ li {
 }
 
 .new_footer_area {
-  background: #343a40;
+  background: #e1d5f1;
 }
 
 
@@ -187,4 +179,3 @@ background-size:100%;
 }
 
 /*************footer End*****************/
-
