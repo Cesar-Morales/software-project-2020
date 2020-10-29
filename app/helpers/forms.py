@@ -6,6 +6,8 @@ from wtforms.widgets.html5 import NumberInput
 from wtforms.validators import ValidationError
 from wtforms_components import DateField, TimeField, DateRange
 from datetime import time, date, timedelta
+from backports.datetime_fromisoformat import MonkeyPatch
+MonkeyPatch.patch_fromisoformat()
 
 class Form(FlaskForm):
     startdate_field = DateField('Start Date', format='%Y-%m-%d')
