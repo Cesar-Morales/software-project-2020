@@ -69,7 +69,8 @@ def update():
 
 
 @login_required
-def trash(id):
+def trash(centro_id,id):
     """Controlador que realiza el intento de borrado de usuario. Se verifica que se este autenticado y que se tengan los permisos. Si
     alguna verificacion no pasa, se redirecciona segun corresponda. Si pasa las verificaciones, informa estado de operacion segun corresponda"""
     Turno.trash(id)
+    return redirect(url_for('turno_index', id=centro_id, page=1))
