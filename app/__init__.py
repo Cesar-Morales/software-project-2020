@@ -8,6 +8,11 @@ from flask_session import Session
 from config import config
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from datetime import date
+
+#Filtro para formatear la fecha. HAY QUE CAMBIAR ESTO DE LUGAR CREO
+def datetimeformat(value, format='%d-%m-%Y'):
+    return date.fromisoformat(value).strftime(format)
 
 # Configuración inicial de la app
 app = Flask(__name__)
@@ -22,6 +27,9 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Carga de la configuración
 env = environ.get("FLASK_ENV")
 app.config.from_object(config[env])
+
+#Registro del filtro para formatear fechas
+app.jinja_env.filters['datetimeformat'] = datetimeformat
 
 # Server Side session
 app.config["SESSION_TYPE"] = "filesystem"
