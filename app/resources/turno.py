@@ -58,6 +58,7 @@ def edit(centro_id, turno_id):
 @login_required
 def update():
     form = TurnoForm()
+    
     if form.validate():
         if Turno.update(form):
             flash('Turno modificado correctamente')
