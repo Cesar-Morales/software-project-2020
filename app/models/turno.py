@@ -2,7 +2,7 @@
 Turnos creados por operator para que luego en la app publica seleccionen
 """
 from app import db
-from datetime import time, timedelta
+from datetime import time, timedelta, date, datetime
 
 class Turno(db.Model):
 
@@ -59,6 +59,13 @@ class Turno(db.Model):
             db.session.add(turno)
             db.session.commit()
             return True
+
+
+    def getTurnosByDate(centro_id):
+        dosDiasFuturo = date.today() + timedelta(days=2)
+        return Turno.query.filter((Turno.date >= date.today().strftime("%Y-%m-%d"))
+                                            & (Turno.date <= dosDiasFuturo.strftime("%Y-%m-%d"))
+                                            & (Turno.centro_id == centro_id))
 
 
     def buscarTurnoPorId(id):
