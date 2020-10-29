@@ -86,6 +86,6 @@ class Turno(db.Model):
 
     def trash(id):
         """Metodo que recibe un id de turno a borrar"""
-        turno = db.session.query(Turno).filter(id=id).first()
+        turno = db.session.query(Turno).filter_by(id=id).first()
         db.session.delete(turno)
         db.session.commit()
