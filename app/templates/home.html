@@ -5,14 +5,9 @@
 {% endblock %}
 {% block content %} 
   {% if site.active %}  
-    <div class="mt-5 container">
-      <img class="image col-12" src="{{url_for('static', filename='logos/ayudar.jpg')}}" alt="home">
-      <div class="overlay">
-        <img class="image col-12" src="{{url_for('static', filename='logos/esFacil.jpg')}}" alt="home">
-      </div>
-    </div>
+    {% include "carousel.html" %}
   {% else %}
-    <h3 style="text-align: center">La Pagina actualmente esta desactivada. Vuelve a intentar mas tarde.</h3>
+    <img src="{{url_for('static', filename='logos/construccion.jpeg')}}" class="d-block w-100" alt="...">
   {% endif %} 
   {% if is_authenticated(session) %}
       <hr>

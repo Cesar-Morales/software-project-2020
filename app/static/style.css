@@ -128,6 +128,11 @@ li {
   padding: 27px 0px;
 }
 
+.center-image{
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .new_footer_top .footer_bg {
   position: absolute;
   bottom: 0;
