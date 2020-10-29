@@ -48,7 +48,7 @@ def create():
 @login_required
 def edit(centro_id, turno_id):
     form = TurnoForm()
-    turno = db.session.query(Turno).filter_by(id=turno_id).first()
+    turno = Turno.buscarTurnoPorId(turno_id)
     form.center_id.data = turno.centro_id
     form.start_time.data = time.fromisoformat(turno.start_time)
     form.date.data = date.fromisoformat(turno.date)
@@ -56,11 +56,10 @@ def edit(centro_id, turno_id):
 
 
 @login_required
-def update():
+def update(id):
     form = TurnoForm()
-    
     if form.validate():
-        if Turno.update(form):
+        if Turno.update(form, id):
             flash('Turno modificado correctamente')
         else:
             flash('El horario ya se encuentra ocupado para la fecha')

@@ -60,7 +60,11 @@ class Turno(db.Model):
             db.session.commit()
             return True
 
-    def update(form):
+
+    def buscarTurnoPorId(id):
+        return db.session.query(Turno).filter_by(id=id).first()
+
+    def update(form, id):
         """ Creción del turno para un centro específico """
         # Datos recibidos del formulario
         turno = Turno.buscarTurno(form)
@@ -72,8 +76,7 @@ class Turno(db.Model):
         else:
             # Una vez que sabemos que no existe la data para el 
             # centro nos lo traemos y lo modificamos
-            turno = db.session.query(Turno).filter_by(
-                    centro_id=form.center_id.data).first()
+            turno = Turno.buscarTurnoPorId(id)
             turno.start_time = form.start_time.data.strftime("%H:%M:%S")
             turno.final_time = final_time.strftime("%H:%M:%S")
             turno.date = form.date.data.strftime("%Y-%m-%d")
