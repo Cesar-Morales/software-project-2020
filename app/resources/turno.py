@@ -16,6 +16,7 @@ from datetime import time, date, timedelta
 @login_required
 def index(id=1, page=1):
     """Funcion que muestra el listado de turnos para un determinado centro """
+
     per_page = Site.page()
     total = Centro.getAllTurnos(id).count()
     turnos = Centro.getAllTurnos(id).paginate(page, per_page, False)
