@@ -9,7 +9,7 @@
     <title>{% block title %}{% endblock %}</title>
     {% endblock %}
   </head>
-  <body>
+  <body background="{{url_for('static', filename='logos/background.png')}}" >
     <div id="navbar">
       {% include "navbar.html" %}
     </div>
@@ -25,9 +25,9 @@
       </div>
       <div class="col-lg-3 col-md-12 col-sm-12"></div>
     </div>
-    <div id="footer">
+  
       {% include "footer.html" %} 
-    </div>
+  
     <!--Bootstrap scripts-->
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
