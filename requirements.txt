@@ -17,7 +17,6 @@ MarkupSafe==1.1.1
 marshmallow==3.8.0
 mccabe==0.6.1
 mysql-connector-python==8.0.21
-mysqlclient==2.0.1
 pkg-resources==0.0.0
 protobuf==3.13.0
 pylint==2.6.0
