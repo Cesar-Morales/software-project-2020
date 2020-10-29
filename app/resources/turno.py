@@ -46,13 +46,13 @@ def create():
 
 
 @login_required
-def edit(centro_id, turno_id):
+def edit(centro_id, id):
     form = TurnoForm()
-    turno = Turno.buscarTurnoPorId(turno_id)
+    turno = Turno.buscarTurnoPorId(id)
     form.center_id.data = turno.centro_id
     form.start_time.data = time.fromisoformat(turno.start_time)
     form.date.data = date.fromisoformat(turno.date)
-    return render_template('turno/edit.html', form=form)
+    return render_template('turno/edit.html', form=form, id=id)
 
 
 @login_required

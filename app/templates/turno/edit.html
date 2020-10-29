@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
 
-<form action="{{ url_for('turno_update') }}" method="POST">
+<form action="{{ url_for('turno_update', id=id) }}" method="POST">
     {{ form.csrf_token }}
     {{ form.center_id }}
 
