@@ -50,7 +50,8 @@ def home():
     return render_template("home.html", form=form, site=site)
 
 # Rutas de API-rest
-app.add_url_rule("/centros/<int:id>/turnos_disponibles", "api_turno_index", api_turno.index, methods=["GET"])
+app.add_url_rule("/centros/<id>/turnos_disponibles", "api_turno_index", api_turno.index, methods=["GET"])
+app.add_url_rule("/centros/<id>/reserva", "api_turno_reserva", api_turno.reserva, methods=["POST"])
 
 #Rutas estaticas de las imagenes
 @app.route('/uploads/<filename>')

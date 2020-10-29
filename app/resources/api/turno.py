@@ -1,8 +1,12 @@
+""" API de turnos """
+
 from flask import jsonify
+from flask import request
 from app.models.centro import Centro
-from app.models.turno import Turno
+from app.models.reseva import Reserva
 from flask import request
 from datetime import date
+from flask import abort
 
 def index(id):
     """ Endpoint para devolver todos los turnos de un centro """
@@ -28,4 +32,26 @@ def index(id):
                 "fecha": turno.date}
             )
 
-    return jsonify(turnos=data)
+    return jsonify(turnos=data), 200
+
+def reserva(id):
+
+    #Crear la reserva del turno
+    if Reserva.create(request.form):
+
+        #Crear el json a devolver
+        data = []
+
+        #Armar la lista para convertirla a json
+        data.append(
+            {"centro_id": request.form.get('centro_id'),
+            "email_donante": request.form.get('email_donante'),
+            "telefono_donante": request.form.get('telefono_donante'), 
+            "hora_inicio": request.form.get('hora_inicio'), 
+            "hora_fin": request.form.get('hora_fin'), 
+            "fecha": request.form.get('fecha')}
+        )
+
+        return jsonify(atributos=data), 201
+    else:
+        return "abort(404)"
