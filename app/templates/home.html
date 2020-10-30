@@ -5,45 +5,52 @@
 {% endblock %}
 {% block content %} 
   {% if site.active %}  
-    {% include "carousel.html" %}
+    <div class="container">
+      <img class="image col-12" src="{{url_for('static', filename='logos/ayudar.jpg')}}" alt="home">
+      <div class="overlay">
+        <img class="image col-12" src="{{url_for('static', filename='logos/esFacil.jpg')}}" alt="home">
+      </div>
+    </div>
   {% else %}
-    <img src="{{url_for('static', filename='logos/construccion.jpeg')}}" class="d-block center-image" alt="...">
+    <h3 style="text-align: center">La Pagina actualmente esta desactivada. Vuelve a intentar mas tarde.</h3>
   {% endif %} 
   {% if is_authenticated(session) %}
-      <div class="row color-dark">
-        <div class="col-2"></div>
-        <div class="col-8 col-lg-8 p-5">
+      <hr>
+      <div class="row">
+        <div class="col-2 col-lg-2"></div>
+        <div class="col-8 col-lg-8 p-4 color-dark rounded">
           <h3 style="text-align: center">Busqueda de Usuarios</h3>
-          <hr>
           <div class="row">
             <!--
               formulario para busqueda de usuarios por nombre de usuario o estado activo/bloqueado
             -->
-            <div class="col-12 col-sm-12 col-md-3 col-lg-3 "></div>
-            <form class="col-12 col-sm-12 col-md-6 col-lg-6" action="{{ url_for('user_search') }}" method="POST">
+            <form class="col-12" action="{{ url_for('user_search') }}" method="POST">
               {{ form.csrf_token }}
-                {{ form.search (class="col-12 mb-2") }}
-                {% for error in form.search.errors %}
-                <span style="color: red;">{{ error }}</span>
-                {% endfor %}
-                <div class="row">                
-                  <div class="col-2 col-md-4 "></div>
-                  {{ form.active (class="col-8 col-md-4 mb-1")}}<br>
-                  {% for error in form.active.errors %}
-                    <span style="color: red;">{{ error }}</span>
+              <div>
+                  {{ form.search (class="col-12 mb-2") }}
+                  {% for error in form.search.errors %}
+                  <span style="color: red;">{{ error }}</span>
                   {% endfor %}
-                  <div class="col-md-4 col-2"></div>
               </div>
               <div class="row">
-                  <div class="col-12 col-md-3 col-lg-3"></div>
-                  {{ form.submit(class="col-12 col-md-6 col-lg-6") }}
-                  <div class="col-12 col-md-3 col-lg-3"></div>
+                <div class="col-12 col-sm-3 col-md-12 col-lg-3"></div>
+                <div class="col-12 col-sm-6 col-md-12 col-lg-5">
+                    {{ form.active (class="mb-0")}}<br>
+                    {% for error in form.active.errors %}
+                      <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+              </div>
+              <input type="number" hidden name="pageNumber" value="1">
+              <div class="row">
+                  <div class="col-4"></div>
+                  {{ form.submit(class="col-4") }}
+                  <div class="col-4"></div>
               </div>
             </form>
-            <div class="col-12 col-sm-12 col-md-3 col-lg-3 "></div>
           </div>  
         </div>
-        <div class="col-2"></div>
+        <div class="col-2 "></div>
       </div>
     {% endif %}
 {% endblock %}
