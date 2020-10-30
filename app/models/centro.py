@@ -24,7 +24,6 @@ class Centro(db.Model):
     coordinates = db.Column(db.String(100), nullable=False)
     estado = db.Column(db.String(80), default='pendiente')
 
-    
     tipoId = db.Column(db.Integer, 
              db.ForeignKey('tipo.id'))
     turnos = db.relationship('Turno', backref='centro', lazy='dynamic')
@@ -33,3 +32,7 @@ class Centro(db.Model):
     def getAllTurnos(id):
         centro = db.session.query(Centro).filter_by(id=id).first()
         return centro.turnos
+
+    def getCentro(id):
+        centro = db.session.query(Centro).filter_by(id=id).first()
+        return centro

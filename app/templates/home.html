@@ -52,5 +52,38 @@
         </div>
         <div class="col-2 "></div>
       </div>
+      <hr>
+      <div class="row">
+        <div class="col-2 col-lg-2"></div>
+        <div class="col-8 col-lg-8 p-4 color-dark rounded">
+          <h3 style="text-align: center">Busqueda de Reservas</h3>
+          <div class="row">
+            <!--
+              formulario para busqueda de reservas por email de persona o nombre de centro
+            -->
+            <form class="col-12" action="{{ url_for('reserva_search', page=1) }}" method="POST">
+              {{ form_reserva.csrf_token }}
+              <div>
+                  {{ form_reserva.centro_name (class="col-12 mb-2") }}
+                  {% for error in form_reserva.centro_name.errors %}
+                  <span style="color: red;">{{ error }}</span>
+                  {% endfor %}
+              </div>
+              <div>
+                  {{ form_reserva.user_email (class="col-12 mb-2") }}
+                  {% for error in form_reserva.user_email.errors %}
+                  <span style="color: red;">{{ error }}</span>
+                  {% endfor %}
+              </div>
+              <div class="row">
+                  <div class="col-4"></div>
+                  {{ form_reserva.submit(class="col-4") }}
+                  <div class="col-4"></div>
+              </div>
+            </form>
+          </div>  
+        </div>
+        <div class="col-2 "></div>
+      </div>
     {% endif %}
 {% endblock %}
