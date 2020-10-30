@@ -2,6 +2,7 @@
 Reservas de centros
 """
 from app import db
+from app.models.centro import Centro
 
 
 class Reserva(db.Model):
@@ -36,6 +37,7 @@ class Reserva(db.Model):
         if Reserva.reservado(form):
             return False
         else:
+            centro_buscado = Centro.getCentro(form.get('centro_id'))
             reserva = Reserva(
                     start_time=form.get('hora_inicio'), 
                     final_time=form.get('hora_fin'), 
@@ -43,8 +45,20 @@ class Reserva(db.Model):
                     phone_number=form.get('telefono_donante'), 
                     date=form.get('fecha'), 
                     centro_id=form.get('centro_id'))
+            reserva.centro(centro_buscado)
             db.session.add(reserva)
             db.session.commit()
             return True
 
+    def getAll():
+        return db.session.query(Reserva).all()
 
+    def search(centro_name, user_email):
+        if not centro_name and user_email != '':
+            reservas = db.session.query(Reserva).filter(Reserva.email == user_email)
+        elif user_email == '':
+            reservas = db.session.query(Reserva).join(Centro).filter(Centro.name.like('%'+centro_name+'%'))
+        else:
+            reservas = db.session.query(Reserva).join(Centro).filter((Reserva.email == user_email)
+                                                        & (Centro.name.like('%'+centro_name+'%')))
+        return reservas

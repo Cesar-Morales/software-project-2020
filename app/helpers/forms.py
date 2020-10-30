@@ -1,11 +1,14 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, SubmitField, RadioField, HiddenField
+from wtforms.fields import StringField, SubmitField, RadioField, HiddenField, SelectField
 from wtforms.validators import DataRequired, NumberRange
 from wtforms.fields.html5 import EmailField, IntegerField, SearchField
 from wtforms.widgets.html5 import NumberInput
 from wtforms.validators import ValidationError
 from wtforms_components import DateField, TimeField, DateRange
 from datetime import time, date, timedelta
+from app.models.centro import Centro
+from app.models.reseva import Reserva
+
 
 class Form(FlaskForm):
     startdate_field = DateField('Start Date', format='%Y-%m-%d')
@@ -104,4 +107,12 @@ class TurnoForm(FlaskForm):
         #Si no es multiplo de 30 minutos, tirar error.
         if timedelta() != (time_delta % multiplo):
             raise ValidationError("El horario no es multiplo de 30")
- 
+
+
+class ReservaSearch(FlaskForm):
+    centro_name = SearchField(
+        'Nombre del centro de ayuda',
+        render_kw={"placeholder": "Ingrese nombre del centro de ayuda"})
+    user_email = SelectField(
+        'Email del usuario')
+    submit = SubmitField('Buscar')

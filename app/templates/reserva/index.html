@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}Reservas{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+
+{% if reservas.items|length %}
+  {% for reserva in reservas.items %}
+    <div>
+      <td>{{reserva.email}}</td>
+      <td>{{reserva.start_time}}</td>
+      <td>{{reserva.final_time}}</td>
+      <td>{{ reserva.date|datetimeformat()  }}</td>
+      <td>{{reserva.centro.name}}</td>
+    </div>
+  {% endfor %}
+{% else %}  
+  <div class="bg-warning p-3 m-4">
+    <h3 style="text-align: center">No se encontraron reservas</h3>
+  </div>
+{% endif %}
+{% endblock %}
