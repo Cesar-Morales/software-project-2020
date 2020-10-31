@@ -76,22 +76,8 @@ def show(centro_id):
 def create():
     """ Endpoint para crear un centro """
 
-    #Crear la reserva del turno
-    if Reserva.create(request.form):
-
-        #Crear el json a devolver
-        data = []
-
-        #Armar la lista para convertirla a json
-        data.append(
-            {"centro_id": request.form.get('centro_id'),
-            "email_donante": request.form.get('email_donante'),
-            "telefono_donante": request.form.get('telefono_donante'), 
-            "hora_inicio": request.form.get('hora_inicio'), 
-            "hora_fin": request.form.get('hora_fin'), 
-            "fecha": request.form.get('fecha')}
-        )
-
-        return jsonify(atributos=data), 201
+    #Crear el centro si no existe
+    if Centro.create(request.form):
+        show(request.form.get('nombre'))
     else:
         return jsonify({"error_message": "horario ya reservado"}), 404
