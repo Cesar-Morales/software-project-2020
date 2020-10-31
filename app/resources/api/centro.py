@@ -36,13 +36,13 @@ def index():
     if request.args.get('pagina'):
         pagina = int(request.args.get('pagina'))
 
-    #Obtner los turnos los centros y paginarlo
+    #Obtner los centros y paginarlos
     per_page = Site.page()
     #total = Centro.getAll().count()
     centros = Centro.getAll().paginate(pagina, per_page, False)
     total = len(centros.items)
 
-    #Donde se va a formar el jason
+    #Donde se va a formar el json
     data = []
     centro_schema = CentroSchema()
 
@@ -55,3 +55,43 @@ def index():
         
 
     return jsonify(centros=data, total=total, pagina=pagina), 200
+
+def show(centro_id):
+    """ Endpoint para devolver un centro en particular segun id"""
+
+    #Obtner el centro segun id
+    centro = Centro.getCentro(centro_id)
+
+    #Donde se va a formar el json
+    data = []
+
+    #Agregar el centro a data creando el schema
+    centro_schema = CentroSchema()
+    data.append(centro_schema.dump(centro))
+
+        
+
+    return jsonify(atributos=data), 200
+
+def create():
+    """ Endpoint para crear un centro """
+
+    #Crear la reserva del turno
+    if Reserva.create(request.form):
+
+        #Crear el json a devolver
+        data = []
+
+        #Armar la lista para convertirla a json
+        data.append(
+            {"centro_id": request.form.get('centro_id'),
+            "email_donante": request.form.get('email_donante'),
+            "telefono_donante": request.form.get('telefono_donante'), 
+            "hora_inicio": request.form.get('hora_inicio'), 
+            "hora_fin": request.form.get('hora_fin'), 
+            "fecha": request.form.get('fecha')}
+        )
+
+        return jsonify(atributos=data), 201
+    else:
+        return jsonify({"error_message": "horario ya reservado"}), 404
