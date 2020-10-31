@@ -1,11 +1,14 @@
 """
-Modulo que contra la relacion con la tabla de centros de ayuda
-de la base de datos y el manejo de los mismos.
+Modulo que modela la relacion con la tabla de centros de ayuda
+de la base de datos y el esquema para poder serializarlos
 """
-from app import db
+from app import db, ma
 from sqlalchemy import and_
 from flask import current_app
 from werkzeug.utils import secure_filename
+from marshmallow import fields
+from app.models.tipo import Tipo
+from marshmallow import Schema, fields, pre_load
 
 class Centro(db.Model):
 
@@ -29,10 +32,27 @@ class Centro(db.Model):
     turnos = db.relationship('Turno', backref='centro', lazy='dynamic')
     reservas = db.relationship('Reserva', backref='centro', lazy='dynamic')
 
-    def getAllTurnos(id):
+    def getAllTurnosById(id):
         centro = db.session.query(Centro).filter_by(id=id).first()
         return centro.turnos
 
     def getCentro(id):
         centro = db.session.query(Centro).filter_by(id=id).first()
         return centro
+        
+    def getAll():
+        return db.session.query(Centro)
+
+class CentroSchema(Schema):
+    class Meta:
+        model = Centro
+        ordered = True
+
+    name = fields.Str()
+    location = fields.Str()
+    phone_number = fields.Str()
+    start_time = fields.Str()
+    final_time = fields.Str()
+    tipo = fields.Pluck("self", "name")
+    web = fields.Str()
+    email = fields.Str()

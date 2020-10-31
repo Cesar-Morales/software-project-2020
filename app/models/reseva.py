@@ -25,7 +25,7 @@ class Reserva(db.Model):
         date = form.get('fecha')
         center_id = int(form.get('centro_id'))
 
-        # Primero se revisa que el horario para la fecha no exista
+        # Primero se revisa que el horario para la fecha y el centro no exista
         turno = db.session.query(Reserva).filter_by(
                 start_time=start_time,
                 date=date,
@@ -45,7 +45,7 @@ class Reserva(db.Model):
                     phone_number=form.get('telefono_donante'), 
                     date=form.get('fecha'), 
                     centro_id=form.get('centro_id'))
-            reserva.centro(centro_buscado)
+            reserva.centro = centro_buscado
             db.session.add(reserva)
             db.session.commit()
             return True

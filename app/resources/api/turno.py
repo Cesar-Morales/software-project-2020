@@ -6,7 +6,6 @@ from app.models.centro import Centro
 from app.models.reseva import Reserva
 from flask import request
 from datetime import date
-from flask import abort
 
 def index(id):
     """ Endpoint para devolver todos los turnos de un centro """
@@ -16,10 +15,11 @@ def index(id):
 
     #Obtener la fecha si viene como parametro
     if request.args.get('fecha'):
-        search_date = date.fromisoformat(request.args.get('fecha'))    
+        search_date = date.fromisoformat(request.args.get('fecha'))
+            
 
     #Obtner los turnos del centro segun la fecha    
-    turnos = Centro.getAllTurnosByDate(id)
+    turnos = Centro.getAllTurnosById(id)
     data = []
 
     #Armar la lista para convertirla a json
@@ -35,6 +35,8 @@ def index(id):
     return jsonify(turnos=data), 200
 
 def reserva(id):
+    """ Endpoint para reservar un turno. No verifica que sea multiplo 
+    de 30 o que el id del centro fue enviado """
 
     #Crear la reserva del turno
     if Reserva.create(request.form):
@@ -54,4 +56,4 @@ def reserva(id):
 
         return jsonify(atributos=data), 201
     else:
-        return "abort(404)"
+        return jsonify({"error_message": "horario ya reservado"}), 404

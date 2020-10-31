@@ -6,6 +6,7 @@ from app.resources import config
 from app.resources import turno
 from app.resources import reserva
 from app.resources.api import turno as api_turno
+from app.resources.api import centro as api_centro
 from app.helpers import auth as helper_auth
 from flask_wtf import FlaskForm
 from app.models.site import Site
@@ -58,8 +59,14 @@ def home():
     return render_template("home.html", form=form, form_reserva=form_reserva, site=site)
 
 # Rutas de API-rest
+#Turnos
 app.add_url_rule("/centros/<id>/turnos_disponibles", "api_turno_index", api_turno.index, methods=["GET"])
 app.add_url_rule("/centros/<id>/reserva", "api_turno_reserva", api_turno.reserva, methods=["POST"])
+
+#Centros
+app.add_url_rule("/centros", "api_centro_index", api_centro.index, methods=["GET"])
+app.add_url_rule("/centros/:centro_id", "api_centro_show", api_centro.show, methods=["GET"])
+
 
 #Rutas estaticas de las imagenes
 @app.route('/uploads/<filename>')
