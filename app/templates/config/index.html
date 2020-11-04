@@ -5,8 +5,8 @@
 {% endblock %}
 {% block content %}
     <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8 col-lg-12 p-4 rounded" style="background: #cccccc">
+        <div class="col-3 col-md-2 col-lg-3"></div>
+        <div class="col-sm-12 col-12 col-md-8 col-lg-6 p-4 rounded" style="background: #cccccc">
             <h2 style="text-align: center">Configuracion</h2>
             <hr>
             <form method="POST" action="{{ url_for('config_edit') }}">
@@ -40,9 +40,9 @@
                         <span style="color: red;">{{ error }}</span>
                         {% endfor %}
                     </div>
-                    <div class="mb-2 mt-0 col-12">
+                    <div class="col-12">
                         <b><p style="text-align: center">{{ form.active.label }}</p></b>
-                        <div style="margin-left: -20px ;display: flex; justify-content: center;">{{ form.active }}</div><br>
+                        <div style="display: flex; justify-content: center;">{{ form.active }}</div><br>
                         {% for error in form.active.errors %}
                         <span style="color: red;">{{ error }}</span>
                         {% endfor %}
@@ -54,7 +54,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-2 col-md-1 col-lg-2"></div>
+        <div class="col-3 col-md-2 col-lg-3"></div>
     </div>
 
 {% endblock %}

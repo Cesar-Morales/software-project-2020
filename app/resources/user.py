@@ -64,7 +64,7 @@ def search():
     per_page = Site.page()
     search = request.form.get("search")
     active = request.form.get("active")
-    pagesNumber=int(request.form.get("pageNumber"))
+    pagesNumber=request.form.get("pageNumber")
     users=User.search(request.form).paginate(pagesNumber,per_page,False)
     total=User.search(request.form).count()
     total_pages=int(math.ceil(total/per_page))
@@ -179,5 +179,4 @@ def confirmEdit():
     rolesUser = usuario.roles
     return render_template("user/editar.html",form = form,roles = roles, rolesUser = rolesUser)
 
-
-   
+  
