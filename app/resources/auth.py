@@ -13,7 +13,10 @@ from app.helpers.auth import authenticated
 
 
 def login():
-    return render_template("auth/login.html")
+    if not authenticated(session):
+        return render_template("auth/login.html")
+    else:
+        return redirect(url_for("home"))
 
 
 def authenticate():
