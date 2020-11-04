@@ -13,7 +13,7 @@
         <td>{{turno.final_time}}</td>
         <td>{{ turno.date|datetimeformat()  }}</td>
         <td><a href="{{ url_for('turno_edit', centro_id=turno.centro_id, id=turno.id) }}" class="col-3 btn btn-success btn-sm">Editar</a></td>
-        <td><form method="post" action="{{ url_for('turno_trash', centro_id=turno.centro_id, id=turno.id) }}">
+        <td><form autocomplete="off" method="post" action="{{ url_for('turno_trash', centro_id=turno.centro_id, id=turno.id) }}">
           <button type="submit">Eliminar</button>
         </form></td>
       </div>
