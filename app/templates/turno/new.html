@@ -28,11 +28,13 @@
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
           </div>
-          <div class="mt-5 col-12 mb-3 col-sm-12 col-md-12 col-lg-12">
-            <div class="row ml-3">
-              {{ form.submit(class="btn col-3 btn-success btn-sm") }}
-              <div class="col-1"></div>
-              <button class="btn col-3 btn-danger btn-sm" type="reset">Limpiar</button>
+          <div class="mt-5 col-12 mb-3">
+              <div class="row ml-3">
+                  <div class="col-2"></div>
+                  {{ form.submit(class="btn col-12 col-md-3 btn-success btn-sm") }}
+                  <div class="col-2"></div>
+                  <button class="btn col-12 btn-danger col-md-3 btn-sm" type="reset">Limpiar</button>
+                  <div class="col-2"></div>
             </div>
           </div>
         </div>
