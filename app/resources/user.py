@@ -10,7 +10,6 @@ from sqlalchemy.orm import sessionmaker
 from app import db
 from flask_login import current_user, login_required
 from flask_sqlalchemy import SQLAlchemy
-from app.static.constantes import ITEMS_PERPAGE
 import json
 from app.helpers.forms import UserForm
 from app.validators.user_validators import check_permission

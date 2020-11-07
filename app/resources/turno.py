@@ -16,12 +16,14 @@ from datetime import time, date, timedelta
 @login_required
 def index(id=1, page=1):
     """Funcion que muestra el listado de turnos para un determinado centro """
-
     per_page = Site.page()
     total = Turno.getTurnosByDate(id).count()
     turnos = Turno.getTurnosByDate(id).paginate(page, per_page, False)
     total_pages=int(math.ceil(total/per_page))
-    return render_template('turno/index.html', turnos=turnos, total_pages=total_pages, id=id)
+    return render_template('turno/index.html', 
+                            turnos=turnos, 
+                            total_pages=total_pages, 
+                            id=id)
 
 
 @login_required
@@ -64,13 +66,18 @@ def update(id):
             flash('Turno modificado correctamente')
         else:
             flash('El horario ya se encuentra ocupado para la fecha')
-        return redirect(url_for('turno_index', id=form.center_id.data, page=1))
+        return redirect(url_for('turno_index', 
+                        id=form.center_id.data, 
+                        page=1))
     return render_template('turno/edit.html', form=form)
 
 
 @login_required
 def trash(centro_id,id):
-    """Controlador que realiza el intento de borrado de usuario. Se verifica que se este autenticado y que se tengan los permisos. Si
-    alguna verificacion no pasa, se redirecciona segun corresponda. Si pasa las verificaciones, informa estado de operacion segun corresponda"""
+    """Controlador que realiza el intento de borrado de usuario. 
+    Se verifica que se este autenticado y que se tengan los permisos. 
+    Si alguna verificacion no pasa, se redirecciona segun corresponda. 
+    Si pasa las verificaciones, informa estado de operacion segun 
+    corresponda"""
     Turno.trash(id)
     return redirect(url_for('turno_index', id=centro_id, page=1))
