@@ -10,7 +10,7 @@ from app.validators.user_validators import check_permission
 from app.models.site import Site
 from app.helpers.forms import TurnoForm
 import math
-from datetime import time, date, timedelta
+from datetime import time, date, datetime ,timedelta
 
 
 @login_required
@@ -60,7 +60,9 @@ def edit(centro_id, id):
 
 @login_required
 def update(id):
+
     form = TurnoForm()
+
     if form.validate():
         if Turno.update(form, id):
             flash('Turno modificado correctamente')
@@ -69,7 +71,7 @@ def update(id):
         return redirect(url_for('turno_index', 
                         id=form.center_id.data, 
                         page=1))
-    return render_template('turno/edit.html', form=form)
+    return render_template('turno/edit.html', form=form, id=id)
 
 
 @login_required

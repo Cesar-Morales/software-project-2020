@@ -23,7 +23,6 @@
           </thead>
           <tbody> 
             {% for turno in turnos.items %}
-              {% if turno.selected == 0 %}
                 <tr>
                   <td>{{ turno.date|datetimeformat()  }}</td>
                   <td>{{turno.start_time}}</td>
@@ -44,7 +43,6 @@
                     </form>
                   </td>
                 </tr>
-              {% endif %}
             {% endfor %}
           </tbody>
         </table>
