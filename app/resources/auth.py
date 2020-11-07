@@ -13,7 +13,10 @@ from app.helpers.auth import authenticated
 
 
 def login():
-    return render_template("auth/login.html")
+    if not authenticated(session):
+        return render_template("auth/login.html")
+    else:
+        return redirect(url_for("home"))
 
 
 def authenticate():
@@ -59,7 +62,7 @@ def authenticate():
     else:
         del session["roles"]
         session.clear()
-        flash("Debe poseer el rol de admin cuando la pagina esta deshabilitada")
+        flash("La pagina se encuentra en mantenimiento. Intente mas tarde")
         return redirect(url_for("auth_login"))
 
 def logout():

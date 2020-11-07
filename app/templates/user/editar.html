@@ -9,7 +9,7 @@
     <div class="col-sm-12 col-12 col-md-8 col-lg-6 p-4 rounded" style="background: #cccccc">
       <h1 style="text-align: center">Editar un usuario</h1>
       <hr>
-      <form form action="{{ url_for('user_confirmEdit') }}" method="POST" enctype="multipart/form-data">
+      <form autocomplete="off" form action="{{ url_for('user_confirmEdit') }}" method="POST" enctype="multipart/form-data">
         {{ form.csrf_token }}
         {{form.idUser}}
         <div class="row">

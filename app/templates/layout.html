@@ -10,24 +10,26 @@
     {% endblock %}
   </head>
   <body>
-    <div id="navbar">
-      {% include "navbar.html" %}
-    </div>
-    <div class="row">
-     
-          {% include "toast.html" %}
-      
-      <div class="col-12">
-        
-          {% block content %}
-          {% endblock %}
-       
+    <div id="wrapper">
+      <div id="navbar">
+        {% include "navbar.html" %}
       </div>
-      <div class="col-lg-3 col-md-12 col-sm-12"></div>
+      <div class="row" id="container">
+      
+            {% include "toast.html" %}
+
+        <div class="col-12">
+
+            {% block content %}
+            {% endblock %}
+        
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12"></div>
+      </div>
+      <div id="footer">
+        {% include "footer.html" %} 
+      </div>
     </div>
-  
-      {% include "footer.html" %} 
-  
     <!--Bootstrap scripts-->
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
