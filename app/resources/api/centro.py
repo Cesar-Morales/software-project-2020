@@ -16,7 +16,6 @@ data.append(
 
 
 from flask import jsonify
-import json
 from flask import request
 from app.models.centro import Centro, CentroSchema
 from app.models.reseva import Reserva
@@ -39,7 +38,6 @@ def index():
 
     #Obtner los centros y paginarlos
     per_page = Site.page()
-    #total = Centro.getAll().count()
     centros = Centro.getAll().paginate(pagina, per_page, False)
     total = len(centros.items)
 
@@ -49,11 +47,7 @@ def index():
 
     #Armar la lista para convertirla a json
     for centro in centros.items:
-        
-        
         data.append(centro_schema.dump(centro))
-
-        
 
     return jsonify(centros=data, total=total, pagina=pagina), 200
 
@@ -69,8 +63,6 @@ def show(centro_id):
     #Agregar el centro a data creando el schema
     centro_schema = CentroSchema()
     data.append(centro_schema.dump(centro))
-    data.encode('utf8')
-        
 
     return jsonify(atributos=data), 200
 
