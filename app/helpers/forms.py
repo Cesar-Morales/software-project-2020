@@ -5,10 +5,10 @@ from wtforms.fields.html5 import EmailField, IntegerField, SearchField
 from wtforms.widgets.html5 import NumberInput
 from wtforms.validators import ValidationError
 from wtforms_components import DateField, TimeField, DateRange
-from datetime import time, date, datetime, timedelta
-from app.models.centro import Centro
-from app.models.reseva import Reserva
+from datetime import time, date, timedelta
+from backports.datetime_fromisoformat import MonkeyPatch
 
+MonkeyPatch.patch_fromisoformat()
 
 class Form(FlaskForm):
     startdate_field = DateField('Start Date', format='%Y-%m-%d')
