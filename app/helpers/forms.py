@@ -5,7 +5,7 @@ from wtforms.fields.html5 import EmailField, IntegerField, SearchField
 from wtforms.widgets.html5 import NumberInput
 from wtforms.validators import ValidationError
 from wtforms_components import DateField, TimeField, DateRange
-from datetime import time, date, timedelta
+from datetime import time, date, datetime, timedelta
 from app.models.centro import Centro
 from app.models.reseva import Reserva
 
@@ -96,7 +96,8 @@ class TurnoForm(FlaskForm):
     date = DateField(
             'Fecha', 
             validators=[DateRange(message='Indique fecha de hoy o posterior', 
-                                  min=date.today()), 
+                                  min=date.today(), 
+                                  max=date.today() + timedelta(days=2*365)), 
                         DataRequired('Falta fecha')])
     submit = SubmitField('Confirmar')
 

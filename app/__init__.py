@@ -30,6 +30,7 @@ env = environ.get("FLASK_ENV")
 app.config.from_object(config[env])
 #Para que JSON no ordene las keys
 app.config['JSON_SORT_KEYS'] = False
+app.config['JSON_AS_ASCII'] = False
 
 #Registro del filtro para formatear fechas
 app.jinja_env.filters['datetimeformat'] = datetimeformat
