@@ -28,7 +28,7 @@ app.add_url_rule("/usuarios/trash", "user_trash", user.trash,methods=["POST"])
 app.add_url_rule("/usuarios/editar", "user_edit", user.edit,methods=["POST"])
 app.add_url_rule("/usuarios/active", "user_activ", user.activate,methods=["POST"])
 app.add_url_rule("/usuarios/edicion", "user_confirmEdit", user.confirmEdit,methods=["POST"])
-app.add_url_rule("/usuarios/busqueda/<int:page>", "user_search", user.search,methods=["POST"])
+app.add_url_rule("/usuarios/busqueda", "user_search", user.search,methods=["GET"])
 app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
 app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
 
@@ -51,6 +51,7 @@ app.add_url_rule("/reservas/<int:page>", "reserva_search", reserva.search, metho
 @app.route("/")
 def home():
     form = SearchForm()
+    form.page.data = 1
     form_reserva = ReservaSearch()
     reservas = Reserva.getAll()
     form_reserva.user_email.choices = [("", "---")] + [(reserva.email, reserva.email) for reserva in reservas]

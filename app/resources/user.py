@@ -58,7 +58,7 @@ def new():
 
 
 @login_required
-def search(page=1):
+def search():
     """ Controlador que lista usuarios segun criterios de busca. 
     Se verifica que se este autenticado y que se tengan los permisos. 
     Si alguna verificacion no pasa, se redirecciona segun corresponda """
@@ -70,10 +70,11 @@ def search(page=1):
     
     permiso = check_permission('user_show')
     per_page = Site.page()
-    search = request.form.get('search')
-    active = request.form.get('active')
-    users = User.search(request.form).paginate(page,per_page,False)
-    total = User.search(request.form).count()
+    search = request.args.get('search')
+    active = request.args.get('active')
+    page = int(request.args.get('page')) if request.args.get('page') else 1
+    users = User.search(search, active).paginate(page,per_page,False)
+    total = User.search(search, active).count()
     total_pages = int(math.ceil(total/per_page))
     
     return render_template("user/index.html", 
