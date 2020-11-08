@@ -64,10 +64,11 @@ class Turno(db.Model):
 
     def getTurnosByDate(centro_id):
         dos_dias_futuro = date.today() + timedelta(days=2)
-        turnos = Turno.query.filter((
-            Turno.date >= date.today().strftime("%Y-%m-%d")) & 
+        turnos = Turno.query.filter(
+            (Turno.date >= date.today().strftime("%Y-%m-%d")) & 
             (Turno.date <= dos_dias_futuro.strftime("%Y-%m-%d")) & 
-            (Turno.centro_id == centro_id))
+            (Turno.centro_id == centro_id) &
+            (Turno.selected == False))
         return turnos.order_by(asc(Turno.date)).order_by(asc(Turno.start_time))
 
 
