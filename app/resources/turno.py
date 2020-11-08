@@ -30,7 +30,7 @@ def index(id=1, page=1):
 def new(id=1):
     """Funcion que muestra el listado de turnos para un determinado centro """
     form = TurnoForm()
-    form.center_id.data = id
+    form.centro_id.data = id
     return render_template('turno/new.html', form=form)
 
 
@@ -44,7 +44,7 @@ def create():
             flash('Turno creado correctamente')
         else:
             flash('El horario ya se encuentra ocupado para la fecha')
-        return redirect(url_for('turno_index', id=form.center_id.data, page=1))
+        return redirect(url_for('turno_index', id=form.centro_id.data, page=1))
     return render_template('turno/new.html', form=form)
 
 
@@ -52,9 +52,9 @@ def create():
 def edit(centro_id, id):
     form = TurnoForm()
     turno = Turno.buscarTurnoPorId(id)
-    form.center_id.data = turno.centro_id
-    form.start_time.data = time.fromisoformat(turno.start_time)
-    form.date.data = date.fromisoformat(turno.date)
+    form.centro_id.data = turno.centro_id
+    form.hora_inicio.data = time.fromisoformat(turno.start_time)
+    form.fecha.data = date.fromisoformat(turno.date)
     return render_template('turno/edit.html', form=form, id=id)
 
 
@@ -69,7 +69,7 @@ def update(id):
         else:
             flash('El horario ya se encuentra ocupado para la fecha')
         return redirect(url_for('turno_index', 
-                        id=form.center_id.data, 
+                        id=form.centro_id.data, 
                         page=1))
     return render_template('turno/edit.html', form=form, id=id)
 

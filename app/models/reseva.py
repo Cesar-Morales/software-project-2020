@@ -3,6 +3,8 @@ Reservas de centros
 """
 from app import db
 from app.models.centro import Centro
+from app.models.turno import Turno
+from app.helpers.forms import TurnoAPIForm
 
 
 class Reserva(db.Model):
@@ -38,17 +40,22 @@ class Reserva(db.Model):
             return False
         else:
             centro_buscado = Centro.getCentro(form.get('centro_id'))
-            reserva = Reserva(
-                    start_time=form.get('hora_inicio'), 
-                    final_time=form.get('hora_fin'), 
-                    email=form.get('email_donante'), 
-                    phone_number=form.get('telefono_donante'), 
-                    date=form.get('fecha'), 
-                    centro_id=form.get('centro_id'))
-            reserva.centro = centro_buscado
-            db.session.add(reserva)
-            db.session.commit()
-            return True
+            turno = Turno.buscarTurno(TurnoAPIForm(form))
+            if centro_buscado and turno:
+                reserva = Reserva(
+                        start_time=form.get('hora_inicio'), 
+                        final_time=form.get('hora_fin'), 
+                        email=form.get('email_donante'), 
+                        phone_number=form.get('telefono_donante'), 
+                        date=form.get('fecha'), 
+                        centro_id=form.get('centro_id'))
+                turno.selected = True
+                reserva.centro = centro_buscado
+                db.session.add(reserva)
+                db.session.commit()
+                return True
+            else:
+                return False
 
     def getAll():
         return db.session.query(Reserva).all()
