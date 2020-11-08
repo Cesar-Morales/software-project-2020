@@ -17,12 +17,14 @@ from datetime import time, date, datetime ,timedelta
 def index(id=1, page=1):
     """Funcion que muestra el listado de turnos para un determinado centro """
     per_page = Site.page()
+    center_state = Centro.getState(id)
     total = Turno.getTurnosByDate(id).count()
     turnos = Turno.getTurnosByDate(id).paginate(page, per_page, False)
     total_pages=int(math.ceil(total/per_page))
     return render_template('turno/index.html', 
                             turnos=turnos, 
                             total_pages=total_pages, 
+                            center_state=center_state, 
                             id=id)
 
 
