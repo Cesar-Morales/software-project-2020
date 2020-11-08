@@ -37,7 +37,9 @@ class Centro(db.Model):
         return centro.turnos
 
     def getCentro(id):
-        centro = db.session.query(Centro).filter_by(id=id, estado='aceptado').first()
+        centro = db.session.query(Centro).filter_by(
+                                            id=id, 
+                                            estado='aceptado').first()
         return centro
         
     def getAll():

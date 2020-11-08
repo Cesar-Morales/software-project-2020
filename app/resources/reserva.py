@@ -15,11 +15,16 @@ import math
 
 @login_required
 def search(page=1):
+    
     form = ReservaSearch()
     per_page = Site.page()
     centro_name = form.centro_name.data
     user_email = form.user_email.data
-    reservas = Reserva.search(centro_name, user_email).paginate(page, per_page, False)
+    reservas = Reserva.search(centro_name, 
+                              user_email).paginate(page, per_page, False)
     reservas_total = Reserva.search(centro_name, user_email).count()
     total_pages=int(math.ceil(reservas_total/per_page))
-    return render_template("reserva/index.html",  reservas=reservas, total_pages=total_pages)
+    
+    return render_template("reserva/index.html",  
+                           reservas=reservas, 
+                           total_pages=total_pages)
