@@ -1,5 +1,5 @@
 from datetime import date, time, timedelta
-from app.helpers.forms import TurnoForm
+from app.helpers.forms import TurnoAPIForm
 
 
 def checkData(form_request, id):
@@ -7,6 +7,12 @@ def checkData(form_request, id):
 
     #Chequear que el id del centro sea el mismo que el parametro
     if id != form_request.get('centro_id'):
+        return False
+
+    #Hacer la validaciones de los tiempos
+    form = TurnoAPIForm(form_request)
+
+    if not form.validate():
         return False
     
     #Chequear que el tiempo tenga diferencia de 30 minutos
@@ -19,18 +25,10 @@ def checkData(form_request, id):
         timedelta(
             hours=start_time.hour, 
             minutes=start_time.minute))
+    
     if diferencia != timedelta(seconds=1800):
         return False
-
-    #Hacer la validaciones de los tiempos
-    form = TurnoForm(csrf_enabled=False)
-    form.start_time.data = time.fromisoformat(form_request.get('hora_inicio'))
-    form.date.data = date.fromisoformat(form_request.get('fecha'))
-    form.center_id.data = form_request.get('centro_id')
-
-    if form.validate():
-        return True
     else:
-        return False
+        return True
     
     

@@ -187,10 +187,10 @@
       {% for i in range(total_pages)  %}
         {% if(page) %}
             <li class="page-item">
-              <form method="POST" action="{{url_for('user_search', page=i+1)}}">
+              <form method="GET" action="{{url_for('user_search')}}">
                 <input name="page" hidden value="{{ i+1 }}">
                 <input name="search" hidden value="{{ search }}">
-                <input name="active" hidden value="{{ active}}">
+                <input name="active" hidden value="{{ active }}">
                 <button class="page-link" type="submit" >{{ i+1 }}</button>
               </form> 
             </li>
