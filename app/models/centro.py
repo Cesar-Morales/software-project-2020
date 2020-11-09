@@ -34,6 +34,26 @@ class Centro(db.Model):
         """Metodo que devuelve todos los centros creados en la base de datos: sin filtros"""
         return db.session.query(Centro).all()
 
+    def create(requestForm):
+        nombre = requestForm.nombre.data
+        direccion =  requestForm.direccion.data
+        telefono =  requestForm.telefono.data
+        horarios =  requestForm.horarios.data
+        municipalidad =  requestForm.municipalidad.data
+        web =  requestForm.web.data
+        email =  requestForm.email.data
+        coordenadas =  requestForm.coordenadas.data
+        instrucciones =  requestForm.instrucciones.data
+        tipo =  requestForm.tipo.data
+        estado =  requestForm.estado.data
+        nuevo =Centro(
+                    email=email, name=nombre, location=direccion,
+                    start_time='06:30', final_time='17:00',municipality= municipalidad, web=web,
+                    phone_number=telefono,pdf_name=instrucciones,coordinates = coordenadas, estado = 'aceptado',tipoId = 1)
+        db.session.add(nuevo)
+        db.session.commit()
+        return True
+
     def getAllTurnos(id):
         centro = db.session.query(Centro).filter_by(id=id).first()
         return centro.turnos

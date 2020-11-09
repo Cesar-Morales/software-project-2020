@@ -35,9 +35,12 @@ app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
 app.add_url_rule("/config", "config_index", config.index)
 app.add_url_rule("/config", "config_edit", config.edit, methods=["POST"])
 
+
 # Rutas de Centros
 app.add_url_rule("/config/centers","config_center_index",config.center_index)
 app.add_url_rule("/centros/nuevo","centros_new",center.new_center)
+app.add_url_rule("/centros/create", "center_create", center.create, methods=["POST"])
+
 #Rutas de turnos
 app.add_url_rule("/centros/<int:id>/turnos/<int:page>", "turno_index", turno.index)
 app.add_url_rule("/centros/<int:id>/turnos/new", "turno_new", turno.new)

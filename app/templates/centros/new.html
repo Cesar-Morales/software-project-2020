@@ -9,7 +9,7 @@
     <div class="col-sm-12 col-12 col-md-8 col-lg-12 p-4 rounded" style="background: #cccccc">
       <h1 style="text-align: center">Crear un Centro </h1>
       <hr>
-      <form action="" method="POST" >
+      <form action="{{ url_for('center_create') }}" method="POST" >
         {{ form.csrf_token }}
         <div class="row">
           <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
@@ -104,6 +104,7 @@
          
           <div class="mt-5 col-12 mb-3 col-sm-12 col-md-12 col-lg-12">
             <div class="row ml-3">
+              {{ form.submit(class="btn col-3 btn-success btn-sm") }}
               <div class="col-1"></div>
               <button class="btn col-3 btn-danger btn-sm" type="reset">Limpiar</button>
               <div class="col-1"></div>

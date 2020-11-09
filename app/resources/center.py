@@ -1,6 +1,7 @@
 from flask import redirect, render_template, request
 from flask import url_for, session, abort, flash
 from app.models.user import User,Rol
+from app.models.centro import Centro
 from app.helpers.auth import authenticated
 from sqlalchemy.orm import sessionmaker
 from app import db
@@ -21,4 +22,15 @@ def new_center():
     #     flash("No posee los permisos necesarios para crear usuarios")
     #     return redirect(url_for("user_index"))
     form = CenterNewForm()
-    return render_template("centros/new.html", form = form) 
+    return render_template("centros/new.html", form = form)
+
+@login_required
+def create():  
+    form = CenterNewForm()
+    if form.validate():
+        if Centro.create(form):
+            flash("Centro creado correctamente")
+        else:
+            flash("Ocurrio un error, intente nuevamente.")
+        return redirect(url_for("config_center_index"))
+    return render_template("config/centers.html", form=form) 

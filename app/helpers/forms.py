@@ -90,6 +90,7 @@ class CenterNewForm(FlaskForm):
         instrucciones = StringField("Instrucciones")
         tipo = StringField("Tipo")
         estado = StringField("Estado")
+        submit = SubmitField('Crear')    
 
 class TurnoForm(FlaskForm):
     """Clase que se encarga de generar formulario para edicion y creacion de 
