@@ -12,10 +12,10 @@
 			<div class="wrap-table100">
         <h1 style="text-align: center">Centros de Ayuda Publicados</h1>
         <button id="public" onclick="mostrarPublicados()">Mostrar Publicados</button>
-        <button onclick="">Mostrar Pendientes</button>
+        <button id="pendant" onclick="mostrarPendientes()">Mostrar Pendientes</button>
         <hr>
         <div class="table100"> 
-          <table id="pendientes" style="display:none">
+          <table id="pendientes" style="visibility:hidden">
             <thead class="centros-head">
               <tr>
                 <th class="column1" scope="col">Nombre</th>
@@ -51,7 +51,7 @@
               {% endfor %}
             </tbody>
           </table>
-          <table id="publicados"  style=visibility:hidden>
+          <table id="publicados"  style="visibility:hidden">
             <thead class="centros-head">
               <tr>
                 <th class="column1" scope="col">Nombre</th>
@@ -100,7 +100,39 @@
     </div>
 		</div>
     
-  
+    <script>
+      function mostrarPublicados(){
+    var x = document.getElementById("publicados");
+    var y = document.getElementById("pendientes");
+    if (y.style.visibility === "visible" ) 
+        y.style.visibility = "hidden";
+    if (x.style.visibility === "hidden") {
+        x.style.visibility = "visible";
+        document.getElementById('public').innerHTML='Ocultar Centros'
+    } else {
+        document.getElementById('public').innerHTML='Mostrar Centros'
+        x.style.visibility = "hidden";
+    }
+
+
+      }
+      function mostrarPendientes(){
+    var x = document.getElementById("pendientes");
+    var y = document.getElementById("publicados");
+    if (y.style.visibility === "visible" ) 
+        y.style.visibility = "hidden";
+    if (x.style.visibility === "hidden") {
+        x.style.visibility = "visible";
+        document.getElementById('pendant').innerHTML='Ocultar Pendientes'
+    } else {
+        document.getElementById('pendant').innerHTML='Mostrar Pendientes'
+        x.style.visibility = "hidden";
+    }
+
+
+      } 
+   
+    </script>
    
  
   {% else %}
