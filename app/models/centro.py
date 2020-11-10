@@ -60,10 +60,13 @@ class Centro(db.Model):
 
     def search(centro_name, option):
         if not centro_name and option != '':
+            
             centros = db.session.query(Centro).filter(Centro.estado == option)
+            
         elif option == '':
             centros = db.session.query(Centro).filter(Centro.name.like('%'+centro_name+'%'))
         else:
              centros = db.session.query(Centro).filter((Centro.estado == option)
                                                         & (Centro.name.like('%'+centro_name+'%')))
+            
         return centros 

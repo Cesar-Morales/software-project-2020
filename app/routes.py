@@ -57,7 +57,7 @@ app.add_url_rule("/centros/<int:centro_id>/turno/trash/<int:id>", "turno_trash",
 def home():
     form = SearchForm()
     formCenterSearch = centerSearchForm()
-    formCenterSearch.options.choices = ["Aceptados","Rechazados","Pendientes"]
+    formCenterSearch.options.choices = ["","aceptado","rechazado","pendiente"]
     site = Site.obtain_site()
     return render_template("home.html", form=form, site=site,centerForm = formCenterSearch)
 
