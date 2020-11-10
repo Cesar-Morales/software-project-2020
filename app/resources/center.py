@@ -35,7 +35,7 @@ def create():
         return redirect(url_for("config_center_index"))
     return render_template("config/centers.html", form=form)
 
-def search():
+def search(page=1):
     form = centerSearchForm()
     per_page = Site.page()
     centro_name = form.search.data

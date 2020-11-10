@@ -58,11 +58,12 @@ class Centro(db.Model):
         centro = db.session.query(Centro).filter_by(id=id).first()
         return centro.turnos
 
-    def search(parameter):
-        #Si no ingresan string a buscar, traigo todos los centros, verificando si mandaron activos o bloqueados.
-        nombre = parameter
-        if not nombre:
-            centros = db.session.query(Centro).all()
-        else: 
-            centros = db.session.query(Centro).filter(Centro.name.like('%'+nombre+'%'))
-        return centros    
+    def search(centro_name, option):
+      if not centro_name and option != '':
+            centros = db.session.query(Centro).filter(Centro.estado == option)
+        elif option == '':
+            centros = db.session.query(Centro).filter(Centro.name.like('%'+centro_name+'%'))
+            else:
+             centros = db.session.query(Centro).filter((Centro.estado == option)
+                                                        & (Centro.name.like('%'+centro_name+'%')))
+        return centros 
