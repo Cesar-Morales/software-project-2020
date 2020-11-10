@@ -33,4 +33,8 @@ def create():
         else:
             flash("Ocurrio un error, intente nuevamente.")
         return redirect(url_for("config_center_index"))
-    return render_template("config/centers.html", form=form) 
+    return render_template("config/centers.html", form=form)
+
+def search():
+    centros = Centro.search(request.form.get('nombre'))
+    return render_template("home.html", centros=centros)

@@ -9,7 +9,7 @@ from app.resources.api import turno as api_turno
 from app.helpers import auth as helper_auth
 from flask_wtf import FlaskForm
 from app.models.site import Site
-from app.helpers.forms import SearchForm
+from app.helpers.forms import SearchForm, centerSearchForm
 # Funciones que se exportan al contexto de Jinja2
 app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
 
@@ -40,6 +40,8 @@ app.add_url_rule("/config", "config_edit", config.edit, methods=["POST"])
 app.add_url_rule("/config/centers","config_center_index",config.center_index)
 app.add_url_rule("/centros/nuevo","centros_new",center.new_center)
 app.add_url_rule("/centros/create", "center_create", center.create, methods=["POST"])
+app.add_url_rule("/centros/busqueda", "center_search", center.search,methods=["POST"])
+
 
 #Rutas de turnos
 app.add_url_rule("/centros/<int:id>/turnos/<int:page>", "turno_index", turno.index)
@@ -53,8 +55,9 @@ app.add_url_rule("/centros/<int:centro_id>/turno/trash/<int:id>", "turno_trash",
 @app.route("/")
 def home():
     form = SearchForm()
+    formCenterSearch = centerSearchForm()
     site = Site.obtain_site()
-    return render_template("home.html", form=form, site=site)
+    return render_template("home.html", form=form, site=site,centerForm = formCenterSearch)
 
 # Rutas de API-rest
 app.add_url_rule("/centros/<id>/turnos_disponibles", "api_turno_index", api_turno.index, methods=["GET"])

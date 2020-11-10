@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, SubmitField, RadioField, HiddenField
+from wtforms.fields import StringField, SubmitField, RadioField, HiddenField, SelectField
 from wtforms.validators import DataRequired, NumberRange
 from wtforms.fields.html5 import EmailField, IntegerField, SearchField
 from wtforms.widgets.html5 import NumberInput
@@ -42,6 +42,13 @@ class ConfigForm(FlaskForm):
              choices=[(1, 'Habilitar'), (0, 'Deshabilitar')])
     submit = SubmitField('Editar')
 
+class centerSearchForm(FlaskForm):
+     search = SearchField(
+             'search',
+             render_kw={"placeholder": "Ingrese nombre de usuario a buscar"})
+     options = SelectField('Options')
+     submit = SubmitField('Buscar')
+        
 
 class SearchForm(FlaskForm):
     """Clase que se encarga de generar formulario para busqueda de usuarios para luego 

@@ -46,6 +46,8 @@
         <div class="col-2"></div>
       </div>
 
+
+     
       <div class="row color-dark">
         <div class="col-2"></div>
         <div class="col-8 col-lg-8 p-5">
@@ -57,15 +59,19 @@
             -->
             <div class="col-12 col-sm-12 col-md-3 col-lg-3 "></div>
             <form class="col-12 col-sm-12 col-md-6 col-lg-6" action="{{ url_for('user_search') }}" method="POST">
-            
+              {{ centerForm.csrf_token }}
+                {{ centerForm.search (class="col-12 mb-2") }}
+                {% for error in centerForm.search.errors %}
+                <span style="color: red;">{{ error }}</span>
+                {% endfor %}
                 <div class="row">                
                   <div class="col-2 col-md-4 "></div>
-                 
+                  {{ centerForm.options (class="col-12 mb-2") }}
                   <div class="col-md-4 col-2"></div>
               </div>
               <div class="row">
                   <div class="col-12 col-md-3 col-lg-3"></div>
-                 
+                  {{ centerForm.submit(class="col-12 col-md-6 col-lg-6") }}
                   <div class="col-12 col-md-3 col-lg-3"></div>
               </div>
             </form>
@@ -73,6 +79,7 @@
           </div>  
         </div>
         <div class="col-2"></div>
-      </div>  
+      </div>
+
     {% endif %}
 {% endblock %}
