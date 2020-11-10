@@ -44,7 +44,7 @@ def search(page=1):
     centros_total = Centro.search(centro_name, option).count()
     total_pages=int(math.ceil(centros_total/per_page))
     
-    return render_template("reserva/index.html",  
+    return render_template("centros/index.html",  
                            centros=centros, 
                            total_pages=total_pages)
  
