@@ -38,15 +38,13 @@ def create():
 def search():
     form = centerSearchForm()
     per_page = Site.page()
-    centro_name = form.centro_name.data
-    user_email = form.user_email.data
-    reservas = Reserva.search(centro_name, 
-                              user_email).paginate(page, per_page, False)
-    reservas_total = Reserva.search(centro_name, user_email).count()
-    total_pages=int(math.ceil(reservas_total/per_page))
+    centro_name = form.search.data
+    option = form.options.data
+    centros = Centro.search(centro_name,option).paginate(page, per_page, False)
+    centros_total = Centro.search(centro_name, option).count()
+    total_pages=int(math.ceil(centros_total/per_page))
     
     return render_template("reserva/index.html",  
-                           reservas=reservas, 
+                           centros=centros, 
                            total_pages=total_pages)
-    centros = Centro.search(request.form.get('nombre'))
-    return render_template("home.html", centros=centros)
+ 
