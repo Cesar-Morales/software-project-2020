@@ -81,7 +81,7 @@ class Turno(db.Model):
         turno = Turno.buscarTurno(form)
         # Creacion del horario de finalización
         final_time = Turno.crearHorarioDeFinalizacion(form.hora_inicio.data)
-        if turno:
+        if (turno and turno.id != id):
             # El turno ya existe
             return False
         else:
