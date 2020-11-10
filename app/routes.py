@@ -41,6 +41,7 @@ app.add_url_rule("/config/centers","config_center_index",config.center_index)
 app.add_url_rule("/centros/nuevo","centros_new",center.new_center)
 app.add_url_rule("/centros/create", "center_create", center.create, methods=["POST"])
 app.add_url_rule("/centros/busqueda", "center_search", center.search,methods=["POST"])
+app.add_url_rule("/centros/<int:page>", "center_search", center.search, methods=["POST"])
 
 
 #Rutas de turnos

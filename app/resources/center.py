@@ -9,7 +9,7 @@ from flask_login import current_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 from app.static.constantes import ITEMS_PERPAGE
 import json
-from app.helpers.forms import CenterNewForm
+from app.helpers.forms import CenterNewForm,centerSearchForm
 from app.validators.user_validators import check_permission
 from app.models.site import Site
 import math
@@ -36,5 +36,17 @@ def create():
     return render_template("config/centers.html", form=form)
 
 def search():
+    form = centerSearchForm()
+    per_page = Site.page()
+    centro_name = form.centro_name.data
+    user_email = form.user_email.data
+    reservas = Reserva.search(centro_name, 
+                              user_email).paginate(page, per_page, False)
+    reservas_total = Reserva.search(centro_name, user_email).count()
+    total_pages=int(math.ceil(reservas_total/per_page))
+    
+    return render_template("reserva/index.html",  
+                           reservas=reservas, 
+                           total_pages=total_pages)
     centros = Centro.search(request.form.get('nombre'))
     return render_template("home.html", centros=centros)
