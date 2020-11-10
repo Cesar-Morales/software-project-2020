@@ -45,6 +45,10 @@ class Centro(db.Model):
     def getAll():
         return db.session.query(Centro).filter_by(estado='aceptado')
 
+    def getState(id):
+        centro = db.session.query(Centro).filter_by(id=id).first()
+        return centro.estado
+
 class CentroSchema(Schema):
     class Meta:
         model = Centro
