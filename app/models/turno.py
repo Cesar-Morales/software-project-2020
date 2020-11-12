@@ -2,6 +2,7 @@
 Turnos creados por operator para que luego en la app publica seleccionen
 """
 from app import db
+from sqlalchemy import asc
 from datetime import time, timedelta, date, datetime
 
 class Turno(db.Model):
@@ -20,9 +21,9 @@ class Turno(db.Model):
 
 
     def buscarTurno(form):
-        start_time = form.start_time.data
-        date = form.date.data
-        center_id = int(form.center_id.data)
+        start_time = form.hora_inicio.data
+        date = form.fecha.data
+        center_id = int(form.centro_id.data)
 
         # Primero se revisa que el horario para la fecha no exista
         turno = db.session.query(Turno).filter_by(
@@ -45,27 +46,30 @@ class Turno(db.Model):
         # Datos recibidos del formulario
         turno = Turno.buscarTurno(form)
         # Creacion del horario de finalización
-        final_time = Turno.crearHorarioDeFinalizacion(form.start_time.data)
+        final_time = Turno.crearHorarioDeFinalizacion(form.hora_inicio.data)
 
         if turno:
             # El turno ya existe
             return False
         else:
             # Se crea el nuevo turno
-            turno = Turno(centro_id=int(form.center_id.data),
-                          start_time=form.start_time.data.strftime("%H:%M:%S"),
+            turno = Turno(centro_id=int(form.centro_id.data),
+                          start_time=form.hora_inicio.data.strftime("%H:%M:%S"),
                           final_time=final_time.strftime("%H:%M:%S"),
-                          date=form.date.data.strftime("%Y-%m-%d"))
+                          date=form.fecha.data.strftime("%Y-%m-%d"))
             db.session.add(turno)
             db.session.commit()
             return True
 
 
     def getTurnosByDate(centro_id):
-        dosDiasFuturo = date.today() + timedelta(days=2)
-        return Turno.query.filter((Turno.date >= date.today().strftime("%Y-%m-%d"))
-                                            & (Turno.date <= dosDiasFuturo.strftime("%Y-%m-%d"))
-                                            & (Turno.centro_id == centro_id))
+        dos_dias_futuro = date.today() + timedelta(days=2)
+        turnos = Turno.query.filter(
+            (Turno.date >= date.today().strftime("%Y-%m-%d")) & 
+            (Turno.date <= dos_dias_futuro.strftime("%Y-%m-%d")) & 
+            (Turno.centro_id == centro_id) &
+            (Turno.selected == False))
+        return turnos.order_by(asc(Turno.date)).order_by(asc(Turno.start_time))
 
 
     def buscarTurnoPorId(id):
@@ -76,7 +80,7 @@ class Turno(db.Model):
         # Datos recibidos del formulario
         turno = Turno.buscarTurno(form)
         # Creacion del horario de finalización
-        final_time = Turno.crearHorarioDeFinalizacion(form.start_time.data)
+        final_time = Turno.crearHorarioDeFinalizacion(form.hora_inicio.data)
         if turno:
             # El turno ya existe
             return False
@@ -84,9 +88,9 @@ class Turno(db.Model):
             # Una vez que sabemos que no existe la data para el 
             # centro nos lo traemos y lo modificamos
             turno = Turno.buscarTurnoPorId(id)
-            turno.start_time = form.start_time.data.strftime("%H:%M:%S")
+            turno.start_time = form.hora_inicio.data.strftime("%H:%M:%S")
             turno.final_time = final_time.strftime("%H:%M:%S")
-            turno.date = form.date.data.strftime("%Y-%m-%d")
+            turno.date = form.fecha.data.strftime("%Y-%m-%d")
             db.session.commit()
             return True
 

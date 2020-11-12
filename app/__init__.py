@@ -9,6 +9,7 @@ from config import config
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from datetime import date
+from flask_marshmallow import Marshmallow
 
 #Filtro para formatear la fecha. HAY QUE CAMBIAR ESTO DE LUGAR CREO
 def datetimeformat(value, format='%d-%m-%Y'):
@@ -27,6 +28,9 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Carga de la configuración
 env = environ.get("FLASK_ENV")
 app.config.from_object(config[env])
+#Para que JSON no ordene las keys
+app.config['JSON_SORT_KEYS'] = False
+app.config['JSON_AS_ASCII'] = False
 
 #Registro del filtro para formatear fechas
 app.jinja_env.filters['datetimeformat'] = datetimeformat
@@ -49,8 +53,11 @@ uri = ('mysql://' + app.config["DB_USER"] + ':' + app.config["DB_PASS"]
 app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = uri
 
-# Configure db
-db = SQLAlchemy(app)  
+#Configure db
+db = SQLAlchemy(app)
+
+#Configurar marshmallow
+ma = Marshmallow(app)
 
 #Importar creacion inicial de la base de datos
 from app import database_populate

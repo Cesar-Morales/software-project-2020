@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block title %}Reservas{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+
+<div class="row">
+  <div class="col-2"></div>
+  <div class="col-sm-12 col-12 col-md-12 col-lg-8 p-4 rounded" style="background: #cccccc">
+    <h1 style="text-align: center">Reservas</h1>
+    <hr>
+    <div class="container">
+      {% if reservas.items|length %}
+        <table class="col-12 table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Centro</th>
+              <th scope="col">Dia-Mes-Año</th>
+              <th scope="col">Desde</th>
+              <th scope="col">Hasta</th>
+              <th scope="col">Email</th>
+            </tr>
+          </thead>
+          <tbody> 
+            {% for reserva in reservas.items %}
+              <tr>
+                <td>{{reserva.centro.name}}</td>
+                <td>{{ reserva.date|datetimeformat() }}</td>
+                <td>{{reserva.start_time}}Hs</td>
+                <td>{{reserva.final_time}}Hs</td>
+                <td>{{reserva.email}}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}  
+        <div class="p-3 m-4">
+          <h3 style="text-align: center">No se encontraron reservas</h3>
+        </div>
+      {% endif %}
+    </div>
+    <div class="row">
+      <div class="col-4"></div>
+      <a class="btn btn-dark col-12 col-sm-4 btn-sm" type="button" href="{{ url_for('home') }}">Volver</a>
+      <div class="col-4"></div>
+    </div>
+  </div>
+  <div class="col-2"></div>
+</div>
+{% endblock %}
