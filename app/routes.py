@@ -54,7 +54,11 @@ def home():
     form.page.data = 1
     form_reserva = ReservaSearch()
     reservas = Reserva.getAll()
-    form_reserva.user_email.choices = [("", "---")] + [(reserva.email, reserva.email) for reserva in reservas]
+    emails = []
+    for reserva in reservas:
+        emails.append(reserva.email)
+    emails = list(dict.fromkeys(emails))
+    form_reserva.user_email.choices = [("", "---")] + [(email, email) for email in emails]
     site = Site.obtain_site()
     return render_template("home.html", form=form, form_reserva=form_reserva, site=site)
 
