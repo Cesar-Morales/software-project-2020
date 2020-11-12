@@ -87,7 +87,6 @@ class UserForm(FlaskForm):
     password = StringField(
             'Contraseña',
             validators=[DataRequired('Debe insertar una contraseña')])
-    idUser = HiddenField('idUser')    
     image_name = StringField('NombreImagen')
 
 class TurnoForm(FlaskForm):
@@ -111,6 +110,7 @@ class TurnoForm(FlaskForm):
                                   min=date.today() + timedelta(days=1), 
                                   max=date.today() + timedelta(days=2*365)), 
                         DataRequired('Falta fecha')])
+    idTurno = HiddenField('idTurno')
     submit = SubmitField('Confirmar')
 
     def validate_start_time(form, field):

@@ -16,21 +16,27 @@ from datetime import time, date, datetime ,timedelta
 @login_required
 def index(id=1, page=1):
     """Funcion que muestra el listado de turnos para un determinado centro """
+    if not check_permission('turno_index'):
+        flash("No posee los permisos necesario para poder ver la lista de turnos")
+        return redirect(url_for("home"))
     per_page = Site.page()
     center_state = Centro.getState(id)
     total = Turno.getTurnosByDate(id).count()
     turnos = Turno.getTurnosByDate(id).paginate(page, per_page, False)
     total_pages=int(math.ceil(total/per_page))
-    return render_template('turno/index.html', 
-                            turnos=turnos, 
-                            total_pages=total_pages, 
-                            center_state=center_state, 
+    return render_template('turno/index.html',
+                            turnos=turnos,
+                            total_pages=total_pages,
+                            center_state=center_state,
                             id=id)
 
 
 @login_required
 def new(id=1):
     """Funcion que muestra el listado de turnos para un determinado centro """
+    if not check_permission('turno_new'):
+        flash("No posee los permisos necesario para crear un turno")
+        return redirect(url_for("turno_index"))
     form = TurnoForm()
     form.centro_id.data = id
     return render_template('turno/new.html', form=form)
@@ -39,6 +45,9 @@ def new(id=1):
 @login_required
 def create():
     """Funcion que crea un nuevo turno para un determinado centro de ayuda"""
+    if not check_permission('turno_new'):
+        flash("No posee los permisos necesario para crear un turno")
+        return redirect(url_for("turno_index"))
     form = TurnoForm()
 
     if form.validate():
@@ -52,6 +61,9 @@ def create():
 
 @login_required
 def edit(centro_id, id):
+    if not check_permission('turno_update'):
+        flash("No posee los permisos necesario para editar un turno")
+        return redirect(url_for("turno_index"))
     form = TurnoForm()
     turno = Turno.buscarTurnoPorId(id)
     form.centro_id.data = turno.centro_id
@@ -62,6 +74,9 @@ def edit(centro_id, id):
 
 @login_required
 def update(id):
+    if not check_permission('turno_update'):
+        flash("No posee los permisos necesario para editar un turno")
+        return redirect(url_for("turno_index"))
 
     form = TurnoForm()
 
@@ -83,5 +98,8 @@ def trash(centro_id,id):
     Si alguna verificacion no pasa, se redirecciona segun corresponda. 
     Si pasa las verificaciones, informa estado de operacion segun 
     corresponda"""
+    if not check_permission('turno_destroy'):
+        flash("No posee los permisos necesario para editar un turno")
+        return redirect(url_for("turno_index"))
     Turno.trash(id)
     return redirect(url_for('turno_index', id=centro_id, page=1))

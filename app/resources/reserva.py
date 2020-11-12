@@ -15,7 +15,6 @@ import math
 
 @login_required
 def search(page=1):
-    
     form = ReservaSearch()
     per_page = Site.page()
     centro_name = form.centro_name.data
