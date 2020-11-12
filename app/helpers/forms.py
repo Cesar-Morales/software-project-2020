@@ -107,8 +107,8 @@ class TurnoForm(FlaskForm):
                         DataRequired('Falta horario de comienzo')])
     fecha = DateField(
             'Fecha', 
-            validators=[DateRange(message='Indique fecha de hoy o posterior', 
-                                  min=date.today(), 
+            validators=[DateRange(message='Indique fecha de mañana o posterior', 
+                                  min=date.today() + timedelta(days=1), 
                                   max=date.today() + timedelta(days=2*365)), 
                         DataRequired('Falta fecha')])
     submit = SubmitField('Confirmar')
