@@ -10,19 +10,21 @@ from app.validators.user_validators import check_permission
 from app.models.site import Site
 from app.helpers.forms import TurnoForm
 import math
-from datetime import time, date, timedelta
+from datetime import time, date, datetime ,timedelta
 
 
 @login_required
 def index(id=1, page=1):
     """Funcion que muestra el listado de turnos para un determinado centro """
     per_page = Site.page()
+    center_state = Centro.getState(id)
     total = Turno.getTurnosByDate(id).count()
     turnos = Turno.getTurnosByDate(id).paginate(page, per_page, False)
     total_pages=int(math.ceil(total/per_page))
     return render_template('turno/index.html', 
                             turnos=turnos, 
                             total_pages=total_pages, 
+                            center_state=center_state, 
                             id=id)
 
 
@@ -30,7 +32,7 @@ def index(id=1, page=1):
 def new(id=1):
     """Funcion que muestra el listado de turnos para un determinado centro """
     form = TurnoForm()
-    form.center_id.data = id
+    form.centro_id.data = id
     return render_template('turno/new.html', form=form)
 
 
@@ -44,7 +46,7 @@ def create():
             flash('Turno creado correctamente')
         else:
             flash('El horario ya se encuentra ocupado para la fecha')
-        return redirect(url_for('turno_index', id=form.center_id.data, page=1))
+        return redirect(url_for('turno_index', id=form.centro_id.data, page=1))
     return render_template('turno/new.html', form=form)
 
 
@@ -52,24 +54,26 @@ def create():
 def edit(centro_id, id):
     form = TurnoForm()
     turno = Turno.buscarTurnoPorId(id)
-    form.center_id.data = turno.centro_id
-    form.start_time.data = time.fromisoformat(turno.start_time)
-    form.date.data = date.fromisoformat(turno.date)
+    form.centro_id.data = turno.centro_id
+    form.hora_inicio.data = time.fromisoformat(turno.start_time)
+    form.fecha.data = date.fromisoformat(turno.date)
     return render_template('turno/edit.html', form=form, id=id)
 
 
 @login_required
 def update(id):
+
     form = TurnoForm()
+
     if form.validate():
         if Turno.update(form, id):
             flash('Turno modificado correctamente')
         else:
             flash('El horario ya se encuentra ocupado para la fecha')
         return redirect(url_for('turno_index', 
-                        id=form.center_id.data, 
+                        id=form.centro_id.data, 
                         page=1))
-    return render_template('turno/edit.html', form=form)
+    return render_template('turno/edit.html', form=form, id=id)
 
 
 @login_required

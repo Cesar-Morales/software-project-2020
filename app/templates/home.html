@@ -18,9 +18,10 @@
             <!--
               formulario para busqueda de usuarios por nombre de usuario o estado activo/bloqueado
             -->
+
             <div class="col-12"></div>
-            <form autocomplete="off" class="col-12" action="{{ url_for('user_search') }}" method="POST">
-              {{ form.csrf_token }}
+            <form autocomplete="off" class="col-12" action="{{ url_for('user_search', page=1) }}" method="GET">
+                {{ form.page }}
                 {{ form.search (class="col-12 mb-2") }}
                 {% for error in form.search.errors %}
                 <span style="color: red;">{{ error }}</span>
@@ -35,7 +36,7 @@
               </div>
               <div class="row">
                   <div class="col-2 col-sm-4"></div>
-                  {{ form.submit(class="btn btn-sm btn-light col-12 col-sm-4") }}
+                    <input class="btn btn-sm btn-light col-12 col-sm-4" type="submit" value="Buscar">
                   <div class="col-2 col-sm-4"></div>
               </div>
             </form>

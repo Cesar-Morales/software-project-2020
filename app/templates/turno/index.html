@@ -24,7 +24,6 @@
           </thead>
           <tbody> 
             {% for turno in turnos.items %}
-              {% if turno.selected == 0 %}
                 <tr>
                   <td>{{ turno.date|datetimeformat()  }}</td>
                   <td>{{turno.start_time}}</td>
@@ -65,21 +64,28 @@
                     </div>
                   </td>
                 </tr>
-              {% endif %}
             {% endfor %}
           </tbody>
         </table>
-      {% else %}  
+      {% else %} 
         <div class="p-3 m-4">
-          <h3 style="text-align: center">Este centro no posee turnos</h3>
+          {% if center_state == 'pendiente' %}
+            <h3 class="bg-warning p-3 m-4" style="text-align: center">Este centro se encuentra pendiente de aprobación</h3>
+          {% elif center_state == 'rechazado' %}
+            <h3 style="text-align: center">Este centro está rechazado</h3>
+          {% else %}
+            <h3 style="text-align: center">Este centro no posee turnos</h3>
+          {% endif %}
         </div>
       {% endif %}
     </div>
+    {% if center_state == 'aceptado' %}
     <div class="row">
         <div class="col-4"></div>  
         <a href="{{ url_for('turno_new', id=id) }}" class="col-12 col-md-4 btn btn-success btn-sm">Nuevo</a>
         <div class="col-4"></div>  
     </div>
+    {% endif %}
   </div>
   <div class="col-2"></div>
 </div>
