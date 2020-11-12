@@ -11,16 +11,16 @@
   {% endif %} 
   {% if is_authenticated(session) %}
       <div class="row color-dark">
-        <div class="col-2"></div>
-        <div class="col-8 col-lg-8 p-5">
+        <div class="col-12 col-md-6 p-5">
           <h3 style="text-align: center">Busqueda de Usuarios</h3>
           <hr>
           <div class="row">
             <!--
               formulario para busqueda de usuarios por nombre de usuario o estado activo/bloqueado
             -->
-            <div class="col-12 col-sm-12 col-md-3 col-lg-3 "></div>
-            <form autocomplete="off" class="col-12 col-sm-12 col-md-6 col-lg-6" action="{{ url_for('user_search', page=1) }}" method="GET">
+
+            <div class="col-12"></div>
+            <form autocomplete="off" class="col-12" action="{{ url_for('user_search', page=1) }}" method="GET">
                 {{ form.page }}
                 {{ form.search (class="col-12 mb-2") }}
                 {% for error in form.search.errors %}
@@ -35,21 +35,18 @@
                   <div class="col-md-4 col-2"></div>
               </div>
               <div class="row">
-                  <div class="col-12 col-md-3 col-lg-3"></div>
-                    <input class="col-12 col-md-6 col-lg-6" type="submit" value="Buscar">
-                  <div class="col-12 col-md-3 col-lg-3"></div>
+                  <div class="col-2 col-sm-4"></div>
+                    <input class="btn btn-sm btn-light col-12 col-sm-4" type="submit" value="Buscar">
+                  <div class="col-2 col-sm-4"></div>
               </div>
             </form>
             <div class="col-12 col-sm-12 col-md-3 col-lg-3 "></div>
           </div>  
         </div>
-        <div class="col-2"></div>
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-2 col-lg-2"></div>
-        <div class="col-8 col-lg-8 p-4 color-dark rounded">
+      
+        <div class="col-12 col-md-6 p-5">
           <h3 style="text-align: center">Busqueda de Reservas</h3>
+          <hr>
           <div class="row">
             <!--
               formulario para busqueda de reservas por email de persona o nombre de centro
@@ -69,14 +66,13 @@
                   {% endfor %}
               </div>
               <div class="row">
-                  <div class="col-4"></div>
-                  {{ form_reserva.submit(class="col-4") }}
-                  <div class="col-4"></div>
+                  <div class="col-2 col-sm-4"></div>
+                  {{ form_reserva.submit(class="btn btn-sm btn-light col-12 col-sm-4") }}
+                  <div class="col-4 col-sm-4"></div>
               </div>
             </form>
           </div>  
         </div>
-        <div class="col-2 "></div>
       </div>
     {% endif %}
 {% endblock %}
