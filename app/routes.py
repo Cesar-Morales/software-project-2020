@@ -42,6 +42,10 @@ app.add_url_rule("/centros/nuevo","centros_new",center.new_center)
 app.add_url_rule("/centros/create", "center_create", center.create, methods=["POST"])
 app.add_url_rule("/centros/busqueda", "center_search", center.search,methods=["POST"])
 app.add_url_rule("/centros/<int:page>", "center_search", center.search, methods=["POST"])
+app.add_url_rule("/centros/accept", "center_accept", center.accept, methods=["POST"])
+app.add_url_rule("/centros/trashOrReject", "center_trashOrReject", center.trashOrReject, methods=["POST"])
+
+app.add_url_rule("/centros/map","center_map",center.map)
 
 
 #Rutas de turnos
