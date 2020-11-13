@@ -55,8 +55,7 @@ class CenterSearchForm(FlaskForm):
              'search',
              render_kw={"placeholder": "Ingrese nombre de usuario a buscar"})
      options = SelectField('Options')
-     submit = SubmitField('Buscar')
-        
+     submit = SubmitField('Buscar')      
 
 class SearchForm(FlaskForm):
     """ Clase que se encarga de generar formulario para busqueda de usuarios 
@@ -160,7 +159,6 @@ class TurnoAPIForm(TurnoForm):
     telefono_donante = StringField(
             'Numero de telefono',
             validators=[DataRequired('El telefono no esta presente')])
-
 
 class ReservaSearch(FlaskForm):
 
