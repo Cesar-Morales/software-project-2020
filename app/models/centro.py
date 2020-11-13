@@ -24,7 +24,7 @@ class Centro(db.Model):
     web = db.Column(db.String(80), default='')
     email = db.Column(db.String(80), default='')
     pdf_name = db.Column(db.String(100), default='')
-    coordinates = db.Column(db.String(100), nullable=False)
+    coordinates = db.Column(db.String(100))
     estado = db.Column(db.String(80), default='pendiente')
 
     tipoId = db.Column(db.Integer, db.ForeignKey('tipo.id'))

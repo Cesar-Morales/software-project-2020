@@ -4,6 +4,8 @@ Configuración de la aplicación
 
 from os import path, environ
 from flask import Flask
+import sys
+print(sys.path)
 from flask_session import Session
 from config import config
 from flask_sqlalchemy import SQLAlchemy
