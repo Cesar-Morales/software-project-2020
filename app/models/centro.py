@@ -40,17 +40,17 @@ class Centro(db.Model):
 
     def create(requestForm):
         nombre = requestForm.nombre.data
-        direccion =  requestForm.direccion.data
-        telefono =  requestForm.telefono.data
-        horarios =  requestForm.horarios.data
-        municipalidad =  requestForm.municipalidad.data
-        web =  requestForm.web.data
-        email =  requestForm.email.data
-        coordenadas =  requestForm.coordenadas.data
-        instrucciones =  requestForm.instrucciones.data
-        tipo =  requestForm.tipo.data
-        estado =  requestForm.estado.data
-        nuevo =Centro(
+        direccion = requestForm.direccion.data
+        telefono = requestForm.telefono.data
+        horarios = requestForm.horarios.data
+        municipalidad = requestForm.municipalidad.data
+        web = requestForm.web.data
+        email = requestForm.email.data
+        coordenadas = requestForm.coordenadas.data
+        instrucciones = requestForm.instrucciones.data
+        tipo = requestForm.tipo.data
+        estado = requestForm.estado.data
+        nuevo = Centro(
                     email=email, name=nombre, location=direccion,
                     start_time='06:30', final_time='17:00',municipality= municipalidad, web=web,
                     phone_number=telefono,pdf_name=instrucciones,coordinates = coordenadas, estado = 'aceptado',tipoId = 1)

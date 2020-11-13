@@ -50,6 +50,7 @@ def edit():
         return redirect(url_for('home'))
     return render_template("config/index.html", form=form)
 
+@login_required
 def center_index():
     #como para empezar me traigo todos los centros cargados, para ver si funciona. 
     centers = Centro.getAll() 

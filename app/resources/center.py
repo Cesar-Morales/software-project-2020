@@ -13,6 +13,7 @@ from app.helpers.forms import CenterNewForm, CenterSearchForm
 from app.validators.user_validators import check_permission
 from app.models.site import Site
 import math
+
 @login_required
 def new_center():
 
@@ -34,7 +35,8 @@ def create():
             flash("Ocurrio un error, intente nuevamente.")
         return redirect(url_for("config_center_index"))
     return render_template("config/centers.html", form=form)
-
+    
+@login_required
 def search(page=1):
     form = CenterSearchForm()
     per_page = Site.page()
