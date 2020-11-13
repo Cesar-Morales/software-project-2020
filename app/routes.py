@@ -45,7 +45,8 @@ app.add_url_rule("/turno/update/<int:id>", "turno_update", turno.update, methods
 app.add_url_rule("/centros/<int:centro_id>/turno/trash/<int:id>", "turno_trash", turno.trash, methods=["POST"])
 
 # Rutas de reserva
-app.add_url_rule("/reservas/<int:page>", "reserva_search", reserva.search, methods=["POST"])
+app.add_url_rule("/reservas/<int:page>", "reserva_index", reserva.index, methods=["GET"])
+app.add_url_rule("/reservas/<int:page>", "reserva_search", reserva.search, methods=["GET"])
 
 # Ruta para el Home (usando decorator)
 @app.route("/")
