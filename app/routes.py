@@ -1,6 +1,7 @@
 from app import app
 from flask import render_template, send_from_directory
 from app.resources import user
+from app.resources import center
 from app.resources import auth
 from app.resources import config
 from app.resources import turno
@@ -11,7 +12,8 @@ from app.helpers import auth as helper_auth
 from flask_wtf import FlaskForm
 from app.models.site import Site
 from app.models.reseva import Reserva
-from app.helpers.forms import SearchForm, ReservaSearch
+from app.helpers.forms import SearchForm, ReservaSearch, CenterSearchForm
+
 # Funciones que se exportan al contexto de Jinja2
 app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
 
@@ -36,7 +38,14 @@ app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
 app.add_url_rule("/config", "config_index", config.index)
 app.add_url_rule("/config", "config_edit", config.edit, methods=["POST"])
 
-# Rutas de turnos
+# Rutas de Centros
+app.add_url_rule("/config/centers","config_center_index",config.center_index)
+app.add_url_rule("/centros/nuevo","centros_new",center.new_center)
+app.add_url_rule("/centros/create", "center_create", center.create, methods=["POST"])
+app.add_url_rule("/centros/busqueda", "center_search", center.search,methods=["POST"])
+app.add_url_rule("/centros/<int:page>", "center_search", center.search, methods=["POST"])
+
+#Rutas de turnos
 app.add_url_rule("/centros/<int:id>/turnos/<int:page>", "turno_index", turno.index)
 app.add_url_rule("/centros/<int:id>/turnos/new", "turno_new", turno.new)
 app.add_url_rule("/centros/<int:centro_id>/turnos/<int:id>/edit", "turno_edit", turno.edit)
@@ -59,8 +68,14 @@ def home():
         emails.append(reserva.email)
     emails = list(dict.fromkeys(emails))
     form_reserva.user_email.choices = [("", "---")] + [(email, email) for email in emails]
+    formCenterSearch = CenterSearchForm()
+    formCenterSearch.options.choices = ["","aceptado","rechazado","pendiente"]
     site = Site.obtain_site()
-    return render_template("home.html", form=form, form_reserva=form_reserva, site=site)
+    return render_template("home.html", 
+                            form=form, 
+                            form_reserva=form_reserva, 
+                            site=site, 
+                            centerForm = formCenterSearch)
 
 # Rutas de API-rest
 #Turnos
@@ -72,14 +87,11 @@ app.add_url_rule("/centros", "api_centro_index", api_centro.index, methods=["GET
 app.add_url_rule("/centros/<centro_id>", "api_centro_show", api_centro.show, methods=["GET"])
 app.add_url_rule("/centros", "api_centro_create", api_centro.create, methods=["POST"])
 
-
 #Rutas estaticas de las imagenes
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
                                filename)
-
-
 
 #Las respuestas no van a ser cacheadas
 @app.after_request

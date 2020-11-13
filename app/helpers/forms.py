@@ -50,6 +50,13 @@ class ConfigForm(FlaskForm):
              (0, 'Deshabilitar')])
     submit = SubmitField('Editar')
 
+class CenterSearchForm(FlaskForm):
+     search = SearchField(
+             'search',
+             render_kw={"placeholder": "Ingrese nombre de usuario a buscar"})
+     options = SelectField('Options')
+     submit = SubmitField('Buscar')
+        
 
 class SearchForm(FlaskForm):
     """ Clase que se encarga de generar formulario para busqueda de usuarios 
@@ -88,6 +95,21 @@ class UserForm(FlaskForm):
             'Contraseña',
             validators=[DataRequired('Debe insertar una contraseña')])
     image_name = StringField('NombreImagen')
+
+class CenterNewForm(FlaskForm):
+        """ sdadsad """
+        nombre = StringField('Nombre')
+        direccion = StringField("Nombre")
+        telefono = StringField("Telefono")
+        horarios = StringField("Horarios")
+        municipalidad = StringField("Municipalidad")
+        web = StringField("Web")
+        email = EmailField("Email")
+        coordenadas = StringField("Coordenadas")
+        instrucciones = StringField("Instrucciones")
+        tipo = StringField("Tipo")
+        estado = StringField("Estado")
+        submit = SubmitField('Crear')    
 
 class TurnoForm(FlaskForm):
     """ Clase que se encarga de generar formulario para edicion y creacion de 

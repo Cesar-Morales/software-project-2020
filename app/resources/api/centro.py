@@ -38,7 +38,7 @@ def index():
 
     #Obtner los centros y paginarlos
     per_page = Site.page()
-    centros = Centro.getAll().paginate(pagina, per_page, False)
+    centros = Centro.getAllAceptados().paginate(pagina, per_page, False)
     total = len(centros.items)
 
     #Donde se va a formar el json
