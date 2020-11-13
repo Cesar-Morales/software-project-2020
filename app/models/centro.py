@@ -20,7 +20,7 @@ class Centro(db.Model):
     phone_number = db.Column(db.String(50), nullable=False)
     start_time = db.Column(db.String(80), nullable=False, default='09:00')
     final_time = db.Column(db.String(80), nullable=False, default='16:00')
-    municipality = db.Column(db.String(80), nullable=False)
+    municipality = db.Column(db.String(80))
     web = db.Column(db.String(80), default='')
     email = db.Column(db.String(80), default='')
     pdf_name = db.Column(db.String(100), default='')
