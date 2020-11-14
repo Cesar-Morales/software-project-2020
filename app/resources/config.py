@@ -14,6 +14,7 @@ from app.validators.user_validators import check_permission
 def index():
     """Este metodo renderiza el template correspondiente a la configuracion del sitio. Se verifican los permisos necesarios, y que se este autenticado. Si no cumple 
     con alguno de los dos, se devuelve mensaje correspondiente."""
+    
     if not check_permission('config_show'):
         flash("No posee los permisos necesario para poder ver los datos del sitio")
         return redirect(url_for("home"))
@@ -32,10 +33,13 @@ def index():
 def edit():
     """Este metodo se encarga de intentar actualizar los datos del sitio, segun modificaciones correspondientes a formulario de edicion. Se verifican
     los permisos y autenticacion: si no pasan, se devuelve mensaje correspondiente. """
+    
     form = ConfigForm()
+    
     if not check_permission('config_update'):
         flash("No posee los permisos necesario para poder editar el sitio")
         return render_template("config/index.html", form=form)    
+    
     if form.validate():
         title = form.title.data
         description = form.description.data
@@ -46,6 +50,7 @@ def edit():
         return redirect(url_for('home'))
     return render_template("config/index.html", form=form)
 
+@login_required
 def center_index():
     #como para empezar me traigo todos los centros cargados, para ver si funciona. 
     centers = Centro.getAll() 

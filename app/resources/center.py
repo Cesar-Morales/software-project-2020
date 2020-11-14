@@ -9,10 +9,11 @@ from flask_login import current_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 from app.static.constantes import ITEMS_PERPAGE
 import json
-from app.helpers.forms import CenterNewForm,centerSearchForm
+from app.helpers.forms import CenterNewForm, CenterSearchForm
 from app.validators.user_validators import check_permission
 from app.models.site import Site
 import math
+
 @login_required
 def new_center():
 
@@ -37,7 +38,7 @@ def create():
 
 @login_required
 def search(page=1):
-    form = centerSearchForm()
+    form = CenterSearchForm()
     per_page = Site.page()
     centro_name = form.search.data
     option = form.options.data

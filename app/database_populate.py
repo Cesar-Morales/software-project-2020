@@ -51,6 +51,18 @@ if not user_operator:
     db.session.add(user_operator)
     db.session.commit()
 
+#Creacion user normal para probar permisos  
+user_normal = db.session.query(User).filter(or_(User.username == 'user', User.email == 'user@user.com')).first()
+if not user_normal:
+    user_normal = User(
+        email = 'user@user.com', 
+        last_name = 'Ezequiel', 
+        first_name = 'Urrutia', 
+        password = '123123', 
+        username = 'user')
+    db.session.add(user_normal)
+    db.session.commit()
+
 #Creacion de roles
 #Crea rol admin si no existe
 rol_admin = db.session.query(Rol).filter_by(name='admin').first()
@@ -155,7 +167,40 @@ permiso_user_show = db.session.query(Permiso).filter_by(
 if not permiso_user_show:
     permiso_user_show = Permiso(name='user_show')
     db.session.add(permiso_user_show)
-    db.session.commit() 
+    db.session.commit()
+
+#Permisos para modulo turnos
+permiso_turno_index = db.session.query(Permiso).filter_by(
+    name='turno_index'
+    ).first()
+if not permiso_turno_index:
+    permiso_turno_index = Permiso(name='turno_index')
+    db.session.add(permiso_turno_index)
+    db.session.commit()
+
+permiso_turno_new = db.session.query(Permiso).filter_by(
+    name='turno_new'
+    ).first()
+if not permiso_turno_new:
+    permiso_turno_new = Permiso(name='turno_new')
+    db.session.add(permiso_turno_new)
+    db.session.commit()
+
+permiso_turno_update = db.session.query(Permiso).filter_by(
+    name='turno_update'
+    ).first()
+if not permiso_turno_update:
+    permiso_turno_update = Permiso(name='turno_update')
+    db.session.add(permiso_turno_update)
+    db.session.commit()
+
+permiso_turno_destroy = db.session.query(Permiso).filter_by(
+    name='turno_destroy'
+    ).first()
+if not permiso_turno_destroy:
+    permiso_turno_destroy = Permiso(name='turno_destroy')
+    db.session.add(permiso_turno_destroy)
+    db.session.commit()
 
 #Creacion tipo de centros de ayuda    
 tipo1 = db.session.query(Tipo).filter_by(
@@ -184,9 +229,9 @@ if not centro_aceptado:
                      phone_number='4032-3243', 
                      start_time='06:30', 
                      final_time='17:00', 
-                     municipality='Quilmes', 
-                     coordinates='-34.72418 -58.25265', 
-                     estado='aceptado')
+                     estado='aceptado',
+                     web='',
+                     email='')
     db.session.add(centro_aceptado)
     db.session.commit()
 
@@ -198,9 +243,9 @@ if not centro_pendiente:
                      location='Calle 47', 
                      phone_number='221-874-3321', 
                      start_time='08:00', 
-                     final_time='16:00', 
-                     municipality='La plata', 
-                     coordinates='-34.92145 -57.95453')
+                     final_time='16:00',
+                     web='',
+                     email='')
     db.session.add(centro_pendiente)
     db.session.commit()
 
@@ -213,9 +258,9 @@ if not centro_rechazado:
                      phone_number='5432-5643', 
                      start_time='09:00', 
                      final_time='16:00', 
-                     municipality='Lanús', 
-                     coordinates='-34.69941 -58.39263', 
-                     estado='rechazado')
+                     estado='rechazado',
+                     web='',
+                     email='')
     db.session.add(centro_rechazado)
     db.session.commit()    
 
@@ -235,12 +280,22 @@ rol_admin.permisos.append(permiso_user_new)
 rol_admin.permisos.append(permiso_user_destroy)
 rol_admin.permisos.append(permiso_user_update)
 rol_admin.permisos.append(permiso_user_show)
+rol_admin.permisos.append(permiso_turno_index)
+rol_admin.permisos.append(permiso_turno_new)
+rol_admin.permisos.append(permiso_turno_update)
+rol_admin.permisos.append(permiso_turno_destroy)
+rol_operador.permisos.append(permiso_turno_index)
+rol_operador.permisos.append(permiso_turno_new)
+rol_operador.permisos.append(permiso_turno_update)
+rol_operador.permisos.append(permiso_turno_destroy)
 
 #Relacionar users con el roles
 user.roles.append(rol_admin)
 user.roles.append(rol_user)
 user_operator.roles.append(rol_user)
 user_operator.roles.append(rol_operador)
+user_normal.roles.append(rol_user)
 db.session.add(user)
 db.session.add(user_operator)
+db.session.add(user_normal)
 db.session.commit()

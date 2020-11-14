@@ -11,3 +11,6 @@ class Tipo(db.Model):
     name = db.Column(db.String(80), nullable=False)
 
     centros = db.relationship('Centro', backref='tipo', lazy='dynamic')
+
+    def searchById(id):
+        return db.session.query(Tipo).filter_by(id=id).first()

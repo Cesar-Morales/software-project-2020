@@ -15,13 +15,12 @@
 }
 
 #container {
-  width: 75%;
+  width: 100%;
   margin: 0 auto;
   background-color: #FFF;
-  padding: 20px 40px;
-  border: solid 1px black;
   margin-top: 20px;
-  min-height: 400px;
+  height: 100%;
+  padding-bottom: 100px;
 }
 
 a.link {
@@ -43,7 +42,7 @@ a.link {
   margin-right: 5px
 }
 .footer {
-  position: fixed;
+  position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
@@ -432,6 +431,19 @@ background-size:100%;
 100% {
   left: 100%;
 }
+}
+
+#wrapper {
+  min-height: 100%;
+  position: relative;
+}
+
+#footer {
+  width: 100%;
+  height: 81px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 
 /*************footer End*****************/

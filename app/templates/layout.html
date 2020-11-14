@@ -13,24 +13,26 @@
     {% endblock %}
   </head>
   <body>
-    <div id="navbar">
-      {% include "navbar.html" %}
-    </div>
-    <div class="row">
-     
-          {% include "toast.html" %}
-      
-      <div class="col-12">
-        
-          {% block content %}
-          {% endblock %}
-       
+    <div id="wrapper">
+      <div id="navbar">
+        {% include "navbar.html" %}
       </div>
-      <div class="col-lg-3 col-md-12 col-sm-12"></div>
+      <div class="row" id="container">
+      
+            {% include "toast.html" %}
+
+        <div class="col-12">
+
+            {% block content %}
+            {% endblock %}
+        
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12"></div>
+      </div>
+      <div id="footer">
+        {% include "footer.html" %} 
+      </div>
     </div>
-  
-      {% include "footer.html" %} 
-  
     <!--Bootstrap scripts-->
     
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

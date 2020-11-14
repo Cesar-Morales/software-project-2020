@@ -4,9 +4,9 @@ from flask import jsonify
 from flask import request
 from app.models.centro import Centro
 from app.models.reseva import Reserva
+from app.helpers.reserva import checkData
 from flask import request
 from datetime import date
-from flask import abort
 
 def index(id):
     """ Endpoint para devolver todos los turnos de un centro """
@@ -16,15 +16,16 @@ def index(id):
 
     #Obtener la fecha si viene como parametro
     if request.args.get('fecha'):
-        search_date = date.fromisoformat(request.args.get('fecha'))    
+        search_date = date.fromisoformat(request.args.get('fecha'))
+            
 
     #Obtner los turnos del centro segun la fecha    
-    turnos = Centro.getAllTurnosByDate(id)
+    turnos = Centro.getAllTurnosById(id)
     data = []
 
     #Armar la lista para convertirla a json
     for turno in turnos:
-        if turno.date == search_date.strftime("%Y-%m-%d"):
+        if turno.date == search_date.strftime("%Y-%m-%d") and not turno.selected:
             data.append(
                 {"centro_id": turno.centro_id, 
                 "hora_inicio": turno.start_time, 
@@ -35,9 +36,12 @@ def index(id):
     return jsonify(turnos=data), 200
 
 def reserva(id):
+    """ Endpoint para reservar un turno. No verifica que sea multiplo 
+    de 30 o que el id del centro fue enviado """
 
     #Crear la reserva del turno
-    if Reserva.create(request.form):
+    if (checkData(request.form,id) and
+        Reserva.create(request.form)):
 
         #Crear el json a devolver
         data = []
@@ -54,4 +58,4 @@ def reserva(id):
 
         return jsonify(atributos=data), 201
     else:
-        return "abort(404)"
+        return jsonify({"error_message": "error al crear reserva"}), 404
