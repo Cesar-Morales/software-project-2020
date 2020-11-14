@@ -6,107 +6,148 @@
 {% block content %}
   {% if centers|length %} 
 
-  <div class="limiter">
-
-		<div class="container-table100">
-			<div class="wrap-table100">
-        <h1 style="text-align: center">Centros de Ayuda Publicados</h1>
-        <button id="public" onclick="mostrarPublicados()">Mostrar Publicados</button>
-        <button id="pendant" onclick="mostrarPendientes()">Mostrar Pendientes</button>
-        <hr>
-        <div class="table100"> 
-          <table id="pendientes" style="visibility:hidden">
-            <thead class="centros-head">
-              <tr>
-                <th class="column1" scope="col">Nombre</th>
-                <th class="column2" scope="col">Direccion</th>
-                <th class="column3" scope="col">Telefono</th>
-                <th class="column4" scope="col">Horario De Atencion</th>
-                <th class="column5" scope="col">Municipalidad</th>
-                <th class="column6" scope="col">Web</th>
-                <th class="column10" scope="col">Tipo</th>
-                <th class="column11" scope="col">Acciones</th>
-              </tr>
-            </thead>
-            <tbody> 
-              {% for center in centers %}
-                {% if  center.estado == 'pendiente' %}                 
-                  <tr>
-                    <td class="column1">{{center.name}}</td>
-                    <td class="column2">{{ center.location }}</td>
-                    <td class="column3">{{ center.phone_number }}</td>
-                    <td class="column4">{{ center.start_time }} A {{center.final_time}}</td>
-                    <td class="column5">{{center.municipality}}</td>
-                    <td class="column6">{{center.web}}</td>
-                    <td class="column10">{{center.tipo.name}}</td>
-                    <td class="column11"><input type="hidden" id="activar" name="activar" hidden value="{{center.id}}"> 
-                      <button data-id="{{center.id}}" class="btn btn-success btn-sm" onclick="ConfirmAccept(this)">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-unlock" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                          <path fill-rule="evenodd" d="M9.655 8H2.333c-.264 0-.398.068-.471.121a.73.73 0 0 0-.224.296 1.626 1.626 0 0 0-.138.59V14c0 .342.076.531.14.635.064.106.151.18.256.237a1.122 1.122 0 0 0 .436.127l.013.001h7.322c.264 0 .398-.068.471-.121a.73.73 0 0 0 .224-.296 1.627 1.627 0 0 0 .138-.59V9c0-.342-.076-.531-.14-.635a.658.658 0 0 0-.255-.237A1.122 1.122 0 0 0 9.655 8zm.012-1H2.333C.5 7 .5 9 .5 9v5c0 2 1.833 2 1.833 2h7.334c1.833 0 1.833-2 1.833-2V9c0-2-1.833-2-1.833-2zM8.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
-                        </svg>
-                      </button>                    
-                        <!-- 
-                          BOTON PARA RECHAZAR
-                        -->
-                          <input type="hidden" id="bloquear" name="bloquear" hidden value="{{center.id}}"> 
-                          <button data-id={{center.id}} class="btn btn-warning btn-sm" onclick="ConfirmReject(this)">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M11.5 8h-7a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1zm-7-1a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-7zm0-3a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+  <div class="row">
+		<div class="col-2"></div>
+    <div class="col-sm-12 col-12 col-md-12 col-lg-8 p-4 rounded" style="background: #cccccc">
+        <h1 style="text-align: center">Centros de Ayuda</h1>
+        <ul class="nav  nav-pills mb-3" id="pills-tab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Pendientes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Aceptados</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Rechazados</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+          <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+              <table class="col-12 table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Direccion</th>
+                      <th scope="col">Telefono</th>
+                      <th scope="col">Apertura</th>
+                      <th scope="col">Municipalidad</th>
+                      <th scope="col">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody> 
+                {% for center in centers %}
+                  {% if  center.estado == 'pendiente' %}                 
+                    <tr>
+                        <td>{{center.name}}</td>
+                        <td>{{ center.location }}</td>
+                        <td>{{ center.phone_number }}</td>
+                        <td>{{ center.start_time }}hs-{{center.final_time}}hs</td>
+                        <td>{{center.municipality}}</td>
+                      <td class="column11"><input type="hidden" id="activar" name="activar" hidden value="{{center.id}}"> 
+                        <button data-id="{{center.id}}" class="btn btn-success btn-sm" onclick="ConfirmAccept(this)">
+                          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-unlock" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M9.655 8H2.333c-.264 0-.398.068-.471.121a.73.73 0 0 0-.224.296 1.626 1.626 0 0 0-.138.59V14c0 .342.076.531.14.635.064.106.151.18.256.237a1.122 1.122 0 0 0 .436.127l.013.001h7.322c.264 0 .398-.068.471-.121a.73.73 0 0 0 .224-.296 1.627 1.627 0 0 0 .138-.59V9c0-.342-.076-.531-.14-.635a.658.658 0 0 0-.255-.237A1.122 1.122 0 0 0 9.655 8zm.012-1H2.333C.5 7 .5 9 .5 9v5c0 2 1.833 2 1.833 2h7.334c1.833 0 1.833-2 1.833-2V9c0-2-1.833-2-1.833-2zM8.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+                          </svg>
+                        </button>                    
+                          <!-- 
+                            BOTON PARA RECHAZAR
+                          -->
+                            <input type="hidden" id="bloquear" name="bloquear" hidden value="{{center.id}}"> 
+                            <button data-id={{center.id}} class="btn btn-warning btn-sm" onclick="ConfirmReject(this)">
+                              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M11.5 8h-7a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1zm-7-1a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-7zm0-3a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+                              </svg>
+                            </button>
+                          </td> 
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+              <table class="col-12 table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Direccion</th>
+                      <th scope="col">Telefono</th>
+                      <th scope="col">Apertura</th>
+                      <th scope="col">Municipalidad</th>
+                      <th scope="col">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody> 
+                {% for center in centers %}
+                  {% if  center.estado == 'aceptado' %}                 
+                    <tr>
+                        <td>{{center.name}}</td>
+                        <td>{{ center.location }}</td>
+                        <td>{{ center.phone_number }}</td>
+                        <td>{{ center.start_time }}hs-{{center.final_time}}hs</td>
+                        <td>{{center.municipality}}</td>
+                      <td class="column11">
+                        <input type="hidden" id="borrar" name="borrar" hidden value="{{center.id}}"> 
+                          <button data-id={{center.id}} class="btn btn-danger btn-sm" onclick="ConfirmDelete(this)">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                              <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                             </svg>
                           </button>
-                        </td> 
-                  </tr>
-                {% endif %}
-              {% endfor %}
-            </tbody>
-          </table>
-          <table id="publicados"  style="visibility:hidden">
-            <thead class="centros-head">
-              <tr>
-                <th class="column1" scope="col">Nombre</th>
-                <th class="column2" scope="col">Direccion</th>
-                <th class="column3" scope="col">Telefono</th>
-                <th class="column4" scope="col">Horario De Atencion</th>
-                <th class="column5" scope="col">Municipalidad</th>
-                <th class="column6" scope="col">Web</th>
-                <th class="column10" scope="col">Tipo</th>
-                <th class="column11"  scope="col">Acciones</th>
-              </tr>
-            </thead>
-            <tbody> 
-              {% for center in centers %}
-                {% if  center.estado == 'aceptado' %}                 
-                  <tr>
-                    <td class="column1">{{center.name}}</td>
-                    <td class="column2">{{ center.location }}</td>
-                    <td class="column3">{{ center.phone_number }}</td>
-                    <td class="column4">{{ center.start_time }} A {{center.final_time}}</td>
-                    <td class="column5">{{center.municipality}}</td>
-                    <td class="column6">{{center.web}}</td>
-                    <td class="column10">{{center.tipo.name}}</td>
-                    <td class="column11">
-                      <input type="hidden" id="borrar" name="borrar" hidden value="{{center.id}}"> 
-                        <button data-id={{center.id}} class="btn btn-danger btn-sm" onclick="ConfirmDelete(this)">
-                          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                          </svg>
-                        </button>
-                    </td> 
-                  </tr>
-                {% endif %}
-              {% endfor %}
-            </tbody>
-          </table>
-          <div class="row">
+                      </td> 
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+              <table class="col-12 table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Direccion</th>
+                      <th scope="col">Telefono</th>
+                      <th scope="col">Apertura</th>
+                      <th scope="col">Municipalidad</th>
+                      <th scope="col">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody> 
+                {% for center in centers %}
+                  {% if  center.estado == 'rechazado' %}                 
+                    <tr>
+                        <td>{{center.name}}</td>
+                        <td>{{ center.location }}</td>
+                        <td>{{ center.phone_number }}</td>
+                        <td>{{ center.start_time }}hs-{{center.final_time}}hs</td>
+                        <td>{{center.municipality}}</td>
+                      <td class="column11">
+                        <input type="hidden" id="borrar" name="borrar" hidden value="{{center.id}}"> 
+                          <button data-id={{center.id}} class="btn btn-danger btn-sm" onclick="ConfirmDelete(this)">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                              <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                            </svg>
+                          </button>
+                      </td> 
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+         </div>
+          <div class="row mt-4">
             <div class="col-2"></div>  
             <a href="{{ url_for('centros_new') }}" class="col-3 btn btn-success btn-sm">Nuevo</a>
             <div class="col-2"></div>
             <a href="{{ url_for('home') }}" class="col-3 btn btn-dark btn-sm">Volver</a>
             <div class="col-2"></div>
           </div>
-          <hr>
       </div>
+
+      <!--Modal aceptar centro-->
       <div class="modal fade" id="acceptModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -118,9 +159,11 @@
                     <button type="button" onclick="accept()" class="btn btn-success">Aceptar</button>
                 </div>
             </div>
-        </div>
-    </div> 
-          <!-- modal de confirmacion de eliminacion de usuario-->
+          </div>
+        </div> 
+
+
+        <!-- modal de confirmacion de eliminacion de Centros-->
           <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -134,6 +177,9 @@
                 </div>
             </div>
         </div>
+
+
+        <!--Modal rechazar centro-->
         <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel" aria-hidden="true">
           <div class="modal-dialog">
               <div class="modal-content">
@@ -149,126 +195,23 @@
       </div>   
     </div>
     
-    
-
-  </div>
-    <script>
-      function ConfirmAccept(elem) {
-        localStorage.setItem('acceptId', $(elem).attr('data-id'));
-        console.log(localStorage.getItem("acceptId"));
-
-        $('#acceptModal').modal();
-    }
-  </script>
-  <script>
-    function ConfirmReject(elem) {
-      localStorage.setItem('centerTrashOrRejectId', $(elem).attr('data-id'));
-      localStorage.setItem('state','rechazado')
-      $('#rejectModal').modal();
-  }
-  </script>
-  <script>
-    function ConfirmDelete(elem) {
-      localStorage.setItem('centerTrashOrRejectId', $(elem).attr('data-id'));
-      localStorage.setItem('state','borrado')
-      $('#deleteModal').modal();
-  }
-  </script>
-  <script>
-    function accept() {
-      $.ajax({
-          url:"{{ url_for('center_accept') }}" ,
-          data: {
-              id: localStorage.getItem('acceptId')
-          },
-          type:'POST',
-          success: function(res) {
-            console.log(res)
-              var result = JSON.parse(res)
-              if (result.status == 'OK') {
-                 alert("centro aceptado correctamente")
-                 setTimeout(window.location.reload.bind(window.location), 250);
-                 $('#acceptModal').modal('hide');
-                 
-              } else {
-                  alert(result.status)
-                  $('#acceptModal').modal('hide');
-              }
-          },
-          error: function(error) {
-              console.log(error);
-          }
-      });
-  }
-  </script>
-  <script>
-    function trashOrReject() {
-      $.ajax({
-          url:"{{ url_for('center_trashOrReject') }}" ,
-          data: {
-              state: localStorage.getItem('state'),
-              id: localStorage.getItem('centerTrashOrRejectId')
-          },
-          type:'POST',
-          success: function(res) {
-            console.log(res)
-              var result = JSON.parse(res)
-              if (result.status == 'OK') {
-                 alert("centro borrado correctamente")
-                 setTimeout(window.location.reload.bind(window.location), 250);
-                 $('#blockModal').modal('hide');
-                 
-              } else {
-                  alert(result.status)
-                  $('#blockModal').modal('hide');
-              }
-          },
-          error: function(error) {
-              console.log(error);
-          }
-      });
-  }
-  </script>
- 
-    <script>
-      function mostrarPublicados(){
-    var x = document.getElementById("publicados");
-    var y = document.getElementById("pendientes");
-    if (y.style.visibility === "visible" ) 
-        y.style.visibility = "hidden";
-    if (x.style.visibility === "hidden") {
-        x.style.visibility = "visible";
-        document.getElementById('public').innerHTML='Ocultar Centros'
-    } else {
-        document.getElementById('public').innerHTML='Mostrar Centros'
-        x.style.visibility = "hidden";
-    }
-
-
-      }
-      function mostrarPendientes(){
-    var x = document.getElementById("pendientes");
-    var y = document.getElementById("publicados");
-    if (y.style.visibility === "visible" ) 
-        y.style.visibility = "hidden";
-    if (x.style.visibility === "hidden") {
-        x.style.visibility = "visible";
-        document.getElementById('pendant').innerHTML='Ocultar Pendientes'
-    } else {
-        document.getElementById('pendant').innerHTML='Mostrar Pendientes'
-        x.style.visibility = "hidden";
-    }
-
-
-      } 
-   
-    </script>
-   
+    {% include "centersScript.html" %}
  
   {% else %}
   <div class="bg-warning p-3 m-4">
     <h3 style="text-align: center">Aun no hay centros registrados</h3>
   </div>
+  <style>
+      .nav-pills > li.active > a, .nav-pills > li.active > a:focus {
+          color: black;
+          background-color: #fcd900;
+      }
+  
+          .nav-pills > li.active > a:hover {
+              background-color: #efcb00;
+              color:black;
+          }
+  </style>
   
   {% endif %}
   
