@@ -6,11 +6,61 @@
 {% block content %}
 
 {% if centros.items|length %}
-  {% for centro in centros.items %}
-    <div>
-      <td>{{centro.name}}</td>
-    </div>
-  {% endfor %}
+
+  <div class="limiter">
+
+		<div class="container-table100">
+			<div class="wrap-table100">
+        <h1 style="text-align: center">Resultados de la Busqueda</h1>
+    
+        <hr>
+        <div class="table100"> 
+          <table>
+            <thead class="centros-head">
+              <tr>
+                <th class="column1" scope="col">Nombre</th>
+                <th class="column2" scope="col">Direccion</th>
+                <th class="column3" scope="col">Telefono</th>
+                <th class="column4" scope="col">Horario De Atencion</th>
+                <th class="column5" scope="col">Municipalidad</th>
+                <th class="column6" scope="col">Web</th>
+                <th class="column7" scope="col">Email</th>
+                <th class="column8" scope="col">Coordenadas</th>
+                <th class="column9" scope="col">Instrucciones de Visita</th>
+                <th class="column10" scope="col">Tipo</th>
+                <th class="column11" scope="col">Estado</th>
+                <th class="column11" scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody> 
+              {% for center in centros.items %}               
+                  <tr>
+                    <td class="column1">{{center.name}}</td>
+                    <td class="column2">{{ center.location }}</td>
+                    <td class="column3">{{ center.phone_number }}</td>
+                    <td class="column4">{{ center.start_time }} A {{center.final_time}}</td>
+                    <td class="column5">{{center.municipality}}</td>
+                    <td class="column6">{{center.web}}</td>
+                    <td class="column7">{{center.email}}</td>
+                    <td class="column8">{{center.pdf_name}}</td>
+                    <td class="column9">{{center.pdf_name}}</td>
+                    <td class="column10">{{center.tipo.name}}</td>
+                    <td class="column11">{{center.estado}}</td>
+                  </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <div class="row">
+            <div class="col-2"></div>  
+            <a href="{{ url_for('centros_new') }}" class="col-3 btn btn-success btn-sm">Nuevo</a>
+            <div class="col-2"></div>
+            <a href="{{ url_for('home') }}" class="col-3 btn btn-dark btn-sm">Volver</a>
+            <div class="col-2"></div>
+          </div>
+          <hr>
+      </div>
+      
+  </div>
 {% else %}  
   <div class="bg-warning p-3 m-4">
     <h3 style="text-align: center">No se encontraron centros</h3>
