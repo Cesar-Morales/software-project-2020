@@ -4,7 +4,7 @@ from flask import jsonify
 from flask import request
 from app.models.centro import Centro
 from app.models.reseva import Reserva
-from app.helpers.reserva import checkData
+from app.helpers.check_api_data import check_data_reserva
 from flask import request
 from datetime import date
 
@@ -40,7 +40,7 @@ def reserva(id):
     de 30 o que el id del centro fue enviado """
 
     #Crear la reserva del turno
-    if (checkData(request.form,id) and
+    if (check_data_reserva(request.form, id) and
         Reserva.create(request.form)):
 
         #Crear el json a devolver

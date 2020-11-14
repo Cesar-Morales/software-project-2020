@@ -39,7 +39,7 @@ class Reserva(db.Model):
         if Reserva.reservado(form):
             return False
         else:
-            centro_buscado = Centro.getCentro(form.get('centro_id'))
+            centro_buscado = Centro.getCentroAceptado(form.get('centro_id'))
             turno = Turno.buscarTurno(TurnoAPIForm(form))
             if centro_buscado and turno:
                 reserva = Reserva(

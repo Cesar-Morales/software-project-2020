@@ -14,3 +14,8 @@ class Tipo(db.Model):
 
     def searchById(id):
         return db.session.query(Tipo).filter_by(id=id).first()
+
+    def searchByName(name):
+        return db.session.query(Tipo).filter_by(name=name).first()
+
+    

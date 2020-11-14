@@ -447,3 +447,10 @@ background-size:100%;
 }
 
 /*************footer End*****************/
+.nav-pills > li > a{
+  color: #000!important;
+}
+.nav-pills > li > a.active {
+  background-color: #c850c0!important;
+  color: #000!important;
+}

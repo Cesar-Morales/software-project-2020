@@ -38,6 +38,34 @@ class Centro(db.Model):
     def getAllAceptados():
         return db.session.query(Centro).filter_by(estado='aceptado')
 
+    def createAPI(form):
+        
+        #Almacenar variables obtenidas por parametros
+        nombre = form.get('nombre')
+        direccion = form.get('direccion')
+        telefono = form.get('telefono')
+        hora_apertura = form.get('hora_apertura')
+        hora_cierre = form.get('hora_cierre')
+        web = form.get('web')
+        email = form.get('email')
+
+        #Buscar id del tipo de centro
+        tipo = Tipo.searchByName(form.get('tipo'))
+
+        nuevo = Centro(name=nombre, 
+                       location=direccion, 
+                       phone_number=telefono, 
+                       start_time='06:30', 
+                       final_time='17:00', 
+                       web=web, 
+                       email=email, 
+                       estado='pendiente', 
+                       tipoId = tipo.id)
+        db.session.add(nuevo)
+        db.session.commit()
+        
+        return nuevo
+
     def create(requestForm):
         nombre = requestForm.nombre.data
         direccion = requestForm.direccion.data
@@ -50,10 +78,18 @@ class Centro(db.Model):
         instrucciones = requestForm.instrucciones.data
         tipo = requestForm.tipo.data
         estado = requestForm.estado.data
-        nuevo = Centro(
-                    email=email, name=nombre, location=direccion,
-                    start_time='06:30', final_time='17:00',municipality= municipalidad, web=web,
-                    phone_number=telefono,pdf_name=instrucciones,coordinates = coordenadas, estado = 'aceptado',tipoId = 1)
+        nuevo = Centro(email=email, 
+                       name=nombre, 
+                       location=direccion,
+                       start_time='06:30',
+                       final_time='17:00', 
+                       municipality=municipalidad, 
+                       web=web,
+                       phone_number=telefono, 
+                       pdf_name=instrucciones, 
+                       coordinates = coordenadas, 
+                       estado='aceptado', 
+                       tipoId=1)
         db.session.add(nuevo)
         db.session.commit()
         return True
@@ -63,10 +99,14 @@ class Centro(db.Model):
         return centro.turnos
 
     def getCentro(id):
+        centro = db.session.query(Centro).filter_by(id=id).first()
+        return centro
+
+    def getCentroAceptado(id):
         centro = db.session.query(Centro).filter_by(
                                             id=id, 
                                             estado='aceptado').first()
-        return centro
+        return centro    
 
     def getState(id):
         centro = db.session.query(Centro).filter_by(id=id).first()
