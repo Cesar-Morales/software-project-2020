@@ -167,6 +167,29 @@
         <hr>
       {% endif %}
     </div>
+    <div class="row">
+        <div class="col-5"></div>
+        <div class="col-2" aria-label="Page navigation example">
+          <ul class="pagination">
+            {% for i in range(total_pages)  %}
+              {% if(page) %}
+                  <li class="page-item">
+                    <form method="GET" action="{{url_for('user_search')}}">
+                      <input name="page" hidden value="{{ i+1 }}">
+                      <input name="search" hidden value="{{ search }}">
+                      <input name="active" hidden value="{{ active }}">
+                      <button class="page-link" type="submit" >{{ i+1 }}</button>
+                    </form> 
+                  </li>
+              {%else%}  
+                <li class="page-item"><a class="page-link" href="{{url_for('user_index')}}/{{ i+1 }}">{{ i+1 }}</a></li>
+              {%endif%}
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="col-5"></div>
+      </div>
+      <hr>
       <div class="row">
         <div class="col-2"></div>  
         <a href="{{ url_for('user_new') }}" class="col-3 btn btn-success btn-sm">Nuevo</a>
@@ -177,29 +200,6 @@
     </div>
   
   <div class="col-2"></div>
-</div>
-
-<div class="row">
-  <div class="col-5"></div>
-  <div class="col-2" aria-label="Page navigation example">
-    <ul class="pagination">
-      {% for i in range(total_pages)  %}
-        {% if(page) %}
-            <li class="page-item">
-              <form method="GET" action="{{url_for('user_search')}}">
-                <input name="page" hidden value="{{ i+1 }}">
-                <input name="search" hidden value="{{ search }}">
-                <input name="active" hidden value="{{ active }}">
-                <button class="page-link" type="submit" >{{ i+1 }}</button>
-              </form> 
-            </li>
-        {%else%}  
-          <li class="page-item"><a class="page-link" href="{{url_for('user_index')}}/{{ i+1 }}">{{ i+1 }}</a></li>
-        {%endif%}
-      {% endfor %}
-    </ul>
-  </div>
-  <div class="col-5"></div>
 </div>
 
 {% include "funciones.html" %}
