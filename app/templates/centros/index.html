@@ -64,6 +64,23 @@
             </tbody>
           </table>
           <div class="row">
+            <div class="col-5"></div>
+            <div class="col-2" aria-label="Page navigation example">
+                <ul class="pagination">
+                  {% for i in range(total_pages)  %}
+                      <li class="page-item">
+                        <form method="GET" action="{{url_for('center_search', page=i+1)}}">
+                          <input name="search" hidden value="{{ search }}">
+                          <input name="options" hidden value="{{ options }}">
+                          <button class="page-link" type="submit" >{{ i+1 }}</button>
+                        </form> 
+                      </li>
+                  {% endfor %}
+                </ul>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
             <div class="col-2"></div>  
             <a href="{{ url_for('centros_new') }}" class="col-3 btn btn-success btn-sm">Nuevo</a>
             <div class="col-2"></div>

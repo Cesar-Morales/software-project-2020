@@ -43,7 +43,7 @@ app.add_url_rule("/config/centers","config_center_index",config.center_index)
 app.add_url_rule("/centros/nuevo","centros_new",center.new_center)
 app.add_url_rule("/centros/create", "center_create", center.create, methods=["POST"])
 app.add_url_rule("/centros/busqueda", "center_search", center.search,methods=["POST"])
-app.add_url_rule("/centros/<int:page>", "center_search", center.search, methods=["POST"])
+app.add_url_rule("/centros/<int:page>", "center_search", center.search, methods=["GET"])
 app.add_url_rule("/centros/accept", "center_accept", center.accept, methods=["POST"])
 app.add_url_rule("/centros/trashOrReject", "center_trashOrReject", center.trashOrReject, methods=["POST"])
 
@@ -58,7 +58,6 @@ app.add_url_rule("/turno/update/<int:id>", "turno_update", turno.update, methods
 app.add_url_rule("/centros/<int:centro_id>/turno/trash/<int:id>", "turno_trash", turno.trash, methods=["POST"])
 
 # Rutas de reserva
-app.add_url_rule("/reservas/<int:page>", "reserva_index", reserva.index, methods=["GET"])
 app.add_url_rule("/reservas/<int:page>", "reserva_search", reserva.search, methods=["GET"])
 
 # Ruta para el Home (usando decorator)

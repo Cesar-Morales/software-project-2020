@@ -12,13 +12,11 @@ from app.models.site import Site
 from app.helpers.forms import ReservaSearch
 import math
 
-
 @login_required
-def index(page=1):
-    form = ReservaSearch(request.args)
+def search(page=1):
     per_page = Site.page()
-    centro_name = form.centro_name.data
-    user_email = form.user_email.data
+    centro_name = request.args.get('centro_name')
+    user_email = request.args.get('user_email')
     reservas = Reserva.search(centro_name, 
                               user_email).paginate(page, per_page, False)
     reservas_total = Reserva.search(centro_name, user_email).count()
@@ -26,26 +24,7 @@ def index(page=1):
     
     return render_template("reserva/index.html",
                            reservas=reservas,
-                           page=page,
-                           total_pages=total_pages,
-                           form_centro=form.centro_name.data,
-                           form_user=form.user_email.data)
-
-@login_required
-def search(page=1):
-    per_page = Site.page()
-    form_centro = request.args.get('centro_name')
-    form_user = request.args.get('user_email')
-    centro_name = form_centro
-    user_email = form_user
-    reservas = Reserva.search(form_centro, 
-                              form_user).paginate(page, per_page, False)
-    reservas_total = Reserva.search(centro_name, user_email).count()
-    total_pages=int(math.ceil(reservas_total/per_page))
-    
-    return render_template("reserva/index.html",
-                           reservas=reservas,
                            total_pages=total_pages,
                            page=page,
-                           form_centro=form_centro,
-                           form_user=form_user)
+                           form_centro=centro_name,
+                           form_user=user_email)
