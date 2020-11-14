@@ -7,38 +7,31 @@
 
 {% if centros.items|length %}
 
-  <div class="limiter">
-
-		<div class="container-table100">
-			<div class="wrap-table100">
+<div class="row">
+  <div class="col-2"></div>
+  <div class="col-sm-12 col-12 col-md-12 col-lg-8 p-4 rounded" style="background: #cccccc">
         <h1 style="text-align: center">Resultados de la Busqueda</h1>
-    
-        <hr>
-        <div class="table100"> 
-          <table>
-            <thead class="centros-head">
+        <div class="container">
+          <table class="col-12 table">
+            <thead class="thead-dark">
               <tr>
-                <th class="column1" scope="col">Nombre</th>
-                <th class="column2" scope="col">Direccion</th>
-                <th class="column3" scope="col">Telefono</th>
-                <th class="column4" scope="col">Horario De Atencion</th>
-                <th class="column5" scope="col">Municipalidad</th>
-                <th class="column6" scope="col">Web</th>
-                <th class="column10" scope="col">Tipo</th>
-                <th class="column11" scope="col">Acciones</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Direccion</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Apertura</th>
+                <th scope="col">Municipalidad</th>
+                <th scope="col">Acciones</th>
               </tr>
             </thead>
             <tbody> 
               {% for center in centros.items %}               
                   <tr>
-                    <td class="column1">{{center.name}}</td>
-                    <td class="column2">{{ center.location }}</td>
-                    <td class="column3">{{ center.phone_number }}</td>
-                    <td class="column4">{{ center.start_time }} A {{center.final_time}}</td>
-                    <td class="column5">{{center.municipality}}</td>
-                    <td class="column6">{{center.web}}</td>
-                    <td class="column10">{{center.tipo.name}}</td>
-                    <td class="column11">
+                    <td>{{center.name}}</td>
+                    <td>{{ center.location }}</td>
+                    <td>{{ center.phone_number }}</td>
+                    <td>{{ center.start_time }}hs-{{center.final_time}}hs</td>
+                    <td>{{center.municipality}}</td>
+                    <td>
                       <!-- BOTON PARA BORRAR, SEA CUAL SEA EL ESTADO -->
                       <input type="hidden" id="borrar" name="borrar" hidden value="{{center.id}}"> 
                         <button data-id={{center.id}} class="btn btn-danger btn-sm" onclick="ConfirmDelete(this)">
@@ -77,10 +70,10 @@
             <a href="{{ url_for('home') }}" class="col-3 btn btn-dark btn-sm">Volver</a>
             <div class="col-2"></div>
           </div>
-          <hr>
       </div>
       
   </div>
+  <div class="col-2"></div>
 {% else %}  
   <div class="bg-warning p-3 m-4">
     <h3 style="text-align: center">No se encontraron centros</h3>
