@@ -53,7 +53,7 @@
             <!--
               formulario para busqueda de reservas por email de persona o nombre de centro
             -->
-            <form class="col-12" action="{{ url_for('reserva_index', page=1) }}" method="GET">
+            <form class="col-12" action="{{ url_for('reserva_search', page=1) }}" method="GET">
               <div>
                   {{ form_reserva.centro_name (class="col-12 mb-2") }}
                   {% for error in form_reserva.centro_name.errors %}
@@ -68,7 +68,7 @@
               </div>
               <div class="row">
                   <div class="col-2 col-sm-4"></div>
-                  {{ form_reserva.submit(class="btn btn-sm btn-light col-12 col-sm-4") }}
+                    <input class="btn btn-sm btn-light col-12 col-sm-4" type="submit" value="Buscar">
                   <div class="col-4 col-sm-4"></div>
               </div>
             </form>
@@ -84,8 +84,7 @@
             <!--
               formulario para busqueda de centros
             -->
-            <form class="col-12" action="{{ url_for('center_search', page=1) }}" method="POST">
-              {{ centerForm.csrf_token }}
+            <form class="col-12" action="{{ url_for('center_search', page=1) }}" method="GET">
                 {{ centerForm.search (class="col-12 mb-2") }}
                 {% for error in centerForm.search.errors %}
                 <span style="color: red;">{{ error }}</span>
@@ -97,7 +96,7 @@
               </div>
               <div class="row">
                   <div class="col-4 col-sm-4"></div>
-                  {{ centerForm.submit(class="btn btn-sm btn-light col-12 col-sm-4") }}
+                    <input class="btn btn-sm btn-light col-12 col-sm-4" type="submit" value="Buscar">
                   <div class="col-4 col-sm-4"></div>
               </div>
             </form>

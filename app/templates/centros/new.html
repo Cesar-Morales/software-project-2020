@@ -53,6 +53,22 @@
 
           </div>
           <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.hora_apertura.label}}</b>
+            {{ form.hora_apertura(class="col-12 mb-2") }}
+            {% for error in form.hora_apertura.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.hora_cierre.label}}</b>
+            {{ form.hora_cierre(class="col-12 mb-2") }}
+            {% for error in form.hora_cierre.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
             <b>{{form.web.label}}</b>
             {{ form.web(class="col-12 mb-2") }}
             {% for error in form.web.errors %}
