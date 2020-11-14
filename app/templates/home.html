@@ -51,8 +51,7 @@
             <!--
               formulario para busqueda de reservas por email de persona o nombre de centro
             -->
-            <form class="col-12" action="{{ url_for('reserva_search', page=1) }}" method="POST">
-              {{ form_reserva.csrf_token }}
+            <form class="col-12" action="{{ url_for('reserva_index', page=1) }}" method="GET">
               <div>
                   {{ form_reserva.centro_name (class="col-12 mb-2") }}
                   {% for error in form_reserva.centro_name.errors %}
