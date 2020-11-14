@@ -1,8 +1,9 @@
 from datetime import date, time, timedelta
-from app.helpers.forms import TurnoAPIForm
+from app.helpers.forms import TurnoAPIForm, CenterNewAPIForm
+from app.models.tipo import Tipo
 
 
-def checkData(form_request, id):
+def check_data_reserva(form_request, id):
     """ Chequea que los datos de crear reserva sean correctos """
 
     #Chequear que el id del centro sea el mismo que el parametro
@@ -30,5 +31,19 @@ def checkData(form_request, id):
         return False
     else:
         return True
+
+def check_data_centro(form_request):
+
+    #Hacer la validaciones de los tiempos
+    form = CenterNewAPIForm(form_request)
+
+    if not form.validate():
+        return False
+    
+    #Chequear que el tipo de centro exista
+    if Tipo.searchByName(form_request.get('tipo')):
+        return True
+    else:
+        return False
     
     

@@ -23,6 +23,7 @@ from flask import request
 from datetime import date
 from app.models.site import Site
 from app.models.turno import Turno
+from app.helpers.check_api_data import check_data_centro
 import math
 
 def index():
@@ -51,11 +52,7 @@ def index():
 
     return jsonify(centros=data, total=total, pagina=pagina), 200
 
-def show(centro_id):
-    """ Endpoint para devolver un centro en particular segun id"""
-
-    #Obtner el centro segun id
-    centro = Centro.getCentro(centro_id)
+def print_centro(centro):
 
     #Donde se va a formar el json
     data = []
@@ -66,11 +63,28 @@ def show(centro_id):
 
     return jsonify(atributos=data), 200
 
+
+def show(centro_id):
+    """ Endpoint para devolver un centro en particular segun id"""
+
+    #Obtner el centro segun id
+    centro = Centro.getCentroAceptado(centro_id)
+
+    if centro:   
+        return print_centro(centro)  
+    else:
+        return jsonify({"error_message": "Not found"}), 404
+
+
 def create():
     """ Endpoint para crear un centro """
 
-    #Crear el centro si no existe
-    if Centro.create(request.form):
-        show(request.form.get('nombre'))
+    if check_data_centro(request.form):
+        #Crear centro si no existe
+        centro = Centro.createAPI(request.form)
+
+        #Cheuqear si se pudo crear
+        if centro:
+            return print_centro(centro)
     else:
-        return jsonify({"error_message": "horario ya reservado"}), 404
+        return jsonify({"error_message": "Bad request"}), 400
