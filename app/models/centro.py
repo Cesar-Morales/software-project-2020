@@ -81,8 +81,9 @@ class Centro(db.Model):
     def trashOrReject(requestForm):
         """Metodo que recibe un id de centro a borrar a traves de un formulario."""
         idCenter = requestForm['id']
+        state = requestForm['state']
         center = db.session.query(Centro).filter(Centro.id == idCenter).first()
         #Reviso si el usuario a borrar es un administrador. Si es, devuelvo false para que no puedan borrarlo, si no, lo bloqueo.
-        center.estado = 'rechazado' 
+        center.estado = state
         db.session.commit()
         return True       

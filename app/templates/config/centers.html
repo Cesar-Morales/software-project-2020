@@ -163,12 +163,14 @@
   <script>
     function ConfirmReject(elem) {
       localStorage.setItem('centerTrashOrRejectId', $(elem).attr('data-id'));
+      localStorage.setItem('state','rechazado')
       $('#rejectModal').modal();
   }
   </script>
   <script>
     function ConfirmDelete(elem) {
       localStorage.setItem('centerTrashOrRejectId', $(elem).attr('data-id'));
+      localStorage.setItem('state','borrado')
       $('#deleteModal').modal();
   }
   </script>
@@ -204,6 +206,7 @@
       $.ajax({
           url:"{{ url_for('center_trashOrReject') }}" ,
           data: {
+              state: localStorage.getItem('state'),
               id: localStorage.getItem('centerTrashOrRejectId')
           },
           type:'POST',
@@ -211,7 +214,7 @@
             console.log(res)
               var result = JSON.parse(res)
               if (result.status == 'OK') {
-                 alert("usuario bloqueado correctamente")
+                 alert("centro borrado correctamente")
                  setTimeout(window.location.reload.bind(window.location), 250);
                  $('#blockModal').modal('hide');
                  
