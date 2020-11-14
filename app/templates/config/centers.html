@@ -24,11 +24,7 @@
                 <th class="column4" scope="col">Horario De Atencion</th>
                 <th class="column5" scope="col">Municipalidad</th>
                 <th class="column6" scope="col">Web</th>
-                <th class="column7" scope="col">Email</th>
-                <th class="column8" scope="col">Coordenadas</th>
-                <th class="column9" scope="col">Instrucciones de Visita</th>
                 <th class="column10" scope="col">Tipo</th>
-                <th class="column11" scope="col">Estado</th>
                 <th class="column11" scope="col">Acciones</th>
               </tr>
             </thead>
@@ -42,11 +38,7 @@
                     <td class="column4">{{ center.start_time }} A {{center.final_time}}</td>
                     <td class="column5">{{center.municipality}}</td>
                     <td class="column6">{{center.web}}</td>
-                    <td class="column7">{{center.email}}</td>
-                    <td class="column8">{{center.pdf_name}}</td>
-                    <td class="column9">{{center.pdf_name}}</td>
                     <td class="column10">{{center.tipo.name}}</td>
-                    <td class="column11">{{center.estado}}</td>
                     <td class="column11"><input type="hidden" id="activar" name="activar" hidden value="{{center.id}}"> 
                       <button data-id="{{center.id}}" class="btn btn-success btn-sm" onclick="ConfirmAccept(this)">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-unlock" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -77,11 +69,7 @@
                 <th class="column4" scope="col">Horario De Atencion</th>
                 <th class="column5" scope="col">Municipalidad</th>
                 <th class="column6" scope="col">Web</th>
-                <th class="column7" scope="col">Email</th>
-                <th class="column8" scope="col">Coordenadas</th>
-                <th class="column9" scope="col">Instrucciones de Visita</th>
                 <th class="column10" scope="col">Tipo</th>
-                <th class="column11" scope="col">Estado</th>
                 <th class="column11"  scope="col">Acciones</th>
               </tr>
             </thead>
@@ -95,11 +83,7 @@
                     <td class="column4">{{ center.start_time }} A {{center.final_time}}</td>
                     <td class="column5">{{center.municipality}}</td>
                     <td class="column6">{{center.web}}</td>
-                    <td class="column7">{{center.email}}</td>
-                    <td class="column8">{{center.pdf_name}}</td>
-                    <td class="column9">{{center.pdf_name}}</td>
                     <td class="column10">{{center.tipo.name}}</td>
-                    <td class="column11">{{center.estado}}</td>
                     <td class="column11">
                       <input type="hidden" id="borrar" name="borrar" hidden value="{{center.id}}"> 
                         <button data-id={{center.id}} class="btn btn-danger btn-sm" onclick="ConfirmDelete(this)">

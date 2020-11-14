@@ -45,7 +45,7 @@ class ConfigForm(FlaskForm):
 class centerSearchForm(FlaskForm):
      search = SearchField(
              'search',
-             render_kw={"placeholder": "Ingrese nombre de usuario a buscar"})
+             render_kw={"placeholder": "Ingrese nombre de centro a buscar"})
      options = SelectField('Options')
      submit = SubmitField('Buscar')
         
