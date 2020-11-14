@@ -116,4 +116,3 @@ class CentroSchema(Schema):
     tipo = fields.Pluck("self", "name")
     web = fields.Str()
     email = fields.Str() 
->>>>>>> app/models/centro.py
