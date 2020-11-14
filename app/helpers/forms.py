@@ -98,7 +98,7 @@ class UserForm(FlaskForm):
 class CenterNewForm(FlaskForm):
         """ sdadsad """
         nombre = StringField('Nombre')
-        direccion = StringField("Nombre")
+        direccion = StringField("Direccion")
         telefono = StringField("Telefono")
         horarios = StringField("Horarios")
         municipalidad = StringField("Municipalidad")
