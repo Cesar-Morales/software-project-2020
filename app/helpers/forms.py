@@ -96,19 +96,48 @@ class UserForm(FlaskForm):
     image_name = StringField('NombreImagen')
 
 class CenterNewForm(FlaskForm):
-        """ sdadsad """
-        nombre = StringField('Nombre')
-        direccion = StringField("Direccion")
-        telefono = StringField("Telefono")
+        """ Form para la creacion de centros """
+        nombre = StringField(
+                'Nombre', 
+                validators=[DataRequired('Debe insertar un nombre')])
+        direccion = StringField(
+                "Direccion", 
+                validators=[DataRequired('Debe insertar una direccion')])
+        telefono = StringField(
+                "Telefono", 
+                validators=[DataRequired('Debe insertar un telefono')])
+        hora_apertura = TimeField(
+                "Hora apertura", 
+                validators=[DateRange(
+                                message='Horario debe estar entre 06:00 y 09:00', 
+                                min=time.fromisoformat('06:00:00'),
+                                max=time.fromisoformat('09:00:00')),
+                            DataRequired('Debe insertar un horario de apertura')])
+        hora_cierre = TimeField(
+                "Hora cierre", 
+                validators=[DateRange(
+                                message='Horario debe estar entre 16:00 y 21:00', 
+                                min=time.fromisoformat('16:00:00'),
+                                max=time.fromisoformat('21:00:00')),
+                            DataRequired('Debe insertar un horario de cierre')])
         horarios = StringField("Horarios")
         municipalidad = StringField("Municipalidad")
         web = StringField("Web")
         email = EmailField("Email")
         coordenadas = StringField("Coordenadas")
         instrucciones = StringField("Instrucciones")
-        tipo = StringField("Tipo")
+        tipo = StringField("Tipo", 
+                validators=[DataRequired('Debe insertar un horario de apertra')])
         estado = StringField("Estado")
-        submit = SubmitField('Crear')    
+        submit = SubmitField('Crear')
+
+class CenterNewAPIForm(CenterNewForm):
+    """ Clase que se encarga de generar formulario para edicion y creacion de 
+    turnos para luego realizar validaciones correspondientes, tanto del lado
+    del servidor como del cliente API"""
+
+    class Meta:
+        csrf = False   
 
 class TurnoForm(FlaskForm):
     """ Clase que se encarga de generar formulario para edicion y creacion de 
@@ -145,13 +174,13 @@ class TurnoForm(FlaskForm):
 class TurnoAPIForm(TurnoForm):
     """ Clase que se encarga de generar formulario para edicion y creacion de 
     turnos para luego realizar validaciones correspondientes, tanto del lado
-    del servidor como del cliente """
+    del servidor como del cliente API"""
 
     class Meta:
         csrf = False
     
     hora_fin = TimeField(
-            'Hora de inicio',
+            'Hora de Fin',
             validators=[DataRequired('Falta horario de fin')])
     email_donante = EmailField(
             'Email',
