@@ -10,7 +10,6 @@
   <div class="col-2"></div>
   <div class="col-sm-12 col-12 col-md-12 col-lg-8 p-4 rounded" style="background: #cccccc">
     <h1 style="text-align: center">Turnos</h1>
-    <hr>
     <div class="container">
       {% if turnos.items|length %}
       <table class="col-12 table">
@@ -67,6 +66,27 @@
             {% endfor %}
           </tbody>
         </table>
+        <div class="row">
+            <div class="col-5"></div>
+            <div class="col-2" aria-label="Page navigation example">
+              <ul class="pagination">
+                {% for i in range(total_pages)  %}
+                  {% if(page) %}
+                    <li class="page-item">
+                      <form method="GET" action="{{url_for('turno_index', id=id, page=i+1)}}">
+                        <input name="page" hidden value="{{ i+1 }}">
+                        <button class="page-link" type="submit" >{{ i+1 }}</button>
+                      </form> 
+                    </li>
+                  {%else%}  
+                    <li class="page-item"><a class="page-link" href="{{url_for('turno_index', id=id, page=i+1)}}">{{ i+1 }}</a></li>
+                  {%endif%}
+                {% endfor %}
+              </ul>
+            </div>
+  <div class="col-5"></div>
+</div>
+<hr>
       {% else %} 
         <div class="p-3 m-4">
           {% if center_state == 'pendiente' %}

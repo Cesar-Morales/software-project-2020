@@ -52,7 +52,6 @@
   <div class="col-2"></div>
   <div class="col-sm-12 col-12 col-md-12 col-lg-8 p-4 rounded" style="background: #cccccc">
       <h1 style="text-align: center">Usuarios</h1>
-      <hr>
       <div class="container">
       {% if users.items|length %} 
         <table class="col-12 table">
@@ -203,104 +202,5 @@
   <div class="col-5"></div>
 </div>
 
-
-<script>
-  function ConfirmActivate(elem) {
-    localStorage.setItem('activateId', $(elem).attr('data-id'));
-    $('#activateModal').modal();
-}
-</script>
-<script>
-  function ConfirmBlock(elem) {
-    localStorage.setItem('blockId', $(elem).attr('data-id'));
-    $('#blockModal').modal();
-}
-</script>
-<script>
-  function ConfirmDelete(elem) {
-    localStorage.setItem('deleteId', $(elem).attr('data-id'));
-    $('#deleteModal').modal();
-}
-</script>
-<script>
-  function activate() {
-    $.ajax({
-        url:"{{ url_for('user_activ') }}" ,
-        data: {
-            id: localStorage.getItem('activateId')
-        },
-        type:'POST',
-        success: function(res) {
-          console.log(res)
-            var result = JSON.parse(res)
-            if (result.status == 'OK') {
-               alert("usuario activado correctamente")
-               setTimeout(window.location.reload.bind(window.location), 250);
-               $('#activateModal').modal('hide');
-               
-            } else {
-                alert(result.status)
-                $('#activateModal').modal('hide');
-            }
-        },
-        error: function(error) {
-            console.log(error);
-        }
-    });
-}
-</script>
-<script>
-  function block() {
-    $.ajax({
-        url:"{{ url_for('user_block') }}" ,
-        data: {
-            id: localStorage.getItem('blockId')
-        },
-        type:'POST',
-        success: function(res) {
-          console.log(res)
-            var result = JSON.parse(res)
-            if (result.status == 'OK') {
-               alert("usuario bloqueado correctamente")
-               setTimeout(window.location.reload.bind(window.location), 250);
-               $('#blockModal').modal('hide');
-               
-            } else {
-                alert(result.status)
-                $('#blockModal').modal('hide');
-            }
-        },
-        error: function(error) {
-            console.log(error);
-        }
-    });
-}
-</script>
-<script>
-  function Delete() {
-    $.ajax({
-        url:"{{ url_for('user_trash') }}" ,
-        data: {
-            id: localStorage.getItem('deleteId')
-        },
-        type:'POST',
-        success: function(res) {
-          console.log(res)
-            var result = JSON.parse(res)
-            if (result.status == 'OK') {
-               alert("usuario borrado correctamente")
-               setTimeout(window.location.reload.bind(window.location), 250);
-               $('#deleteModal').modal('hide');
-               
-            } else {
-                alert(result.status)
-                $('#deleteModal').modal('hide');
-            }
-        },
-        error: function(error) {
-            console.log(error);
-        }
-    });
-}
-</script>
+{% include "funciones.html" %}
 {% endblock %}

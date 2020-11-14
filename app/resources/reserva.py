@@ -14,8 +14,8 @@ import math
 
 
 @login_required
-def search(page=1):
-    form = ReservaSearch()
+def index(page=1):
+    form = ReservaSearch(request.args)
     per_page = Site.page()
     centro_name = form.centro_name.data
     user_email = form.user_email.data
@@ -24,6 +24,28 @@ def search(page=1):
     reservas_total = Reserva.search(centro_name, user_email).count()
     total_pages=int(math.ceil(reservas_total/per_page))
     
-    return render_template("reserva/index.html",  
-                           reservas=reservas, 
-                           total_pages=total_pages)
+    return render_template("reserva/index.html",
+                           reservas=reservas,
+                           page=page,
+                           total_pages=total_pages,
+                           form_centro=form.centro_name.data,
+                           form_user=form.user_email.data)
+
+@login_required
+def search(page=1):
+    per_page = Site.page()
+    form_centro = request.args.get('centro_name')
+    form_user = request.args.get('user_email')
+    centro_name = form_centro
+    user_email = form_user
+    reservas = Reserva.search(form_centro, 
+                              form_user).paginate(page, per_page, False)
+    reservas_total = Reserva.search(centro_name, user_email).count()
+    total_pages=int(math.ceil(reservas_total/per_page))
+    
+    return render_template("reserva/index.html",
+                           reservas=reservas,
+                           total_pages=total_pages,
+                           page=page,
+                           form_centro=form_centro,
+                           form_user=form_user)

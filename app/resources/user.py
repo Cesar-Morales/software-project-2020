@@ -181,7 +181,7 @@ def edit():
     form.first_name.data = usuario.first_name
     form.email.data = usuario.email
     form.password.data = usuario.password
-    form.idUser.data = usuario.id
+    #form.idUser.data = usuario.id         //Esto trae problemas cuando quiero editar uduario.
     form.image_name= usuario.image_name
     roles = Rol.getRoles()
     rolesUser = usuario.roles

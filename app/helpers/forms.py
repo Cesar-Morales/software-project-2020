@@ -53,7 +53,7 @@ class ConfigForm(FlaskForm):
 class CenterSearchForm(FlaskForm):
      search = SearchField(
              'search',
-             render_kw={"placeholder": "Ingrese nombre de usuario a buscar"})
+             render_kw={"placeholder": "Ingrese nombre de centro a buscar"})
      options = SelectField('Options')
      submit = SubmitField('Buscar')      
 
@@ -98,7 +98,7 @@ class UserForm(FlaskForm):
 class CenterNewForm(FlaskForm):
         """ sdadsad """
         nombre = StringField('Nombre')
-        direccion = StringField("Nombre")
+        direccion = StringField("Direccion")
         telefono = StringField("Telefono")
         horarios = StringField("Horarios")
         municipalidad = StringField("Municipalidad")
