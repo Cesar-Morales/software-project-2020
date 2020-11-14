@@ -31,8 +31,32 @@
                 <td>{{reserva.email}}</td>
               </tr>
             {% endfor %}
+            
           </tbody>
         </table>
+        
+        <div class="row">
+            <div class="col-5"></div>
+            <div class="col-2" aria-label="Page navigation example">
+                <ul class="pagination">
+                  {% for i in range(total_pages)  %}
+                    {% if(page) %}
+                      <li class="page-item">
+                        <form method="GET" action="{{url_for('reserva_search', page=i+1)}}">
+                          <input name="page" hidden value="{{ i+1 }}">
+                          <input name="centro_name" hidden value="{{ form_centro }}">
+                          <input name="user_email" hidden value="{{ form_user }}">
+                          <button class="page-link" type="submit" >{{ i+1 }}</button>
+                        </form> 
+                      </li>
+                    {%else%}  
+                      <li class="page-item"><a class="page-link" href="{{url_for('reserva_search', page=i+1)}}">{{ i+1 }}</a></li>
+                    {%endif%}
+                  {% endfor %}
+                </ul>
+            </div>
+          </div>
+          <hr>
       {% else %}  
         <div class="p-3 m-4">
           <h3 style="text-align: center">No se encontraron reservas</h3>
@@ -44,7 +68,7 @@
       <a class="btn btn-dark col-12 col-sm-4 btn-sm" type="button" href="{{ url_for('home') }}">Volver</a>
       <div class="col-4"></div>
     </div>
-  </div>
+  </tbody>
   <div class="col-2"></div>
 </div>
 {% endblock %}

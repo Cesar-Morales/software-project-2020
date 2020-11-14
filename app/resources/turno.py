@@ -26,6 +26,7 @@ def index(id=1, page=1):
     total_pages=int(math.ceil(total/per_page))
     return render_template('turno/index.html',
                             turnos=turnos,
+                            page=page,
                             total_pages=total_pages,
                             center_state=center_state,
                             id=id)
