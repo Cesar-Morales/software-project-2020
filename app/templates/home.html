@@ -11,14 +11,16 @@
   {% endif %} 
   {% if is_authenticated(session) %}
       <div class="row color-dark">
-        <div class="col-12 col-md-6 p-5">
+        <!--
+          BUSQUEDA USUARIOS
+        -->
+        <div class="col-12 col-lg-4 p-5">
           <h3 style="text-align: center">Busqueda de Usuarios</h3>
           <hr>
           <div class="row">
             <!--
               formulario para busqueda de usuarios por nombre de usuario o estado activo/bloqueado
             -->
-
             <div class="col-12"></div>
             <form autocomplete="off" class="col-12" action="{{ url_for('user_search', page=1) }}" method="GET">
                 {{ form.page }}
@@ -27,12 +29,10 @@
                 <span style="color: red;">{{ error }}</span>
                 {% endfor %}
                 <div class="row">                
-                  <div class="col-2 col-md-4 "></div>
-                  {{ form.active (class="col-8 col-md-4 mb-1")}}<br>
+                  {{ form.active (class="col-12 pl-5 mb-1")}}<br>
                   {% for error in form.active.errors %}
                     <span style="color: red;">{{ error }}</span>
                   {% endfor %}
-                  <div class="col-md-4 col-2"></div>
               </div>
               <div class="row">
                   <div class="col-2 col-sm-4"></div>
@@ -43,8 +43,10 @@
             <div class="col-12 col-sm-12 col-md-3 col-lg-3 "></div>
           </div>  
         </div>
-      
-        <div class="col-12 col-md-6 p-5">
+        <!--
+          BUSQUEDA RESERVA
+        -->
+        <div class="col-12 col-lg-4 p-5">
           <h3 style="text-align: center">Busqueda de Reservas</h3>
           <hr>
           <div class="row">
@@ -60,7 +62,7 @@
                   {% endfor %}
               </div>
               <div>
-                  {{ form_reserva.user_email (class="col-12 mb-2") }}
+                  {{ form_reserva.user_email (class="col-12 mb-4") }}
                   {% for error in form_reserva.user_email.errors %}
                   <span style="color: red;">{{ error }}</span>
                   {% endfor %}
@@ -73,41 +75,35 @@
             </form>
           </div>  
         </div>
-      </div>
-
-
-     
-      <div class="row color-dark">
-        <div class="col-2"></div>
-        <div class="col-8 col-lg-8 p-5">
+        <!--
+          BUSQUEDA CENTROS
+        -->
+        <div class="col-12 col-lg-4 p-5">
           <h3 style="text-align: center">Busqueda de Centros</h3>
           <hr>
           <div class="row">
             <!--
               formulario para busqueda de centros
             -->
-            <div class="col-12 col-sm-12 col-md-3 col-lg-3 "></div>
-            <form class="col-12 col-sm-12 col-md-6 col-lg-6" action="{{ url_for('center_search', page=1) }}" method="POST">
+            <form class="col-12" action="{{ url_for('center_search', page=1) }}" method="POST">
               {{ centerForm.csrf_token }}
                 {{ centerForm.search (class="col-12 mb-2") }}
                 {% for error in centerForm.search.errors %}
                 <span style="color: red;">{{ error }}</span>
                 {% endfor %}
-                <div class="row">                
-                  <div class="col-2 col-md-4 "></div>
-                  {{ centerForm.options (class="col-12 mb-2") }}
-                  <div class="col-md-4 col-2"></div>
+                <div>                
+                  <div class="col-2 col-sm-4 "></div>
+                  {{ centerForm.options (class="col-12 mb-4") }}
+                  <div class="col-sm-4 col-2"></div>
               </div>
               <div class="row">
-                  <div class="col-12 col-md-3 col-lg-3"></div>
-                  {{ centerForm.submit(class="col-12 col-md-6 col-lg-6") }}
-                  <div class="col-12 col-md-3 col-lg-3"></div>
+                  <div class="col-4 col-sm-4"></div>
+                  {{ centerForm.submit(class="btn btn-sm btn-light col-12 col-sm-4") }}
+                  <div class="col-4 col-sm-4"></div>
               </div>
             </form>
-            <div class="col-12 col-sm-12 col-md-3 col-lg-3 "></div>
           </div>  
         </div>
-        <div class="col-2"></div>
       </div>
 
     {% endif %}
