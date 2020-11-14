@@ -5,11 +5,11 @@
   {% endblock %}
 {% block content %}
 <div class="row">
-    <div class="col-2"></div>
-    <div class="col-sm-12 col-12 col-md-8 col-lg-12 p-4 rounded" style="background: #cccccc">
+    <div class="col-md-1 col-lg-3"></div>
+    <div class="col-12 col-md-10 col-lg-6 p-4 rounded" style="background: #cccccc">
       <h1 style="text-align: center">Crear un Centro </h1>
       <hr>
-      <form action="{{ url_for('center_create') }}" method="POST" >
+      <form autocomplete="off" action="{{ url_for('center_create') }}" method="POST" >
         {{ form.csrf_token }}
         <div class="row">
           <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
@@ -114,6 +114,6 @@
         </div>
       </form>
     </div>
-    <div class="col-2"></div>
+    <div class="col-md-1 col-lg-3"></div>
 </div> 
 {% endblock %}
