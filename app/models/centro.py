@@ -83,7 +83,25 @@ class Centro(db.Model):
              centros = db.session.query(Centro).filter((Centro.estado == option)
                                                         & (Centro.name.like('%'+centro_name+'%')))
             
-        return centros
+        return centros 
+    
+    def accept(requestForm):
+        idd = requestForm['id']
+        center = db.session.query(Centro).filter(Centro.id == idd).first()
+        center.estado = 'aceptado'
+        db.session.commit()
+        return True
+
+    def trashOrReject(requestForm):
+        """Metodo que recibe un id de centro a borrar a traves de un formulario."""
+        idCenter = requestForm['id']
+        state = requestForm['state']
+        center = db.session.query(Centro).filter(Centro.id == idCenter).first()
+        #Reviso si el usuario a borrar es un administrador. Si es, devuelvo false para que no puedan borrarlo, si no, lo bloqueo.
+        center.estado = state
+        db.session.commit()
+        return True       
+
 
 class CentroSchema(Schema):
     class Meta:
@@ -98,3 +116,4 @@ class CentroSchema(Schema):
     tipo = fields.Pluck("self", "name")
     web = fields.Str()
     email = fields.Str() 
+>>>>>>> app/models/centro.py

@@ -35,7 +35,7 @@ def create():
             flash("Ocurrio un error, intente nuevamente.")
         return redirect(url_for("config_center_index"))
     return render_template("config/centers.html", form=form)
-    
+
 @login_required
 def search(page=1):
     form = CenterSearchForm()
@@ -49,4 +49,19 @@ def search(page=1):
     return render_template("centros/index.html",  
                            centros=centros, 
                            total_pages=total_pages)
- 
+
+@login_required
+def accept():
+    if Centro.accept(request.form):
+        return json.dumps({'status':'OK'})
+
+@login_required
+def trashOrReject():
+
+    if Centro.trashOrReject(request.form):
+        return json.dumps({'status':'OK'})
+    else:
+        return json.dumps({'status':'Ocurrio algun error'})     
+
+def map():
+    return render_template("config/map.html")
