@@ -34,7 +34,7 @@ def create():
         else:
             flash("Ocurrio un error, intente nuevamente.")
         return redirect(url_for("config_center_index"))
-    return render_template("config/centers.html", form=form)
+    return render_template("centros/new.html", form=form)
 
 @login_required
 def search(page=1):

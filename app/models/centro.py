@@ -20,11 +20,11 @@ class Centro(db.Model):
     phone_number = db.Column(db.String(50), nullable=False)
     start_time = db.Column(db.String(80), nullable=False, default='09:00')
     final_time = db.Column(db.String(80), nullable=False, default='16:00')
-    municipality = db.Column(db.String(80))
+    municipality = db.Column(db.String(80), default='No especificado')
     web = db.Column(db.String(80), default='')
     email = db.Column(db.String(80), default='')
     pdf_name = db.Column(db.String(100), default='')
-    coordinates = db.Column(db.String(100))
+    coordinates = db.Column(db.String(100), default='No especificado')
     estado = db.Column(db.String(80), default='pendiente')
 
     tipoId = db.Column(db.Integer, db.ForeignKey('tipo.id'))
