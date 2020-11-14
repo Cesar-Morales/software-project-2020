@@ -50,6 +50,12 @@ class ConfigForm(FlaskForm):
              (0, 'Deshabilitar')])
     submit = SubmitField('Editar')
 
+class CenterSearchForm(FlaskForm):
+     search = SearchField(
+             'search',
+             render_kw={"placeholder": "Ingrese nombre de usuario a buscar"})
+     options = SelectField('Options')
+     submit = SubmitField('Buscar')      
 
 class SearchForm(FlaskForm):
     """ Clase que se encarga de generar formulario para busqueda de usuarios 
@@ -89,6 +95,21 @@ class UserForm(FlaskForm):
             validators=[DataRequired('Debe insertar una contraseña')])
     image_name = StringField('NombreImagen')
 
+class CenterNewForm(FlaskForm):
+        """ sdadsad """
+        nombre = StringField('Nombre')
+        direccion = StringField("Nombre")
+        telefono = StringField("Telefono")
+        horarios = StringField("Horarios")
+        municipalidad = StringField("Municipalidad")
+        web = StringField("Web")
+        email = EmailField("Email")
+        coordenadas = StringField("Coordenadas")
+        instrucciones = StringField("Instrucciones")
+        tipo = StringField("Tipo")
+        estado = StringField("Estado")
+        submit = SubmitField('Crear')    
+
 class TurnoForm(FlaskForm):
     """ Clase que se encarga de generar formulario para edicion y creacion de 
     turnos para luego realizar validaciones correspondientes, tanto del lado
@@ -106,8 +127,8 @@ class TurnoForm(FlaskForm):
                         DataRequired('Falta horario de comienzo')])
     fecha = DateField(
             'Fecha', 
-            validators=[DateRange(message='Indique fecha de hoy o posterior', 
-                                  min=date.today(), 
+            validators=[DateRange(message='Indique fecha de mañana o posterior', 
+                                  min=date.today() + timedelta(days=1), 
                                   max=date.today() + timedelta(days=2*365)), 
                         DataRequired('Falta fecha')])
     idTurno = HiddenField('idTurno')
@@ -138,7 +159,6 @@ class TurnoAPIForm(TurnoForm):
     telefono_donante = StringField(
             'Numero de telefono',
             validators=[DataRequired('El telefono no esta presente')])
-
 
 class ReservaSearch(FlaskForm):
 

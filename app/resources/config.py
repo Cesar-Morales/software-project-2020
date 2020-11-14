@@ -5,6 +5,7 @@ from flask import render_template, session, redirect, url_for, flash
 from app.helpers.forms import ConfigForm
 from app import db
 from app.models.site import Site
+from app.models.centro import Centro
 from flask_login import login_required
 from app.validators.user_validators import check_permission
 
@@ -48,3 +49,9 @@ def edit():
         Site.update_data(title,description,email,pages,active)
         return redirect(url_for('home'))
     return render_template("config/index.html", form=form)
+
+@login_required
+def center_index():
+    #como para empezar me traigo todos los centros cargados, para ver si funciona. 
+    centers = Centro.getAll() 
+    return render_template("config/centers.html",centers = centers)

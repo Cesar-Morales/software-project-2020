@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block title %}Centros{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+
+{% if centros.items|length %}
+  {% for centro in centros.items %}
+    <div>
+      <td>{{centro.name}}</td>
+    </div>
+  {% endfor %}
+{% else %}  
+  <div class="bg-warning p-3 m-4">
+    <h3 style="text-align: center">No se encontraron centros</h3>
+  </div>
+{% endif %}
+{% endblock %}

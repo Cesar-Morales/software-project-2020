@@ -229,9 +229,9 @@ if not centro_aceptado:
                      phone_number='4032-3243', 
                      start_time='06:30', 
                      final_time='17:00', 
-                     municipality='Quilmes', 
-                     coordinates='-34.72418 -58.25265', 
-                     estado='aceptado')
+                     estado='aceptado',
+                     web='',
+                     email='')
     db.session.add(centro_aceptado)
     db.session.commit()
 
@@ -243,9 +243,9 @@ if not centro_pendiente:
                      location='Calle 47', 
                      phone_number='221-874-3321', 
                      start_time='08:00', 
-                     final_time='16:00', 
-                     municipality='La plata', 
-                     coordinates='-34.92145 -57.95453')
+                     final_time='16:00',
+                     web='',
+                     email='')
     db.session.add(centro_pendiente)
     db.session.commit()
 
@@ -258,9 +258,9 @@ if not centro_rechazado:
                      phone_number='5432-5643', 
                      start_time='09:00', 
                      final_time='16:00', 
-                     municipality='Lanús', 
-                     coordinates='-34.69941 -58.39263', 
-                     estado='rechazado')
+                     estado='rechazado',
+                     web='',
+                     email='')
     db.session.add(centro_rechazado)
     db.session.commit()    
 
