@@ -38,17 +38,19 @@ def create():
 
 @login_required
 def search(page=1):
-    form = CenterSearchForm()
     per_page = Site.page()
-    centro_name = form.search.data
-    option = form.options.data
-    centros = Centro.search(centro_name,option).paginate(page, per_page, False)
-    centros_total = Centro.search(centro_name, option).count()
+    search = request.args.get('search')
+    options = request.args.get('options')
+    centros = Centro.search(search,options).paginate(page, per_page, False)
+    centros_total = Centro.search(search, options).count()
     total_pages=int(math.ceil(centros_total/per_page))
     
     return render_template("centros/index.html",  
-                           centros=centros, 
-                           total_pages=total_pages)
+                           centros=centros,
+                           total_pages=total_pages,
+                           page=page,
+                           search=search,
+                           options=options)
 
 @login_required
 def accept():
