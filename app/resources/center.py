@@ -16,17 +16,21 @@ import math
 
 @login_required
 def new_center():
-
-    if not authenticated(session):
-        abort(401)
-    # if not check_permission('user_new'):
-    #     flash("No posee los permisos necesarios para crear usuarios")
-    #     return redirect(url_for("user_index"))
+    
+    if not check_permission('centro_new'):
+        flash("No posee los permisos necesario para poder crear centro")
+        return redirect(url_for("home"))
+    
     form = CenterNewForm()
     return render_template("centros/new.html", form = form)
 
 @login_required
 def create():  
+
+    if not check_permission('centro_new'):
+        flash("No posee los permisos necesario para poder crear centro")
+        return redirect(url_for("home"))
+
     form = CenterNewForm()
     if form.validate():
         if Centro.create(form):
@@ -38,6 +42,11 @@ def create():
 
 @login_required
 def search(page=1):
+
+    if not check_permission('centro_index'):
+        flash("No posee los permisos necesario para poder lsitar centros")
+        return redirect(url_for("home"))
+
     per_page = Site.page()
     search = request.args.get('search')
     options = request.args.get('options')
@@ -59,6 +68,10 @@ def accept():
 
 @login_required
 def trashOrReject():
+
+    if not check_permission('centro_destroy'):
+        flash("No posee los permisos necesario para poder eliminar centro")
+        return redirect(url_for("home"))
 
     if Centro.trashOrReject(request.form):
         return json.dumps({'status':'OK'})
