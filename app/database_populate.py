@@ -169,6 +169,47 @@ if not permiso_user_show:
     db.session.add(permiso_user_show)
     db.session.commit()
 
+#Permisos para modulo centros
+permiso_centro_index = db.session.query(Permiso).filter_by(
+    name='centro_index'
+    ).first()
+if not permiso_centro_index:
+    permiso_centro_index = Permiso(name='centro_index')
+    db.session.add(permiso_centro_index)
+    db.session.commit()
+
+permiso_centro_new = db.session.query(Permiso).filter_by(
+    name='centro_new'
+    ).first()
+if not permiso_centro_new:
+    permiso_centro_new = Permiso(name='centro_new')
+    db.session.add(permiso_centro_new)
+    db.session.commit()
+
+permiso_centro_update = db.session.query(Permiso).filter_by(
+    name='centro_update'
+    ).first()
+if not permiso_centro_update:
+    permiso_centro_update = Permiso(name='centro_update')
+    db.session.add(permiso_centro_update)
+    db.session.commit()
+
+permiso_centro_destroy = db.session.query(Permiso).filter_by(
+    name='centro_destroy'
+    ).first()
+if not permiso_centro_destroy:
+    permiso_centro_destroy = Permiso(name='centro_destroy')
+    db.session.add(permiso_centro_destroy)
+    db.session.commit()
+
+permiso_centro_show = db.session.query(Permiso).filter_by(
+    name='centro_show'
+    ).first()
+if not permiso_centro_show:
+    permiso_centro_show = Permiso(name='centro_show')
+    db.session.add(permiso_centro_show)
+    db.session.commit()
+
 #Permisos para modulo turnos
 permiso_turno_index = db.session.query(Permiso).filter_by(
     name='turno_index'
@@ -270,24 +311,44 @@ tipo1.centros.append(centro_rechazado)
 tipo2.centros.append(centro_pendiente)
 
 #Relacionar permisos con rol
+
+#Permisos admin
+#Configuracion sistema
 rol_admin.permisos.append(permiso_config_index)
 rol_admin.permisos.append(permiso_config_new)
 rol_admin.permisos.append(permiso_config_destroy)
 rol_admin.permisos.append(permiso_config_update)
 rol_admin.permisos.append(permiso_config_show)
+#Users
 rol_admin.permisos.append(permiso_user_index)
 rol_admin.permisos.append(permiso_user_new)
 rol_admin.permisos.append(permiso_user_destroy)
 rol_admin.permisos.append(permiso_user_update)
 rol_admin.permisos.append(permiso_user_show)
+#Centros
+rol_admin.permisos.append(permiso_centro_index)
+rol_admin.permisos.append(permiso_centro_new)
+rol_admin.permisos.append(permiso_centro_destroy)
+rol_admin.permisos.append(permiso_centro_update)
+rol_admin.permisos.append(permiso_centro_show)
+#Turnos
 rol_admin.permisos.append(permiso_turno_index)
 rol_admin.permisos.append(permiso_turno_new)
 rol_admin.permisos.append(permiso_turno_update)
 rol_admin.permisos.append(permiso_turno_destroy)
+
+#Permisos operator
+#Centro
+rol_operador.permisos.append(permiso_centro_index)
+rol_operador.permisos.append(permiso_centro_new)
+rol_operador.permisos.append(permiso_centro_update)
+rol_operador.permisos.append(permiso_centro_show)
+#Turno
 rol_operador.permisos.append(permiso_turno_index)
 rol_operador.permisos.append(permiso_turno_new)
 rol_operador.permisos.append(permiso_turno_update)
 rol_operador.permisos.append(permiso_turno_destroy)
+
 
 #Relacionar users con el roles
 user.roles.append(rol_admin)
