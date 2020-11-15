@@ -81,7 +81,13 @@ def trashOrReject():
     else:
         return json.dumps({'status':'Ocurrio algun error'})     
 
+@login_required
 def edit():
+
+    if not check_permission('centro_update'):
+        flash("No posee los permisos necesario para poder editar centro")
+        return redirect(url_for("home"))
+
     form = CenterNewForm()
     centro = Centro.getCentro(request.form.get('center_edit'))
     form.hora_cierre.data = time.fromisoformat(centro.final_time)
@@ -94,12 +100,39 @@ def edit():
     form.email.data = centro.email
     form.instrucciones.data = centro.pdf_name
     form.coordenadas.data = centro.coordinates
-    form.tipo.data = centro.tipo.name
+    centerTypes = Tipo.getAllTypes()
+    form.tipo.choices = [(tipo.name, tipo.name) for tipo in centerTypes]
+    return render_template("centros/edit.html",form = form, center_edit=request.form.get('center_edit'))
+
+@login_required
+def confirmEdit():
+
+    if not check_permission('centro_update'):
+        flash("No posee los permisos necesario para poder editar centro")
+        return redirect(url_for("home"))
+
+    form = CenterNewForm()
+    if form.validate():
+        if Centro.updateCentro(form, request.form.get('center_edit')):
+            flash("Centro modificado correctamente")
+        else:
+            flash("Ocurrio un error, intente nuevamente.")
+
+    centro = Centro.getCentro(request.form.get('center_edit'))
+    form.hora_cierre.data = time.fromisoformat(centro.final_time)
+    form.hora_apertura.data = time.fromisoformat(centro.start_time)
+    form.telefono.data = centro.phone_number
+    form.direccion.data = centro.location
+    form.nombre.data = centro.name
+    form.municipalidad.data = centro.municipality
+    form.web.data = centro.web
+    form.email.data = centro.email
+    form.instrucciones.data = centro.pdf_name
+    form.coordenadas.data = centro.coordinates
+    centerTypes = Tipo.getAllTypes()
+    form.tipo.choices = [(tipo.name, tipo.name) for tipo in centerTypes]
+
     return render_template("centros/edit.html",form = form)
-
-
-
-
 
 def map():
     return render_template("config/map.html")

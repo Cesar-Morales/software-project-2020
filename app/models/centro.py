@@ -77,7 +77,10 @@ class Centro(db.Model):
         email = requestForm.email.data
         coordenadas = requestForm.coordenadas.data
         instrucciones = requestForm.instrucciones.data
-        tipo = requestForm.tipo.data
+        
+        #Buscar id del tipo de centro
+        tipo = Tipo.searchByName(requestForm.tipo.data)
+
         nuevo = Centro(email=email, 
                        name=nombre, 
                        location=direccion,
@@ -89,10 +92,44 @@ class Centro(db.Model):
                        pdf_name=instrucciones, 
                        coordinates = coordenadas, 
                        estado='aceptado', 
-                       tipoId=1)
+                       tipoId=tipo.id)
         db.session.add(nuevo)
         db.session.commit()
         return True
+
+    def updateCentro(requestForm, id):
+
+        centro = db.session.query(Centro).filter_by(id=id).first()
+
+        nombre = requestForm.nombre.data
+        direccion = requestForm.direccion.data
+        telefono = requestForm.telefono.data
+        hora_apertura = requestForm.hora_apertura.data
+        hora_cierre = requestForm.hora_cierre.data
+        municipalidad = requestForm.municipalidad.data
+        web = requestForm.web.data
+        email = requestForm.email.data
+        coordenadas = requestForm.coordenadas.data
+        instrucciones = requestForm.instrucciones.data
+        
+        #Buscar id del tipo de centro
+        tipo = Tipo.searchByName(requestForm.tipo.data)
+
+        centro.email=email
+        centro.name=nombre
+        centro.location=direccion
+        centro.start_time=hora_apertura
+        centro.final_time=hora_cierre
+        centro.municipality=municipalidad
+        centro.web=web
+        centro.phone_number=telefono 
+        centro.pdf_name=instrucciones 
+        centro.coordinates = coordenadas
+        centro.estado='aceptado'
+        centro.tipoId=tipo.id
+
+        db.session.commit()
+        return True    
 
     def getAllTurnosById(id):
         centro = db.session.query(Centro).filter_by(id=id).first()
