@@ -18,7 +18,8 @@
                 <th scope="col">Direccion</th>
                 <th scope="col">Telefono</th>
                 <th scope="col">Apertura</th>
-                <th scope="col">Acciones</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Mas</th>
               </tr>
             </thead>
             <tbody> 
@@ -28,7 +29,40 @@
                     <td>{{ center.location }}</td>
                     <td>{{ center.phone_number }}</td>
                     <td>{{ center.start_time }}hs-{{center.final_time}}hs</td>
+                    <td>{{ center.estado }}</td>
                     <td>
+                       <!--BOTON y Modal INFO-->
+                       <button type="button" class="btn btn-light btn-sm" data-toggle="modal" id="{{center}}" data-target="#center{{center.id}}">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                            <path fill-rule="evenodd" d="M16 1.25v4.146a.25.25 0 01-.427.177L14.03 4.03l-3.75 3.75a.75.75 0 11-1.06-1.06l3.75-3.75-1.543-1.543A.25.25 0 0111.604 1h4.146a.25.25 0 01.25.25zM2.75 3.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h2a.75.75 0 01.75.75v2.19l2.72-2.72a.75.75 0 01.53-.22h4.5a.25.25 0 00.25-.25v-2.5a.75.75 0 111.5 0v2.5A1.75 1.75 0 0113.25 13H9.06l-2.573 2.573A1.457 1.457 0 014 14.543V13H2.75A1.75 1.75 0 011 11.25v-7.5C1 2.784 1.784 2 2.75 2h5.5a.75.75 0 010 1.5h-5.5z"></path>
+                          </svg>
+                        </button>
+                        <div class="modal col-12 fade" id="center{{center.id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                              <div class="modal-content">
+                                  <div class="modal-header mb-3" style="text-align:center;">
+                                      <h4 class="modal-title" id="deleteModalLabel">Detalles del Centro</h4>
+                                  </div>
+                                  <div class="media m-3">
+                                      <div class="media-body">
+                                        <p class="mt-0"><b>Nombre </b> {{center.name}}.</p>
+                                        <p class="mt-0"><b>Localidad:</b> {{ center.location }}.</p>
+                                        <p class="mt-0"><b>Telefono:</b> {{ center.phone_number }}.</p>
+                                        <p class="mt-0"><b>Hora de Apertura:</b> {{ center.start_time }}hs</p>
+                                        <p class="mt-0"><b>Hora de Cierre:</b> {{center.final_time}}hs.</p>
+                                        <p class="mt-0"><b>Municipalidad:</b> {{ center.municipality }}.</p>
+                                        <p class="mt-0"><b>Sitio Web:</b> {%if center.web|length%}{{ center.web }}{%else%}No posee sitio{%endif%}.</p>
+                                        <p class="mt-0"><b>Correo Electronico:</b>{%if center.email|length%}{{ center.email }}{%else%}No posee email{%endif%}.</p>
+                                        <p class="mt-0"><b>Estado del centro:</b>{%if center.coordinates|length%}{{ center.coordinates }}{%else%}No posee coordenadas{%endif%}</p>
+                                        <p class="mt-0"><b>Estado del centro:</b>{{ center.estado }}</p>
+                                      </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-dark" data-dismiss="modal">Volver</button>
+                                    </div>
+                              </div>
+                            </div>
+                          </div>
                       <!-- BOTON PARA BORRAR, SEA CUAL SEA EL ESTADO -->
                       <input type="hidden" id="borrar" name="borrar" hidden value="{{center.id}}"> 
                         <button data-id={{center.id}} class="btn btn-danger btn-sm" onclick="ConfirmDelete(this)">
@@ -56,6 +90,7 @@
                                   <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                                 </svg>
                             </button>
+                           
                       {% endif %}
                     </td> 
                   </tr>
