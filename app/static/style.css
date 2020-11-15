@@ -104,7 +104,7 @@ li {
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
 }
-/* estilos de tabla centros */
+/* estilos de tabla centros 
 
 .limiter {
   width: 100%;
@@ -355,7 +355,7 @@ tbody tr:hover {
     padding-right: 15px;
   }
 }
-
+*/
 .new_footer_area {
   background: #e1d5f1;
 }
