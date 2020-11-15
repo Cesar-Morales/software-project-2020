@@ -170,8 +170,9 @@
                                           <p class="mt-0"><b>Municipalidad:</b> {{ center.municipality }}.</p>
                                           <p class="mt-0"><b>Sitio Web:</b> {%if center.web|length%}{{ center.web }}{%else%}No posee sitio{%endif%}.</p>
                                           <p class="mt-0"><b>Correo Electronico:</b>{%if center.email|length%}{{ center.email }}{%else%}No posee email{%endif%}.</p>
-                                          <p class="mt-0"><b>Estado del centro:</b>{%if center.coordinates|length%}{{ center.coordinates }}{%else%}No posee coordenadas{%endif%}</p>
+                                          <p class="mt-0"><b>Coordenadas:</b>{%if center.coordinates|length%}{{ center.coordinates }}{%else%}No posee coordenadas{%endif%}</p>
                                           <p class="mt-0"><b>Estado del centro:</b>{{ center.estado }}</p>
+                                          <a href="{{url_for('turno_index', id=center.id, page=1)}}">Ver turnos</a>
                                       </div>
                                     </div>
                                     <div class="modal-footer">
