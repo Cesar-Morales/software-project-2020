@@ -50,7 +50,7 @@
 
 <div class="row">
   <div class="col-2"></div>
-  <div class="col-sm-12 col-12 col-md-12 col-lg-8 p-4 rounded" style="background: #cccccc">
+  <div class="col-sm-12 col-12 col-md-12 col-lg-8 p-4 rounded" style="background: #C6B2EF">
       <h1 style="text-align: center">Usuarios</h1>
       <div class="container">
       {% if users.items|length %} 
@@ -168,8 +168,8 @@
       {% endif %}
     </div>
     <div class="row">
-        <div class="col-5"></div>
-        <div class="col-2" aria-label="Page navigation example">
+        <div class="col-3 col-md-5"></div>
+        <div class="col-6 col-md-2" aria-label="Page navigation example">
           <ul class="pagination">
             {% for i in range(total_pages)  %}
               {% if(page) %}
@@ -187,7 +187,7 @@
             {% endfor %}
           </ul>
         </div>
-        <div class="col-5"></div>
+        <div class="col-3 col-md-5"></div>
       </div>
       <hr>
       <div class="row">

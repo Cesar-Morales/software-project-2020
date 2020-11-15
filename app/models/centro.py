@@ -55,8 +55,8 @@ class Centro(db.Model):
         nuevo = Centro(name=nombre, 
                        location=direccion, 
                        phone_number=telefono, 
-                       start_time='06:30', 
-                       final_time='17:00', 
+                       start_time=hora_apertura, 
+                       final_time=hora_cierre, 
                        web=web, 
                        email=email, 
                        estado='pendiente', 
@@ -70,19 +70,19 @@ class Centro(db.Model):
         nombre = requestForm.nombre.data
         direccion = requestForm.direccion.data
         telefono = requestForm.telefono.data
-        horarios = requestForm.horarios.data
+        hora_apertura = requestForm.hora_apertura.data
+        hora_cierre = requestForm.hora_cierre.data
         municipalidad = requestForm.municipalidad.data
         web = requestForm.web.data
         email = requestForm.email.data
         coordenadas = requestForm.coordenadas.data
         instrucciones = requestForm.instrucciones.data
         tipo = requestForm.tipo.data
-        estado = requestForm.estado.data
         nuevo = Centro(email=email, 
                        name=nombre, 
                        location=direccion,
-                       start_time='06:30',
-                       final_time='17:00', 
+                       start_time=hora_apertura,
+                       final_time=hora_cierre, 
                        municipality=municipalidad, 
                        web=web,
                        phone_number=telefono, 

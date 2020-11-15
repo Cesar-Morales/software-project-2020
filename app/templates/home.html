@@ -5,12 +5,12 @@
 {% endblock %}
 {% block content %} 
   {% if site.active %}  
-    {% include "carousel.html" %}
+    
   {% else %}
     <img src="{{url_for('static', filename='logos/construccion.jpeg')}}" class="d-block center-image" alt="...">
   {% endif %} 
   {% if is_authenticated(session) %}
-      <div class="row color-dark">
+      <div class="row " style="margin-top: -60px; background-color: #C6B2EF">
         <!--
           BUSQUEDA USUARIOS
         -->
@@ -105,4 +105,5 @@
       </div>
 
     {% endif %}
+    {% include "carousel.html" %}
 {% endblock %}
