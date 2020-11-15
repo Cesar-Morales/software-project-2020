@@ -13,6 +13,7 @@ from app.helpers.forms import CenterNewForm, CenterSearchForm
 from app.validators.user_validators import check_permission
 from app.models.site import Site
 import math
+from datetime import time
 
 @login_required
 def new_center():
@@ -77,6 +78,26 @@ def trashOrReject():
         return json.dumps({'status':'OK'})
     else:
         return json.dumps({'status':'Ocurrio algun error'})     
+
+def edit():
+    form = CenterNewForm()
+    centro = Centro.getCentro(request.form.get('center_edit'))
+    form.hora_cierre.data = time.fromisoformat(centro.final_time)
+    form.hora_apertura.data = time.fromisoformat(centro.start_time)
+    form.telefono.data = centro.phone_number
+    form.direccion.data = centro.location
+    form.nombre.data = centro.name
+    form.municipalidad.data = centro.municipality
+    form.web.data = centro.web
+    form.email.data = centro.email
+    form.instrucciones.data = centro.pdf_name
+    form.coordenadas.data = centro.coordinates
+    form.tipo.data = centro.tipoId
+    return render_template("centros/edit.html",form = form)
+
+
+
+
 
 def map():
     return render_template("config/map.html")

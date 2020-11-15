@@ -1,0 +1,137 @@
+{% extends "layout.html" %}
+{% block title %}Centros{% endblock %}
+{% block head %}
+  {{ super() }}
+
+  {% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-1 col-lg-3"></div>
+    <div class="col-12 col-md-10 col-lg-6 p-4 rounded" style="background: #cccccc">
+      <h1 style="text-align: center">Editar un Centro </h1>
+      <hr>
+      <form autocomplete="off" action="{{ url_for('center_create') }}" method="POST" >
+        {{ form.csrf_token }}
+        <div class="row">
+          <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.nombre.label}}</b>
+            {{ form.nombre(class="col-12 mb-2") }}
+            {% for error in form.nombre.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.direccion.label}}</b>
+            {{ form.direccion(class="col-12 mb-2") }}
+            {% for error in form.direccion.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div id="app" class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
+           <b>Municipalidad</b>
+           <br>
+            <select  name="municipalidad" >
+              <option v-for="municipio in info" v-bind:value="municipio.name"> [[municipio.name]]  </option></select>
+          </div>
+          <script src="https://unpkg.com/vue"></script>
+          <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+          <script>
+             new Vue({
+               el: '#app',
+               data () {
+                return {
+                info: null
+               } 
+              },
+               delimiters: ['[[',']]'],
+               mounted() {
+                 axios
+                 .get('https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios?per_page=135')
+                 .then(response => (this.info = response.data.data.Town))
+              }
+           })
+          </script>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.telefono.label}}</b>
+            {{ form.telefono(class="col-12 mb-2") }}
+            {% for error in form.telefono.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.hora_apertura.label}}</b>
+            {{ form.hora_apertura(class="col-12 mb-2") }}
+            {% for error in form.hora_apertura.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.hora_cierre.label}}</b>
+            {{ form.hora_cierre(class="col-12 mb-2") }}
+            {% for error in form.hora_cierre.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.web.label}}</b>
+            {{ form.web(class="col-12 mb-2") }}
+            {% for error in form.web.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.email.label}}</b>
+            {{ form.email(class="col-12 mb-2") }}
+            {% for error in form.email.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.coordenadas.label}}</b>
+            {{ form.coordenadas(class="col-12 mb-2") }}
+            {% for error in form.coordenadas.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.instrucciones.label}}</b>
+            {{ form.instrucciones(class="col-12 mb-2") }}
+            {% for error in form.instrucciones.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.tipo.label}}</b>
+            {{ form.tipo(class="col-12 mb-2") }}
+            {% for error in form.tipo.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
+
+          </div>
+          
+         
+          <div class="mt-5 col-12 mb-3 col-sm-12 col-md-12 col-lg-12">
+            <div class="row ml-3">
+              {{ form.submit(class="btn col-3 btn-success btn-sm") }}
+              <div class="col-1"></div>
+              <button class="btn col-3 btn-danger btn-sm" type="reset">Limpiar</button>
+              <div class="col-1"></div>
+              <a class="btn btn-dark col-3 btn-sm" type="button" href="{{ url_for('config_center_index') }}">Volver</a>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-1 col-lg-3"></div>
+</div> 
+{% endblock %}

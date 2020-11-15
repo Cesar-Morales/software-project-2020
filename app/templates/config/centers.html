@@ -50,7 +50,16 @@
                           <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-unlock" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M9.655 8H2.333c-.264 0-.398.068-.471.121a.73.73 0 0 0-.224.296 1.626 1.626 0 0 0-.138.59V14c0 .342.076.531.14.635.064.106.151.18.256.237a1.122 1.122 0 0 0 .436.127l.013.001h7.322c.264 0 .398-.068.471-.121a.73.73 0 0 0 .224-.296 1.627 1.627 0 0 0 .138-.59V9c0-.342-.076-.531-.14-.635a.658.658 0 0 0-.255-.237A1.122 1.122 0 0 0 9.655 8zm.012-1H2.333C.5 7 .5 9 .5 9v5c0 2 1.833 2 1.833 2h7.334c1.833 0 1.833-2 1.833-2V9c0-2-1.833-2-1.833-2zM8.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
                           </svg>
-                        </button>                    
+                        </button>
+                        <!-- Boton para editar -->
+                        <form autocomplete="off" action="{{ url_for('center_edit') }}" method="POST">
+                          <input type="hidden" id="center_edit" name="center_edit" hidden value="{{center.id}}"> 
+                        <button name="center_edit" class="btn btn-info btn-sm"  data-id={{center_edit}} >
+                          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+                          </svg>
+                        </button>
+                        </form>                           
                           <!-- 
                             BOTON PARA RECHAZAR
                           -->
@@ -89,6 +98,15 @@
                         <td>{{ center.start_time }}hs-{{center.final_time}}hs</td>
                         <td>{{center.municipality}}</td>
                       <td class="column11">
+                         <!-- Boton para editar -->
+                         <form autocomplete="off" action="{{ url_for('center_edit') }}" method="POST">
+                          <input type="hidden" id="center_edit" name="center_edit" hidden value="{{center.id}}"> 
+                        <button name="center_edit" class="btn btn-info btn-sm"  data-id={{center_edit}} >
+                          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+                          </svg>
+                        </button>
+                        </form>             
                         <input type="hidden" id="borrar" name="borrar" hidden value="{{center.id}}"> 
                           <button data-id={{center.id}} class="btn btn-danger btn-sm" onclick="ConfirmDelete(this)">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -125,6 +143,15 @@
                         <td>{{ center.start_time }}hs-{{center.final_time}}hs</td>
                         <td>{{center.municipality}}</td>
                       <td>
+                         <!-- Boton para editar -->
+                         <form autocomplete="off" action="{{ url_for('center_edit') }}" method="POST">
+                          <input type="hidden" id="center_edit" name="center_edit" hidden value="{{center.id}}"> 
+                        <button name="center_edit" class="btn btn-info btn-sm"  data-id={{center.id}} >
+                          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+                          </svg>
+                        </button>
+                        </form>             
                         <input type="hidden" id="borrar" name="borrar" hidden value="{{center.id}}"> 
                           <button data-id={{center.id}} class="btn btn-danger btn-sm" onclick="ConfirmDelete(this)">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
