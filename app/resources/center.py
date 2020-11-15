@@ -2,6 +2,7 @@ from flask import redirect, render_template, request
 from flask import url_for, session, abort, flash
 from app.models.user import User,Rol
 from app.models.centro import Centro
+from app.models.tipo import Tipo
 from app.helpers.auth import authenticated
 from sqlalchemy.orm import sessionmaker
 from app import db
@@ -15,14 +16,15 @@ from app.models.site import Site
 import math
 from datetime import time
 
-@login_required
+# @login_required
 def new_center():
     
-    if not check_permission('centro_new'):
-        flash("No posee los permisos necesario para poder crear centro")
-        return redirect(url_for("home"))
-    
+    # if not check_permission('centro_new'):
+    #     flash("No posee los permisos necesario para poder crear centro")
+    #     return redirect(url_for("home"))
     form = CenterNewForm()
+    centerTypes = Tipo.getAllTypes()
+    form.tipo.choices = [(tipo.name, tipo.name) for tipo in centerTypes]
     return render_template("centros/new.html", form = form)
 
 @login_required
@@ -92,7 +94,7 @@ def edit():
     form.email.data = centro.email
     form.instrucciones.data = centro.pdf_name
     form.coordenadas.data = centro.coordinates
-    form.tipo.data = centro.tipoId
+    form.tipo.data = centro.tipo.name
     return render_template("centros/edit.html",form = form)
 
 

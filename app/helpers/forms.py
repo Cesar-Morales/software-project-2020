@@ -125,8 +125,7 @@ class CenterNewForm(FlaskForm):
         email = EmailField("Email")
         coordenadas = StringField("Coordenadas")
         instrucciones = StringField("Instrucciones")
-        tipo = StringField("Tipo", 
-                validators=[DataRequired('Debe insertar un horario de apertra')])
+        tipo = SelectField("Tipo",validate_choice = False)
         submit = SubmitField('Crear')
 
 class CenterNewAPIForm(CenterNewForm):
