@@ -120,15 +120,13 @@ class CenterNewForm(FlaskForm):
                                 min=time.fromisoformat('16:00:00'),
                                 max=time.fromisoformat('21:00:00')),
                             DataRequired('Debe insertar un horario de cierre')])
-        horarios = StringField("Horarios")
-        municipalidad = StringField("Municipalidad")
+        municipalidad = SelectField("Municipalidad",validate_choice = False)
         web = StringField("Web")
         email = EmailField("Email")
         coordenadas = StringField("Coordenadas")
         instrucciones = StringField("Instrucciones")
         tipo = StringField("Tipo", 
                 validators=[DataRequired('Debe insertar un horario de apertra')])
-        estado = StringField("Estado")
         submit = SubmitField('Crear')
 
 class CenterNewAPIForm(CenterNewForm):

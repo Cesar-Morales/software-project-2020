@@ -2,6 +2,7 @@
 {% block title %}Usuarios{% endblock %}
 {% block head %}
   {{ super() }}
+
   {% endblock %}
 {% block content %}
 <div class="row">
@@ -28,14 +29,30 @@
             {% endfor %}
 
           </div>
-          <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
-            <b>{{form.municipalidad.label}}</b>
-            {{ form.municipalidad(class="col-12 mb-2") }}
-            {% for error in form.municipalidad.errors %}
-            <span style="color: red;">{{error}}</span>
-            {% endfor %}
-
+          <div id="app" class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
+           <b>Municipalidad</b>
+           <br>
+            <select  name="municipalidad" >
+              <option v-for="municipio in info" v-bind:value="municipio.name"> [[municipio.name]]  </option></select>
           </div>
+          <script src="https://unpkg.com/vue"></script>
+          <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+          <script>
+             new Vue({
+               el: '#app',
+               data () {
+                return {
+                info: null
+               } 
+              },
+               delimiters: ['[[',']]'],
+               mounted() {
+                 axios
+                 .get('https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios?per_page=135')
+                 .then(response => (this.info = response.data.data.Town))
+              }
+           })
+          </script>
           <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
             <b>{{form.telefono.label}}</b>
             {{ form.telefono(class="col-12 mb-2") }}
@@ -44,14 +61,7 @@
             {% endfor %}
 
           </div>
-          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
-            <b>{{form.horarios.label}}</b>
-            {{ form.horarios(class="col-12 mb-2") }}
-            {% for error in form.horarios.errors %}
-            <span style="color: red;">{{error}}</span>
-            {% endfor %}
-
-          </div>
+          
           <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
             <b>{{form.hora_apertura.label}}</b>
             {{ form.hora_apertura(class="col-12 mb-2") }}
@@ -108,15 +118,7 @@
             {% endfor %}
 
           </div>
-          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
-            <b>{{form.estado.label}}</b>
-            {{ form.estado(class="col-12 mb-2") }}
-            {% for error in form.estado.errors %}
-            <span style="color: red;">{{error}}</span>
-            {% endfor %}
-
-           
-          </div>
+          
          
           <div class="mt-5 col-12 mb-3 col-sm-12 col-md-12 col-lg-12">
             <div class="row ml-3">
