@@ -1,0 +1,49 @@
+  <!--Modal aceptar centro-->
+  <div class="modal fade" id="acceptModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="text-align:center;">
+                    <h4 class="modal-title" id="acceptModalLabel">Esta seguro que desea aceptarlo? </h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" onclick="accept()" class="btn btn-success">Aceptar</button>
+                </div>
+            </div>
+          </div>
+        </div> 
+
+
+        <!-- modal de confirmacion de eliminacion de Centros-->
+          <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="text-align:center;">
+                        <h4 class="modal-title" id="deleteModalLabel">Esta seguro que desea borrarlo? </h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                        <button type="button" onclick="trashOrReject()" class="btn btn-danger">Borrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--Modal rechazar centro-->
+        <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header" style="text-align:center;">
+                      <h4 class="modal-title" id="blockModalLabel">Esta seguro que desea rechazarlo? </h4>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                      <button type="button" onclick="trashOrReject()" class="btn btn-warning">Rechazar</button>
+                  </div>
+              </div>
+          </div>
+      </div>   
+    </div>
+    
+    {% include "centersScript.html" %}
