@@ -4,13 +4,12 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
-
-{% if centros.items|length %}
-
 <div class="row">
   <div class="col-2"></div>
   <div class="col-sm-12 col-12 col-md-12 col-lg-8 p-4 rounded" style="background: #cccccc">
         <h1 style="text-align: center">Centros de Ayuda</h1>
+{% if centros.items|length %}
+
         <div class="container">
           <table class="col-12 table">
             <thead class="thead-dark">
@@ -80,7 +79,15 @@
             </div>
           </div>
           <hr>
-          <div class="row">
+          
+{% else %}  
+<hr>
+  <div class=" p-3 m-4">
+    <h3 style="text-align: center">No se encontraron centros {{ options }}s</h3>
+  </div>
+  <hr>
+{% endif %}
+<div class="row">
             <div class="col-2"></div>  
             <a href="{{ url_for('centros_new') }}" class="col-3 btn btn-success btn-sm">Nuevo</a>
             <div class="col-2"></div>
@@ -92,9 +99,4 @@
   </div>
   <div class="col-2"></div>
   {% include "modalsCentros.html" %}
-{% else %}  
-  <div class="bg-warning p-3 m-4">
-    <h3 style="text-align: center">No se encontraron centros</h3>
-  </div>
-{% endif %}
 {% endblock %}
