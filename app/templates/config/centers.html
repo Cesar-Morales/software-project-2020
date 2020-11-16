@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}Configuracion{% endblock %}
 {% block head %}
+
   {{ super() }}
 {% endblock %}
 {% block content %}
@@ -74,6 +75,7 @@
                                           <p class="mt-0"><b>Correo Electronico:</b>{%if center.email|length%}{{ center.email }}{%else%}No posee email{%endif%}.</p>
                                           <p class="mt-0"><b>Estado del centro:</b>{%if center.coordinates|length%}{{ center.coordinates }}{%else%}No posee coordenadas{%endif%}</p>
                                           <p class="mt-0"><b>Estado del centro:</b>{{ center.estado }}</p>
+                                          <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
                                       </div>
                                     </div>
                                     <div class="modal-footer">
@@ -126,6 +128,7 @@
                       <th scope="col">Direccion</th>
                       <th scope="col">Telefono</th>
                       <th scope="col">Apertura</th>
+                      <th scope="col">Ubicacion</th>
                       <th scope="col">Acciones</th>
                     </tr>
                   </thead>
@@ -137,6 +140,7 @@
                         <td>{{ center.location }}</td>
                         <td>{{ center.phone_number }}</td>
                         <td>{{ center.start_time }}hs-{{center.final_time}}hs</td>
+                        <td>Ver Ubicacion</td>
                       <td class="column11">
                       <!-- Boton para editar -->
                       <form autocomplete="off" action="{{ url_for('center_edit') }}" method="POST">
@@ -172,6 +176,7 @@
                                           <p class="mt-0"><b>Correo Electronico:</b>{%if center.email|length%}{{ center.email }}{%else%}No posee email{%endif%}.</p>
                                           <p class="mt-0"><b>Coordenadas:</b>{%if center.coordinates|length%}{{ center.coordinates }}{%else%}No posee coordenadas{%endif%}</p>
                                           <p class="mt-0"><b>Estado del centro:</b>{{ center.estado }}</p>
+                                    
                                           <a href="{{url_for('turno_index', id=center.id, page=1)}}">Ver turnos</a>
                                       </div>
                                     </div>
@@ -209,12 +214,15 @@
                   <tbody> 
                 {% for center in centers %}
                   {% if  center.estado == 'rechazado' %}                 
-                    <tr>
+                   <tr>
                         <td>{{center.name}}</td>
                         <td>{{ center.location }}</td>
                         <td>{{ center.phone_number }}</td>
                         <td>{{ center.start_time }}hs-{{center.final_time}}hs</td>
-                      <td> 
+                        <script>
+                          
+                        </script>
+                      <td>
                          <!-- Boton para editar -->
                       <form autocomplete="off" action="{{ url_for('center_edit') }}" method="POST">
                         <input type="hidden" id="center_edit" name="center_edit" hidden value="{{center.id}}"> 
@@ -248,7 +256,7 @@
                                           <p class="mt-0"><b>Correo Electronico:</b>{%if center.email|length%}{{ center.email }}{%else%}No posee email{%endif%}.</p>
                                           <p class="mt-0"><b>Estado del centro:</b>{%if center.coordinates|length%}{{ center.coordinates }}{%else%}No posee coordenadas{%endif%}</p>
                                           <p class="mt-0"><b>Estado del centro:</b>{{ center.estado }}</p>
-                                      </div>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-dark" data-dismiss="modal">Volver</button>
@@ -284,7 +292,15 @@
     <div class="col-2"></div>
     <a href="{{ url_for('home') }}" class="col-3 btn btn-dark btn-sm">Volver</a>
     <div class="col-2"></div>
-  </div>
+  </div><br>
+  <div id="mapid"></div>
+  <!-- links para mapas de coordenadas -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+crossorigin=""></script>
+<script type="text/javascript"
+src="{{ url_for('static', filename='map.js') }}"></script>
+<!-- fin de link de mapas de coordenadas -->
 </div> 
 </div>
 <div class="col-2"></div>
