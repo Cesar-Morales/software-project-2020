@@ -96,6 +96,7 @@ def edit():
     form.direccion.data = centro.location
     form.nombre.data = centro.name
     form.municipalidad.data = centro.municipality
+    munic = centro.municipality
     form.web.data = centro.web
     form.email.data = centro.email
     form.instrucciones.data = centro.pdf_name
@@ -104,7 +105,7 @@ def edit():
     centro_tipo = centro.tipo.name
     form.tipo.choices = [(tipo.name, tipo.name) for tipo in centerTypes]
     form.tipo.data = centro_tipo
-    return render_template("centros/edit.html",form = form, center_edit=request.form.get('center_edit'))
+    return render_template("centros/edit.html",munic = munic, form = form, center_edit=request.form.get('center_edit'))
 
 @login_required
 def confirmEdit():
