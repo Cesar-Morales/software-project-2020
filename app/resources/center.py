@@ -101,7 +101,9 @@ def edit():
     form.instrucciones.data = centro.pdf_name
     form.coordenadas.data = centro.coordinates
     centerTypes = Tipo.getAllTypes()
+    centro_tipo = centro.tipo.name
     form.tipo.choices = [(tipo.name, tipo.name) for tipo in centerTypes]
+    form.tipo.data = centro_tipo
     return render_template("centros/edit.html",form = form, center_edit=request.form.get('center_edit'))
 
 @login_required

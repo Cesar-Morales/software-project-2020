@@ -119,7 +119,7 @@
                         <td>{{ center.location }}</td>
                         <td>{{ center.phone_number }}</td>
                         <td>{{ center.start_time }}hs-{{center.final_time}}hs</td>
-                      <td class="column11">
+                      <td style="display:inline-flex;" class="column11">
                       <!-- Boton para editar -->
                       <form autocomplete="off" action="{{ url_for('center_edit') }}" method="POST">
                         <input type="hidden" id="center_edit" name="center_edit" hidden value="{{center.id}}"> 
