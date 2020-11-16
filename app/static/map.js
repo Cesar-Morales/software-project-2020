@@ -14,7 +14,7 @@ var myIcon = L.icon({
 })
 
  $('table tr td').click(function(){
-     console.log($(this).val())
+     console.log($.val())
     var marker = L.marker([51.5, -0.09],{icon:myIcon})
     .addTo(myMap)
     myMap.setView([51.5, -0.09],13)
