@@ -36,7 +36,7 @@ def create():
 
     form = CenterNewForm()
     if form.validate():
-        if Centro.create(form):
+        if Centro.create(form, request.files['file']):
             flash("Centro creado correctamente")
         else:
             flash("Ocurrio un error, intente nuevamente.")
@@ -113,7 +113,7 @@ def confirmEdit():
 
     form = CenterNewForm()
     if form.validate():
-        if Centro.updateCentro(form, request.form.get('center_edit')):
+        if Centro.updateCentro(form, request.form.get('center_edit'), request.files['file']):
             flash("Centro modificado correctamente")
         else:
             flash("Ocurrio un error, intente nuevamente.")
@@ -132,7 +132,7 @@ def confirmEdit():
     centerTypes = Tipo.getAllTypes()
     form.tipo.choices = [(tipo.name, tipo.name) for tipo in centerTypes]
 
-    return render_template("centros/edit.html",form = form)
+    return render_template("centros/edit.html",form = form,center_edit=request.form.get('center_edit'))
 
 def map():
     return render_template("config/map.html")
