@@ -13,12 +13,11 @@ var myIcon = L.icon({
     iconAnchor:[25,16],
 })
 
-
  $('table tr td').click(function(){
-    var coordenadas = 
-    var marker = L.marker([coordenadas],{icon:myIcon})
+     console.log($(this).val())
+    var marker = L.marker([51.5, -0.09],{icon:myIcon})
     .addTo(myMap)
-    myMap.setView([coordenadas],13)
+    myMap.setView([51.5, -0.09],13)
     console.log("PROBANDO");
     return false;
  });
