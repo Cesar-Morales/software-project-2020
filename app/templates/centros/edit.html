@@ -7,11 +7,12 @@
 {% block content %}
 <div class="row">
     <div class="col-md-1 col-lg-3"></div>
-    <div class="col-12 col-md-10 col-lg-6 p-4 rounded" style="background: #C6B2EF">
-      <h1 style="text-align: center">Crear un Centro </h1>
+    <div class="col-12 col-md-10 col-lg-6 p-4 rounded" style="background: #cccccc">
+      <h1 style="text-align: center">Edicion de Centro</h1>
       <hr>
-      <form autocomplete="off" action="{{ url_for('center_create') }}" method="POST" enctype="multipart/form-data">
+      <form autocomplete="off" action="{{ url_for('center_confirmEdit') }}" method="POST" enctype="multipart/form-data">
         {{ form.csrf_token }}
+        <input name="center_edit" hidden value="{{center_edit}}">
         <div class="row">
           <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
             <b>{{form.nombre.label}}</b>
@@ -102,21 +103,29 @@
             {% endfor %}
 
           </div>
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>{{form.instrucciones.label}}</b>
+            {{ form.instrucciones(class="col-12 mb-2", readonly=true) }}
+            {% for error in form.instrucciones.errors %}
+            <span style="color: red;">{{error}}</span>
+            {% endfor %}
 
+          </div>
           <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
             <b>{{form.tipo.label}}</b>
             {{ form.tipo(class="col-12 mb-2") }}
             {% for error in form.tipo.errors %}
             <span style="color: red;">{{error}}</span>
             {% endfor %}
-          </div>
 
-          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
-            <b>Nuevas instrucciones</b>
-            <input class="col-12" type="file" accept="application/pdf" name="file"/>
           </div>
           
-         
+          <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
+            <b>Instrucciones</b>
+            <input class="col-12" type="file" accept="application/pdf" name="file"/>
+          </div>
+
+
           <div class="mt-5 col-12 mb-3 col-sm-12 col-md-12 col-lg-12">
             <div class="row ml-3">
               {{ form.submit(class="btn col-3 btn-success btn-sm") }}

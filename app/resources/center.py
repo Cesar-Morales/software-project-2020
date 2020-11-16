@@ -2,6 +2,7 @@ from flask import redirect, render_template, request
 from flask import url_for, session, abort, flash
 from app.models.user import User,Rol
 from app.models.centro import Centro
+from app.models.tipo import Tipo
 from app.helpers.auth import authenticated
 from sqlalchemy.orm import sessionmaker
 from app import db
@@ -13,15 +14,17 @@ from app.helpers.forms import CenterNewForm, CenterSearchForm
 from app.validators.user_validators import check_permission
 from app.models.site import Site
 import math
+from datetime import time
 
-@login_required
+# @login_required
 def new_center():
     
-    if not check_permission('centro_new'):
-        flash("No posee los permisos necesario para poder crear centro")
-        return redirect(url_for("home"))
-    
+    # if not check_permission('centro_new'):
+    #     flash("No posee los permisos necesario para poder crear centro")
+    #     return redirect(url_for("home"))
     form = CenterNewForm()
+    centerTypes = Tipo.getAllTypes()
+    form.tipo.choices = [(tipo.name, tipo.name) for tipo in centerTypes]
     return render_template("centros/new.html", form = form)
 
 @login_required
@@ -33,7 +36,7 @@ def create():
 
     form = CenterNewForm()
     if form.validate():
-        if Centro.create(form):
+        if Centro.create(form, request.files['file']):
             flash("Centro creado correctamente")
         else:
             flash("Ocurrio un error, intente nuevamente.")
@@ -77,6 +80,59 @@ def trashOrReject():
         return json.dumps({'status':'OK'})
     else:
         return json.dumps({'status':'Ocurrio algun error'})     
+
+@login_required
+def edit():
+
+    if not check_permission('centro_update'):
+        flash("No posee los permisos necesario para poder editar centro")
+        return redirect(url_for("home"))
+
+    form = CenterNewForm()
+    centro = Centro.getCentro(request.form.get('center_edit'))
+    form.hora_cierre.data = time.fromisoformat(centro.final_time)
+    form.hora_apertura.data = time.fromisoformat(centro.start_time)
+    form.telefono.data = centro.phone_number
+    form.direccion.data = centro.location
+    form.nombre.data = centro.name
+    form.municipalidad.data = centro.municipality
+    form.web.data = centro.web
+    form.email.data = centro.email
+    form.instrucciones.data = centro.pdf_name
+    form.coordenadas.data = centro.coordinates
+    centerTypes = Tipo.getAllTypes()
+    form.tipo.choices = [(tipo.name, tipo.name) for tipo in centerTypes]
+    return render_template("centros/edit.html",form = form, center_edit=request.form.get('center_edit'))
+
+@login_required
+def confirmEdit():
+
+    if not check_permission('centro_update'):
+        flash("No posee los permisos necesario para poder editar centro")
+        return redirect(url_for("home"))
+
+    form = CenterNewForm()
+    if form.validate():
+        if Centro.updateCentro(form, request.form.get('center_edit'), request.files['file']):
+            flash("Centro modificado correctamente")
+        else:
+            flash("Ocurrio un error, intente nuevamente.")
+
+    centro = Centro.getCentro(request.form.get('center_edit'))
+    form.hora_cierre.data = time.fromisoformat(centro.final_time)
+    form.hora_apertura.data = time.fromisoformat(centro.start_time)
+    form.telefono.data = centro.phone_number
+    form.direccion.data = centro.location
+    form.nombre.data = centro.name
+    form.municipalidad.data = centro.municipality
+    form.web.data = centro.web
+    form.email.data = centro.email
+    form.instrucciones.data = centro.pdf_name
+    form.coordenadas.data = centro.coordinates
+    centerTypes = Tipo.getAllTypes()
+    form.tipo.choices = [(tipo.name, tipo.name) for tipo in centerTypes]
+
+    return render_template("centros/edit.html",form = form,center_edit=request.form.get('center_edit'))
 
 def map():
     return render_template("config/map.html")
