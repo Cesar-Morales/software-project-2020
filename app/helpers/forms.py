@@ -160,7 +160,7 @@ class TurnoForm(FlaskForm):
     idTurno = HiddenField('idTurno')
     submit = SubmitField('Confirmar')
 
-    def validate_start_time(form, field):
+    def validate_hora_inicio(form, field):
         time = field.data
         time_delta =  timedelta(minutes=time.minute)
         multiplo = timedelta(minutes=30)
