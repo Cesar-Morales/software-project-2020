@@ -124,7 +124,7 @@ class CenterNewForm(FlaskForm):
         web = StringField("Web")
         email = EmailField("Email")
         coordenadas = StringField("Coordenadas")
-        instrucciones = StringField("Instrucciones")
+        instrucciones = StringField("Instrucciones actuales")
         tipo = SelectField("Tipo",validate_choice = False)
         submit = SubmitField('Crear')
 

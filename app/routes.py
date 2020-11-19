@@ -47,6 +47,7 @@ app.add_url_rule("/centros_buscar/<int:page>", "center_search", center.search, m
 app.add_url_rule("/centros/accept", "center_accept", center.accept, methods=["POST"])
 app.add_url_rule("/centros/trashOrReject", "center_trashOrReject", center.trashOrReject, methods=["POST"])
 app.add_url_rule("/centros/edit", "center_edit", center.edit, methods=["POST"])
+app.add_url_rule("/centros/edicion", "center_confirmEdit", center.confirmEdit, methods=["POST"])
 
 app.add_url_rule("/centros/map","center_map",center.map)
 
