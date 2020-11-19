@@ -9,6 +9,7 @@ from werkzeug.utils import secure_filename
 from marshmallow import fields
 from app.models.tipo import Tipo
 from marshmallow import Schema, fields, pre_load
+import os
 
 class Centro(db.Model):
 
@@ -66,7 +67,7 @@ class Centro(db.Model):
         
         return nuevo
 
-    def create(requestForm):
+    def create(requestForm, file):
         nombre = requestForm.nombre.data
         direccion = requestForm.direccion.data
         telefono = requestForm.telefono.data
@@ -76,8 +77,18 @@ class Centro(db.Model):
         web = requestForm.web.data
         email = requestForm.email.data
         coordenadas = requestForm.coordenadas.data
-        instrucciones = requestForm.instrucciones.data
-        tipo = requestForm.tipo.data
+
+        #Guardamos el PDF
+        if file.filename == '':
+            pdf_name = ''
+        else:
+            pdf_name = file.filename
+            pdf_path = os.path.join(current_app.config['UPLOAD_FOLDER'], pdf_name)
+            file.save(pdf_path)
+        
+        #Buscar id del tipo de centro
+        tipo = Tipo.searchByName(requestForm.tipo.data)
+
         nuevo = Centro(email=email, 
                        name=nombre, 
                        location=direccion,
@@ -86,13 +97,54 @@ class Centro(db.Model):
                        municipality=municipalidad, 
                        web=web,
                        phone_number=telefono, 
-                       pdf_name=instrucciones, 
+                       pdf_name=pdf_name, 
                        coordinates = coordenadas, 
                        estado='aceptado', 
-                       tipoId=1)
+                       tipoId=tipo.id)
         db.session.add(nuevo)
         db.session.commit()
         return True
+
+    def updateCentro(requestForm, id, file):
+
+        centro = db.session.query(Centro).filter_by(id=id).first()
+
+        nombre = requestForm.nombre.data
+        direccion = requestForm.direccion.data
+        telefono = requestForm.telefono.data
+        hora_apertura = requestForm.hora_apertura.data
+        hora_cierre = requestForm.hora_cierre.data
+        municipalidad = requestForm.municipalidad.data
+        web = requestForm.web.data
+        email = requestForm.email.data
+        coordenadas = requestForm.coordenadas.data
+        
+        #Guardamos el PDF
+        if file.filename == '':
+            pdf_name = requestForm.instrucciones.data
+        else:
+            pdf_name = file.filename
+            pdf_path = os.path.join(current_app.config['UPLOAD_FOLDER'], pdf_name)
+            file.save(pdf_path)
+        
+        #Buscar id del tipo de centro
+        tipo = Tipo.searchByName(requestForm.tipo.data)
+
+        centro.email=email
+        centro.name=nombre
+        centro.location=direccion
+        centro.start_time=hora_apertura
+        centro.final_time=hora_cierre
+        centro.municipality=municipalidad
+        centro.web=web
+        centro.phone_number=telefono 
+        centro.pdf_name=pdf_name 
+        centro.coordinates = coordenadas
+        centro.estado='aceptado'
+        centro.tipoId=tipo.id
+
+        db.session.commit()
+        return True    
 
     def getAllTurnosById(id):
         centro = db.session.query(Centro).filter_by(id=id).first()
