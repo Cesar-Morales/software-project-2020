@@ -1,4 +1,12 @@
 
+function verMapa(centercoordinates){ 
+    console.log(centercoordinates)
+    var res = centercoordinates.split(',')
+    var lat = res[0]
+    var long = res[1]
+    console.log(res)
+    console.log(lat)
+    console.log(long)
 const tilesProvider = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 
 let myMap = L.map('mapid').setView([-34.6083,-58.3712],13)
@@ -13,11 +21,10 @@ var myIcon = L.icon({
     iconAnchor:[25,16],
 })
 
- $('table tr td').click(function(){
-     console.log($.val())
-    var marker = L.marker([51.5, -0.09],{icon:myIcon})
+    var marker = L.marker([lat,long],{icon:myIcon})
     .addTo(myMap)
-    myMap.setView([51.5, -0.09],13)
+    myMap.setView([lat,long],13)
     console.log("PROBANDO");
     return false;
- });
+ 
+}

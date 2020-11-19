@@ -30,6 +30,7 @@
                       <th scope="col">Direccion</th>
                       <th scope="col">Telefono</th>
                       <th scope="col">Apertura</th>
+                      <th scope="col">Ubicacion</th>
                       <th scope="col">Acciones</th>
                     </tr>
                   </thead>
@@ -41,6 +42,8 @@
                         <td>{{ center.location }}</td>
                         <td>{{ center.phone_number }}</td>
                         <td>{{ center.start_time }}hs-{{center.final_time}}hs</td>
+                        <td><button onclick="verMapa('{{center.coordinates}}')">Ver ubicacion</button></td>
+
                       <td>
                         <!--BOTON y Modal INFO-->
                        <button type="button" class="btn btn-light btn-sm" data-toggle="modal" id="{{center}}" data-target="#center{{center.id}}">
@@ -122,7 +125,7 @@
                         <td>{{ center.location }}</td>
                         <td>{{ center.phone_number }}</td>
                         <td>{{ center.start_time }}hs-{{center.final_time}}hs</td>
-                        <td><input id="hidden" type="hidden" value="hola"> Ver Ubicacion</td>
+                        <td><button onclick="verMapa('{{center.coordinates}}')">Ver ubicacion</button></td>
                       <td class="column11">
                       <!-- Boton para editar -->
                       <form autocomplete="off" action="{{ url_for('center_edit') }}" method="POST">
@@ -190,6 +193,7 @@
                       <th scope="col">Direccion</th>
                       <th scope="col">Telefono</th>
                       <th scope="col">Apertura</th>
+                      <th scope="col">Ubicacion</th>
                       <th scope="col">Acciones</th>
                     </tr>
                   </thead>
@@ -201,6 +205,7 @@
                         <td>{{ center.location }}</td>
                         <td>{{ center.phone_number }}</td>
                         <td>{{ center.start_time }}hs-{{center.final_time}}hs</td>
+                        <td><button onclick="verMapa('{{center.coordinates}}')">Ver ubicacion</button></td>
                         <script>
                           
                         </script>
