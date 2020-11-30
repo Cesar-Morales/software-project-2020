@@ -1,6 +1,7 @@
 from datetime import date, time, timedelta
 from app.helpers.forms import TurnoAPIForm, CenterNewAPIForm
 from app.models.tipo import Tipo
+from werkzeug.datastructures import ImmutableMultiDict
 
 
 def check_data_reserva(form_request, id):
@@ -32,7 +33,16 @@ def check_data_reserva(form_request, id):
     else:
         return True
 
-def check_data_centro(form_request):
+def check_data_centro(data):
+
+
+    form_request = ImmutableMultiDict([
+        ('nombre', data.get('nombre')), 
+        ('direccion', data.get('direccion')), 
+        ('telefono', data.get('telefono')), 
+        ('hora_apertura', data.get('hora_apertura')), 
+        ('hora_cierre', data.get('hora_cierre'))
+        ])
 
     #Hacer la validaciones de los tiempos
     form = CenterNewAPIForm(form_request)
@@ -41,7 +51,7 @@ def check_data_centro(form_request):
         return False
     
     #Chequear que el tipo de centro exista
-    if Tipo.searchByName(form_request.get('tipo')):
+    if Tipo.searchByName(data.get('tipo')):
         return True
     else:
         return False
