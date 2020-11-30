@@ -24,7 +24,8 @@
     <p> {{ errors }} </p>
 
     <vue-recaptcha  
-      @verify='mi_metodo' 
+      @verify='establecer_captcha'
+      @expired='resetear_captcha'
       sitekey="6LfwIuwZAAAAAOJrxBMi5Er5IqvcXnPUjfdS1O2U" 
       :loadRecaptchaScript="true"
     ></vue-recaptcha>
@@ -61,7 +62,10 @@ export default {
     }
   },
   methods: {
-    mi_metodo(response) {
+    resetear_captcha() {
+      this.captcha = ""
+    },
+    establecer_captcha(response) {
       this.captcha = response
     },
     crear_centro() {
