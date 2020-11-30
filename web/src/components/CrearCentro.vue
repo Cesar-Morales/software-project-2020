@@ -17,7 +17,7 @@
     <input v-model="email">
     <p> El email es: {{ email }} </p>
 
-    <h3>Respeusta</h3>
+    <p v-if="respuesta">Petición creada exitosamente, espere pacientemente a que su solicitud sea aprobada.</p>
     <p> {{ respuesta }} </p>
 
     <h3>Errors</h3>
@@ -38,6 +38,7 @@
 <script>
 import axios from 'axios'
 import VueRecaptcha from 'vue-recaptcha'
+import qs from 'qs'
 
 export default {
   name: 'CrearCentro',
@@ -65,7 +66,7 @@ export default {
     },
     crear_centro() {
       axios
-        .post('http://127.0.0.1:5000/centros',{
+        .post('http://127.0.0.1:5000/centros', qs.stringify({
           nombre: this.nombre,
           direccion: this.direccion,
           telefono: this.telefono,
@@ -73,7 +74,7 @@ export default {
           hora_cierre: this.hora_cierre,
           tipo: this.tipo,
           web: this.web,
-          email: this.email})
+          email: this.email}))
         .then(response => {this.errors = ""
                            this.respuesta = response.data.atributos})
         .catch(

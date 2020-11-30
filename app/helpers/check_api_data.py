@@ -33,16 +33,7 @@ def check_data_reserva(form_request, id):
     else:
         return True
 
-def check_data_centro(data):
-
-
-    form_request = ImmutableMultiDict([
-        ('nombre', data.get('nombre')), 
-        ('direccion', data.get('direccion')), 
-        ('telefono', data.get('telefono')), 
-        ('hora_apertura', data.get('hora_apertura')), 
-        ('hora_cierre', data.get('hora_cierre'))
-        ])
+def check_data_centro(form_request):
 
     #Hacer la validaciones de los tiempos
     form = CenterNewAPIForm(form_request)
@@ -51,7 +42,7 @@ def check_data_centro(data):
         return False
     
     #Chequear que el tipo de centro exista
-    if Tipo.searchByName(data.get('tipo')):
+    if Tipo.searchByName(form_request.get('tipo')):
         return True
     else:
         return False

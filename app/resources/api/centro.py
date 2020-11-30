@@ -79,11 +79,9 @@ def show(centro_id):
 def create():
     """ Endpoint para crear un centro """
 
-    data = request.get_json(silent=True)
-
-    if check_data_centro(data):
+    if check_data_centro(request.form):
         #Crear centro si no existe
-        centro = Centro.createAPI(data)
+        centro = Centro.createAPI(request.form)
 
         #Cheuqear si se pudo crear
         if centro:
