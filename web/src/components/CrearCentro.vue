@@ -1,21 +1,28 @@
 <template>
   <div>
-    <input v-model="nombre">
     <p> El nombre es: {{ nombre }} </p>
+    <input v-model="nombre">
+
+    <p> La direccion es: {{ direccion }} </p>
     <input v-model="direccion">
-    <p> El direccion es: {{ direccion }} </p>
-    <input v-model="telefono">
+    
     <p> El telefono es: {{ telefono }} </p>
-    <input v-model="hora_apertura">
-    <p> El hora_apertura es: {{ hora_apertura }} </p>
-    <input v-model="hora_cierre">
-    <p> El hora_cierre es: {{ hora_cierre }} </p>
+    <input v-model="telefono">
+
+    <p> La hora de apertura es: {{ hora_apertura }} </p>    
+    <input v-model="hora_apertura" type="time">
+ 
+    <p> La hora de cierre es: {{ hora_cierre }} </p>   
+    <input v-model="hora_cierre" type="time">
+    
+    <p> El tipo de centro es: {{ tipo }} </p>
     <input v-model="tipo">
-    <p> El tipo es: {{ tipo }} </p>
+    
+    <p> La web es: {{ web }} </p>
     <input v-model="web">
-    <p> El web es: {{ web }} </p>
-    <input v-model="email">
+    
     <p> El email es: {{ email }} </p>
+    <input v-model="email">
 
     <p v-if="respuesta">Petición creada exitosamente, espere pacientemente a que su solicitud sea aprobada.</p>
     <p> {{ respuesta }} </p>
