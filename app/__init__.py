@@ -11,10 +11,7 @@ from flask_login import LoginManager
 from datetime import date
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
-
-#Filtro para formatear la fecha. HAY QUE CAMBIAR ESTO DE LUGAR CREO
-def datetimeformat(value, format='%d-%m-%Y'):
-    return date.fromisoformat(value).strftime(format)
+from app.helpers.format_data import datetimeformat
 
 # Configuración inicial de la app
 app = Flask(__name__)

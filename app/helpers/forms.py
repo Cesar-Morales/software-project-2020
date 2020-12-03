@@ -1,3 +1,7 @@
+"""
+Modulo que define formularios y sus validadores
+"""
+
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, SubmitField, RadioField
 from wtforms.fields import HiddenField, SelectField
