@@ -19,12 +19,13 @@ from datetime import time
 # @login_required
 def new_center():
     
-    # if not check_permission('centro_new'):
-    #     flash("No posee los permisos necesario para poder crear centro")
-    #     return redirect(url_for("home"))
+    if not check_permission('centro_new'):
+         flash("No posee los permisos necesario para poder crear centro")
+         return redirect(url_for("home"))
     form = CenterNewForm()
-    centerTypes = Tipo.getAllTypes()
-    form.tipo.choices = [(tipo.name, tipo.name) for tipo in centerTypes]
+    form.municipalidad.data = ''
+    center_types = Tipo.getAllTypes()
+    form.tipo.choices = [(tipo.name, tipo.name) for tipo in center_types]
     return render_template("centros/new.html", form = form)
 
 @login_required
@@ -35,19 +36,24 @@ def create():
         return redirect(url_for("home"))
 
     form = CenterNewForm()
+    form.instrucciones.data = request.files['file'].filename
     if form.validate():
         if Centro.create(form, request.files['file']):
             flash("Centro creado correctamente")
         else:
             flash("Ocurrio un error, intente nuevamente.")
         return redirect(url_for("config_center_index"))
+
+    center_types = Tipo.getAllTypes()
+    form.tipo.choices = [(tipo.name, tipo.name) for tipo in center_types]
+
     return render_template("centros/new.html", form=form)
 
 @login_required
 def search(page=1):
 
     if not check_permission('centro_index'):
-        flash("No posee los permisos necesario para poder lsitar centros")
+        flash("No posee los permisos necesario para poder listar centros")
         return redirect(url_for("home"))
 
     per_page = Site.page()
@@ -74,7 +80,7 @@ def trashOrReject():
 
     if not check_permission('centro_destroy'):
         flash("No posee los permisos necesario para poder eliminar centro")
-        return redirect(url_for("home"))
+        return json.dumps({'status':'No posee los pormisos para borrar centros'})
 
     if Centro.trashOrReject(request.form):
         return json.dumps({'status':'OK'})
@@ -89,7 +95,9 @@ def edit():
         return redirect(url_for("home"))
 
     form = CenterNewForm()
+
     centro = Centro.getCentro(request.form.get('center_edit'))
+
     form.hora_cierre.data = time.fromisoformat(centro.final_time)
     form.hora_apertura.data = time.fromisoformat(centro.start_time)
     form.telefono.data = centro.phone_number
@@ -100,9 +108,11 @@ def edit():
     form.email.data = centro.email
     form.instrucciones.data = centro.pdf_name
     form.coordenadas.data = centro.coordinates
-    centerTypes = Tipo.getAllTypes()
-    form.tipo.choices = [(tipo.name, tipo.name) for tipo in centerTypes]
-    return render_template("centros/edit.html",form = form, center_edit=request.form.get('center_edit'))
+
+    center_types = Tipo.getAllTypes()
+    form.tipo.choices = [(tipo.name, tipo.name) for tipo in center_types]
+
+    return render_template("centros/edit.html", form = form, center_edit=request.form.get('center_edit'))
 
 @login_required
 def confirmEdit():

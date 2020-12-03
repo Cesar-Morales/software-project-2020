@@ -62,11 +62,11 @@
                 if (result.status == 'OK') {
                    alert("Operacion realizada correctamente")
                    setTimeout(window.location.reload.bind(window.location), 250);
-                   $('#blockModal').modal('hide');
+                   $('#deleteModal').modal('hide');
                    
                 } else {
                     alert(result.status)
-                    $('#blockModal').modal('hide');
+                    $('#deleteModal').modal('hide');
                 }
             },
             error: function(error) {
