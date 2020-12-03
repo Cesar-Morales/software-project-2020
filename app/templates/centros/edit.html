@@ -34,38 +34,10 @@
           <div id="app" class="mb-3 col-12 col-sm-6 col-md-6 col-lg-6">
             <api_municipios municipio='{{form.municipalidad.data}}'></api_municipios>
           </div>
-          <script src="https://unpkg.com/vue"></script>
-          <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-          <script>
-            Vue.component('api_municipios', {
-              props: {
-                municipio: {
-                  default: String
-                }
-              },
-              data: function() {
-                return {
-                  selected: "Almirante Brown",
-                  info: null
-                }
-              },
-              delimiters: ['[[',']]'],
-              mounted() {
-                axios
-                  .get('https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios?per_page=135')
-                  .then(response => (this.info = response.data.data.Town))
-                //Necesario para cuando se entra a crear por primera vez porque municipio es vacio
-                if(this.municipio){
-                  this.selected = this.municipio
-                }
-              },
-              template: '<div><b>Municipalidad</b><br><select v-model="selected" name="municipalidad"><option v-for="municipio in info" v-bind:value="municipio.name"> [[municipio.name]] </option></select></div>'
-            })
-            new Vue({el: '#app'})
-          </script>
+
           <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
             <b>{{form.telefono.label}}</b>
-            {{ form.telefono(class="col-12 mb-2") }}
+            {{ form.telefono(class="col-12 mb-2", id="phone_mask") }}
             {% for error in form.telefono.errors %}
             <span style="color: red;">{{error}}</span>
             {% endfor %}
@@ -149,4 +121,7 @@
     </div>
     <div class="col-md-1 col-lg-3"></div>
 </div> 
+
+{% include "modalsCentros.html" %}
+
 {% endblock %}
