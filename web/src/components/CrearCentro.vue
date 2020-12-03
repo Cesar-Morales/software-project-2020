@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="crear-centro">
     <b-jumbotron class="container">
       <h3 class="text-center">Crear Centro</h3>
       <div class="row">
