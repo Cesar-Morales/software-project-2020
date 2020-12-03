@@ -12,7 +12,7 @@
         </div>
         
         <div class="col-md-6 col-12 mt-2"> El telefono es: {{ telefono }} 
-          <b-form-input v-model="telefono" placeholder="221-5552222" type="tel"></b-form-input>
+          <b-form-input v-model="telefono" placeholder="11-9999-9999" type="text" v-mask="'##-####-####'"></b-form-input>
         </div>
         
         <div class="col-md-6 col-12 mt-2"> La hora de apertura es: {{ hora_apertura }}    
