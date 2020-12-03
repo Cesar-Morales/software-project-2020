@@ -39,8 +39,12 @@
         <p> {{ respuesta }} </p>
 
         <h3>Errors</h3>
-        <p> {{ errors }} </p>
-
+        <ul v-if="errors">
+            <li v-for="error in errors" :key="error">
+                {{ error[0] }}
+            </li>
+        </ul>
+        
         <vue-recaptcha 
           @verify='establecer_captcha'
           @expired='resetear_captcha'
@@ -82,6 +86,15 @@ export default {
     }
   },
   methods: {
+    check_errors_for_key(key) {
+      return this.errors && this.error_contains_key(this.errors, key)
+    },
+    print_error_key(key) {
+      return this.errors[key][0]
+    },
+    error_contains_key(errors, key) {
+      return Object.keys(errors).includes(key)
+    },
     resetear_captcha() {
       this.captcha = ""
     },
@@ -100,10 +113,10 @@ export default {
           web: this.web,
           email: this.email}))
         .then(response => {this.errors = ""
-                           this.respuesta = response.data.atributos})
+                           this.respuesta = response.data})
         .catch(
           error => {this.respuesta = ""
-                    this.errors = error.response})
+                    this.errors = error.response.data.error_message})
     }
   }
 }
