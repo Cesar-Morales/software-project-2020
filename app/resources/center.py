@@ -111,6 +111,8 @@ def edit():
 
     center_types = Tipo.getAllTypes()
     form.tipo.choices = [(tipo.name, tipo.name) for tipo in center_types]
+    form.tipo.data = centro.tipo.name
+
 
     return render_template("centros/edit.html", form = form, center_edit=request.form.get('center_edit'))
 
