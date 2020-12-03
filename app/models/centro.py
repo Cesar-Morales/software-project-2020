@@ -209,4 +209,6 @@ class CentroSchema(Schema):
     final_time = fields.Str()
     tipo = fields.Pluck("self", "name")
     web = fields.Str()
-    email = fields.Str() 
+    email = fields.Str()
+    # Tuve que agregar este campo, porque si no , no tengo como mostrar las coordenadas en la app vue
+    coordinates = fields.Str() 
