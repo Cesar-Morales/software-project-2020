@@ -1,45 +1,62 @@
 <template>
   <div>
-    <p> El nombre es: {{ nombre }} </p>
-    <input v-model="nombre">
+    <b-jumbotron class="container">
+      <h3 class="text-center">Crear Centro</h3>
+      <div class="row">
+        <div class="col-md-6 col-12 mt-2">El nombre es: {{ nombre }}
+          <b-form-input v-model="nombre" placeholder="Centro Tururu"></b-form-input>
+        </div>
 
-    <p> La direccion es: {{ direccion }} </p>
-    <input v-model="direccion">
-    
-    <p> El telefono es: {{ telefono }} </p>
-    <input v-model="telefono">
+        <div class="col-md-6 col-12 mt-2"> La direccion es: {{ direccion }} 
+          <b-form-input v-model="direccion" placeholder="Avenida Siempre Vivas Nro 743"></b-form-input>
+        </div>
+        
+        <div class="col-md-6 col-12 mt-2"> El telefono es: {{ telefono }} 
+          <b-form-input v-model="telefono" placeholder="11-9999-9999" type="text" v-mask="'##-####-####'"></b-form-input>
+        </div>
+        
+        <div class="col-md-6 col-12 mt-2"> La hora de apertura es: {{ hora_apertura }}    
+          <b-form-input v-model="hora_apertura" type="time"></b-form-input>
+        </div>
 
-    <p> La hora de apertura es: {{ hora_apertura }} </p>    
-    <input v-model="hora_apertura" type="time">
- 
-    <p> La hora de cierre es: {{ hora_cierre }} </p>   
-    <input v-model="hora_cierre" type="time">
-    
-    <p> El tipo de centro es: {{ tipo }} </p>
-    <input v-model="tipo">
-    
-    <p> La web es: {{ web }} </p>
-    <input v-model="web">
-    
-    <p> El email es: {{ email }} </p>
-    <input v-model="email">
+        <div class="col-md-6 col-12 mt-2"> La hora de cierre es: {{ hora_cierre }}    
+          <b-form-input v-model="hora_cierre" type="time"></b-form-input>
+        </div>
+        
+        <div class="col-md-6 col-12 mt-2"> El tipo de centro es: {{ tipo }}
+          <b-form-input placeholder="Comedor" v-model="tipo"></b-form-input>
+        </div>
+        
+        <div class="col-md-6 col-12 mt-2"> La web es: {{ web }} 
+          <b-form-input v-model="web" placeholder="http://www.centrotururu.org.ar" type="url"></b-form-input>
+        </div>
+        
+        <div class="col-md-6 col-12 mt-2"> El email es: {{ email }} 
+        <b-form-input v-model="email" placeholder="comedortururu@mail.com" type="email"></b-form-input>
+        </div>
+      </div>
+        <p v-if="respuesta">Petición creada exitosamente, espere pacientemente a que su solicitud sea aprobada.</p>
+        <p> {{ respuesta }} </p>
 
-    <p v-if="respuesta">Petición creada exitosamente, espere pacientemente a que su solicitud sea aprobada.</p>
-    <p> {{ respuesta }} </p>
-
-    <h3>Errors</h3>
-    <p> {{ errors }} </p>
-
-    <vue-recaptcha  
-      @verify='establecer_captcha'
-      @expired='resetear_captcha'
-      sitekey="6LfwIuwZAAAAAOJrxBMi5Er5IqvcXnPUjfdS1O2U" 
-      :loadRecaptchaScript="true"
-    ></vue-recaptcha>
-
-    <!-- AGREGAR UN MENSAJE PARA CUANDO ESTA DESHABILITADO -->
-    <button :disabled="!captcha" v-on:click="crear_centro"> Enviar </button>
-
+        <h3>Errors</h3>
+        <ul v-if="errors">
+            <li v-for="error in errors" :key="error">
+                {{ error[0] }}
+            </li>
+        </ul>
+        
+        <vue-recaptcha 
+          @verify='establecer_captcha'
+          @expired='resetear_captcha'
+          sitekey="6LfwIuwZAAAAAOJrxBMi5Er5IqvcXnPUjfdS1O2U" 
+          :loadRecaptchaScript="true">
+        </vue-recaptcha>
+        <div class="text-center">
+          <b-button class="mt-3 btn btn-dark" :disabled="!captcha" v-on:click="crear_centro" v-b-tooltip.hover title="Confirma reCAPTCHA">
+            Enviar
+          </b-button>
+        </div>
+    </b-jumbotron>
   </div>
 </template>
 
@@ -65,10 +82,19 @@ export default {
       email: "",
       respuesta: "",
       captcha: "",
-      errors: ""
+      errors: "",
     }
   },
   methods: {
+    check_errors_for_key(key) {
+      return this.errors && this.error_contains_key(this.errors, key)
+    },
+    print_error_key(key) {
+      return this.errors[key][0]
+    },
+    error_contains_key(errors, key) {
+      return Object.keys(errors).includes(key)
+    },
     resetear_captcha() {
       this.captcha = ""
     },
@@ -87,10 +113,10 @@ export default {
           web: this.web,
           email: this.email}))
         .then(response => {this.errors = ""
-                           this.respuesta = response.data.atributos})
+                           this.respuesta = response.data})
         .catch(
           error => {this.respuesta = ""
-                    this.errors = error.response})
+                    this.errors = error.response.data.error_message})
     }
   }
 }
