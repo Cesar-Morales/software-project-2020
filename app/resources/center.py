@@ -89,7 +89,7 @@ def trashOrReject():
 
 @login_required
 def edit():
-
+    
     if not check_permission('centro_update'):
         flash("No posee los permisos necesario para poder editar centro")
         return redirect(url_for("home"))
