@@ -39,12 +39,14 @@ def check_data_centro(form_request):
     form = CenterNewAPIForm(form_request)
 
     if not form.validate():
-        return False
+        return [False, form.errors]
     
     #Chequear que el tipo de centro exista
     if Tipo.searchByName(form_request.get('tipo')):
-        return True
+        return [True, form.errors]
     else:
-        return False
+        return [False, {"tipo": ["El tipo de centro no existe"]}]
+
+        #{ "hora_cierre": "[Debe insertar un horario de cierre]" }
     
     
