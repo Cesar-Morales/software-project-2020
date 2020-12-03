@@ -4,11 +4,14 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 import Turno from '../components/Turno.vue'
-import Home from '../components/Home.vue'
+import CrearCentro from '../components/CrearCentro.vue'
 
-export default new Router({
+var route = new Router({
+  mode: 'history', 
+  base: process.env.BASE_URL,
 	routes: [
     { path: '/turno', component: Turno},
-    { path: '/', component: Home}
+    { path: '/crear-centro', component: CrearCentro}
   ]
 })
+export default route

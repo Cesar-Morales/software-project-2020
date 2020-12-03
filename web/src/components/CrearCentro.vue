@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="crear-centro">
     <b-jumbotron class="container">
       <h3 class="text-center">Crear Centro</h3>
       <div class="row">
@@ -103,7 +103,7 @@ export default {
     },
     crear_centro() {
       axios
-        .post('http://127.0.0.1:5000/centros', qs.stringify({
+        .post('https://admin-grupo12.proyecto2020.linti.unlp.edu.ar/centros', qs.stringify({
           nombre: this.nombre,
           direccion: this.direccion,
           telefono: this.telefono,
