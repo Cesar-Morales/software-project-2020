@@ -47,7 +47,7 @@
 		},
 		mounted () {
             axios
-            .get('http://127.0.0.1:5000/centros')
+            .get('https://admin-grupo12.proyecto2020.linti.unlp.edu.ar/centros')
             .then(response => (this.centros = response.data.centros))
             .catch(error => this.errors = error.response)
         },
@@ -55,7 +55,7 @@
 			onSubmit() {
 				var date = new Date(this.fecha)
 				axios
-				.post('http://127.0.0.1:5000/centros/'.concat(this.centro_id).concat('/reserva'), qs.stringify({
+				.post('https://admin-grupo12.proyecto2020.linti.unlp.edu.ar/centros/'.concat(this.centro_id).concat('/reserva'), qs.stringify({
 					centro_id: this.centro_id,
 					email_donante: this.email_donante,
 					telefono_donante: this.telefono_donante,
@@ -72,7 +72,7 @@
             solicitarTurnos() {
                 var date = new Date(this.fecha)
                 axios
-                .get('http://127.0.0.1:5000/centros/'.concat(this.centro_id).concat('/turnos_disponibles?fecha=').concat(date.getFullYear() + '-' + ('0'+ (date.getMonth()+1)).slice(-2) + '-' +
+                .get('https://admin-grupo12.proyecto2020.linti.unlp.edu.ar/centros/'.concat(this.centro_id).concat('/turnos_disponibles?fecha=').concat(date.getFullYear() + '-' + ('0'+ (date.getMonth()+1)).slice(-2) + '-' +
                 ('0'+ (date.getDate() + 1)).slice(-2)))
                 .then(response => (this.turnos = response.data.turnos))
                 .catch(error => this.errors = error.response)
