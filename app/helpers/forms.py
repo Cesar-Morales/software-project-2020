@@ -14,7 +14,16 @@ from datetime import time, date, timedelta
 from backports.datetime_fromisoformat import MonkeyPatch
 import phonenumbers
 
+#Parche para funcionar con python 2.x
 MonkeyPatch.patch_fromisoformat()
+
+#Custom validadores para los forms
+def validate_phone_numeber_arg(form, field):
+            numero_telefono = phonenumbers.parse(field.data, "AR")
+            print(str(phonenumbers.is_valid_number(numero_telefono)))
+            if not phonenumbers.is_valid_number(numero_telefono):
+                raise ValidationError("El numero de telefono es invalido")
+
 
 class Form(FlaskForm):
 
@@ -110,7 +119,7 @@ class CenterNewForm(FlaskForm):
                 validators=[DataRequired('Debe insertar una direccion')])
         telefono = StringField(
                 "Telefono", 
-                validators=[DataRequired('Debe insertar un telefono')])
+                validators=[DataRequired('Debe insertar un telefono'), validate_phone_numeber_arg])
         hora_apertura = TimeField(
                 "Hora apertura", 
                 validators=[DateRange(
@@ -132,12 +141,6 @@ class CenterNewForm(FlaskForm):
         instrucciones = StringField("Instrucciones actuales")
         tipo = SelectField("Tipo",validate_choice = False)
         submit = SubmitField('Crear')
-
-        def validate_telefono(form, field):
-            numero_telefono = phonenumbers.parse(field.data, "AR")
-            print(str(phonenumbers.is_valid_number(numero_telefono)))
-            if not phonenumbers.is_valid_number(numero_telefono):
-                raise ValidationError("El numero de telefono es invalido")
 
         def validate_instrucciones(form, field):
             #Si no es un pdf
@@ -200,7 +203,7 @@ class TurnoAPIForm(TurnoForm):
             validators=[DataRequired('El mail no esta presente')])
     telefono_donante = StringField(
             'Numero de telefono',
-            validators=[DataRequired('El telefono no esta presente')])
+            validators=[DataRequired('El telefono no esta presente'), validate_phone_numeber_arg])
 
 class ReservaSearch(FlaskForm):
 

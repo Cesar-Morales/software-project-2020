@@ -125,20 +125,20 @@ def confirmEdit():
     if form.validate():
         if Centro.updateCentro(form, request.form.get('center_edit'), request.files['file']):
             flash("Centro modificado correctamente")
+            centro = Centro.getCentro(request.form.get('center_edit'))
+            form.hora_cierre.data = time.fromisoformat(centro.final_time)
+            form.hora_apertura.data = time.fromisoformat(centro.start_time)
+            form.telefono.data = centro.phone_number
+            form.direccion.data = centro.location
+            form.nombre.data = centro.name
+            form.municipalidad.data = centro.municipality
+            form.web.data = centro.web
+            form.email.data = centro.email
+            form.instrucciones.data = centro.pdf_name
+            form.coordenadas.data = centro.coordinates
         else:
             flash("Ocurrio un error, intente nuevamente.")
 
-    centro = Centro.getCentro(request.form.get('center_edit'))
-    form.hora_cierre.data = time.fromisoformat(centro.final_time)
-    form.hora_apertura.data = time.fromisoformat(centro.start_time)
-    form.telefono.data = centro.phone_number
-    form.direccion.data = centro.location
-    form.nombre.data = centro.name
-    form.municipalidad.data = centro.municipality
-    form.web.data = centro.web
-    form.email.data = centro.email
-    form.instrucciones.data = centro.pdf_name
-    form.coordenadas.data = centro.coordinates
     centerTypes = Tipo.getAllTypes()
     form.tipo.choices = [(tipo.name, tipo.name) for tipo in centerTypes]
 
