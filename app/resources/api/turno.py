@@ -58,4 +58,4 @@ def reserva(id):
 
         return jsonify(atributos=data), 201
     else:
-        return jsonify({"error_message": "error al crear reserva"}), 404
+        return jsonify({"error_message": "error al crear reserva"}), 400
