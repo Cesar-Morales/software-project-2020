@@ -11,7 +11,7 @@
 				<option v-for="centro in centros" :value="centro.id" :key="centro.id">{{centro.name}}</option>
 			</select>
 			<label for="fecha" v-if="centro_id">Fecha:</label>
-			<input type="date" id="fecha" v-model="fecha" @change="solicitarTurnos()" v-if="centro_id">
+			<input type="date" id="fecha" v-model="fecha" @change="solicitarTurnos()" :min="tomorrow" v-if="centro_id">
 			<label for="turno">Horario: </label>
 			<select v-model="turno" id="turno">
 				<option v-for="turno in turnos" v-bind:value="turno" v-bind:key="turno">{{turno.hora_inicio}}</option>
@@ -32,13 +32,14 @@
 		},
 		data() {
 			return{
+				tomorrow: new Date(),
 				centro_id: null,
 				email_donante: "",
 				telefono_donante: "",
 				hora_inicio: null,
 				hora_fin: null,
 				turno: null,
-				fecha: new Date('2020-12-04'),
+				fecha: new Date(),
 				centros: [],
 				errors:"",
 				turnos: [],
@@ -50,6 +51,9 @@
             .get('https://admin-grupo12.proyecto2020.linti.unlp.edu.ar/centros')
             .then(response => (this.centros = response.data.centros))
             .catch(error => this.errors = error.response)
+            this.tomorrow = this.tomorrow.getFullYear() + '-' + ('0'+ (this.tomorrow.getMonth()+1)).slice(-2) + '-' +
+                            ('0'+ (this.tomorrow.getDate() + 1)).slice(-2)
+            this.fecha = this.tomorrow
         },
 		methods: {
 			onSubmit() {
@@ -61,8 +65,7 @@
 					telefono_donante: this.telefono_donante,
 					hora_inicio: this.turno.hora_inicio,
 					hora_fin: this.turno.hora_fin,
-					fecha: date.getFullYear() + '-' + ('0'+ (date.getMonth()+1)).slice(-2) + '-' +
-                           ('0'+ (date.getDate() + 1)).slice(-2)}))
+					fecha: this.formatearFecha(date)}))
                 .then(response => {this.errors = "",
                                   this.respuesta = response.data.atributos,
                                   this.turno = null})
@@ -72,11 +75,14 @@
             solicitarTurnos() {
                 var date = new Date(this.fecha)
                 axios
-                .get('https://admin-grupo12.proyecto2020.linti.unlp.edu.ar/centros/'.concat(this.centro_id).concat('/turnos_disponibles?fecha=').concat(date.getFullYear() + '-' + ('0'+ (date.getMonth()+1)).slice(-2) + '-' +
-                ('0'+ (date.getDate() + 1)).slice(-2)))
+                .get('https://admin-grupo12.proyecto2020.linti.unlp.edu.ar/centros/'.concat(this.centro_id).concat('/turnos_disponibles?fecha=').concat(this.formatearFecha(date)))
                 .then(response => (this.turnos = response.data.turnos))
                 .catch(error => this.errors = error.response)
                 this.turno = null;
+			},
+			formatearFecha(date) {
+				return date.getFullYear() + '-' + ('0'+ (date.getMonth()+1)).slice(-2) + '-' +
+                        ('0'+ (date.getDate() + 1)).slice(-2)
 			}
 		}
 	}

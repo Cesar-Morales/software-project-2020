@@ -10,6 +10,8 @@ from marshmallow import fields
 from app.models.tipo import Tipo
 from marshmallow import Schema, fields, pre_load
 import os
+from geoalchemy2 import Geometry
+
 
 class Centro(db.Model):
 
@@ -25,7 +27,7 @@ class Centro(db.Model):
     web = db.Column(db.String(80), default='')
     email = db.Column(db.String(80), default='')
     pdf_name = db.Column(db.String(100), default='')
-    coordinates = db.Column(db.String(100), default='No especificado')
+    coordinates = db.Column(db.String(80),default='')
     estado = db.Column(db.String(80), default='pendiente')
 
     tipoId = db.Column(db.Integer, db.ForeignKey('tipo.id'))
@@ -209,3 +211,5 @@ class CentroSchema(Schema):
     tipo = fields.Pluck("self", "name")
     web = fields.Str()
     email = fields.Str()
+    # Tuve que agregar este campo, porque si no , no tengo como mostrar las coordenadas en la app vue
+    coordinates = fields.Str() 
