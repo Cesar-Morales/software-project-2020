@@ -34,24 +34,16 @@ export default {
             
   }    
 },
-    components: { LMap, LTileLayer, LMarker, LPopup
- },
+    components: { LMap, LTileLayer, LMarker, LPopup },
    
     methods:{
         latLng: function(coordinates){
+            if (coordinates != 'No especificado')
             var splitted = coordinates.split(",");
             var lat = splitted[0];
             var lng = splitted[1];
             return L.latLng(lat,lng);
         },
-        
-        markerFunction: function(string) {
-           var vm = this;
-            console.log(vm.map)
-         },   
-        
-        
-
     }
 
 }
