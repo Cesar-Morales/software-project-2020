@@ -38,7 +38,6 @@ export default {
    
     methods:{
         latLng: function(coordinates){
-            if (coordinates != 'No especificado')
             var splitted = coordinates.split(",");
             var lat = splitted[0];
             var lng = splitted[1];
