@@ -49,7 +49,6 @@ login_manager.login_message_category = "info"
 #Configurar CORS
 CORS(app)
 
-
 #Configurar datos alchemy
 #Reducir esta creacion a 79 caracteres por linea
 uri = ('mysql://' + app.config["DB_USER"] + ':' + app.config["DB_PASS"] 
