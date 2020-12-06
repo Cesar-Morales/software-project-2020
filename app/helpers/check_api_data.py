@@ -9,13 +9,14 @@ def check_data_reserva(form_request, id):
 
     #Chequear que el id del centro sea el mismo que el parametro
     if id != form_request.get('centro_id'):
-        return False
+        return [False, {
+            "id": ["El id del url y enviado por parametro no coincide"]}]
 
     #Hacer la validaciones de los tiempos
     form = TurnoAPIForm(form_request)
 
     if not form.validate():
-        return False
+        return [False, form.errors]
     
     #Chequear que el tiempo tenga diferencia de 30 minutos
     start_time = time.fromisoformat(form_request.get('hora_inicio'))
@@ -29,9 +30,13 @@ def check_data_reserva(form_request, id):
             minutes=start_time.minute))
     
     if diferencia != timedelta(seconds=1800):
-        return False
+        return [False, {
+                    "time": [
+                        "La diferencia entre la hora de inicio" + 
+                        " y de fin debe ser 30 minutos"]
+                }]
     else:
-        return True
+        return [True, form.errors]
 
 def check_data_centro(form_request):
 
@@ -39,12 +44,11 @@ def check_data_centro(form_request):
     form = CenterNewAPIForm(form_request)
 
     if not form.validate():
-        return False
+        return [False, form.errors]
     
     #Chequear que el tipo de centro exista
     if Tipo.searchByName(form_request.get('tipo')):
-        return True
+        return [True, form.errors]
     else:
-        return False
-    
+        return [False, {"tipo": ["El tipo de centro no existe"]}]
     

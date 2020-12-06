@@ -1,3 +1,7 @@
+"""
+Modulo que define formularios y sus validadores
+"""
+
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, SubmitField, RadioField
 from wtforms.fields import HiddenField, SelectField
@@ -8,8 +12,18 @@ from wtforms.validators import ValidationError
 from wtforms_components import DateField, TimeField, DateRange
 from datetime import time, date, timedelta
 from backports.datetime_fromisoformat import MonkeyPatch
+import phonenumbers
 
+#Parche para funcionar con python 2.x
 MonkeyPatch.patch_fromisoformat()
+
+#Custom validadores para los forms
+def validate_phone_numeber_arg(form, field):
+            numero_telefono = phonenumbers.parse(field.data, "AR")
+            print(str(phonenumbers.is_valid_number(numero_telefono)))
+            if not phonenumbers.is_valid_number(numero_telefono):
+                raise ValidationError("El numero de telefono es invalido")
+
 
 class Form(FlaskForm):
 
@@ -105,7 +119,7 @@ class CenterNewForm(FlaskForm):
                 validators=[DataRequired('Debe insertar una direccion')])
         telefono = StringField(
                 "Telefono", 
-                validators=[DataRequired('Debe insertar un telefono')])
+                validators=[DataRequired('Debe insertar un telefono'), validate_phone_numeber_arg])
         hora_apertura = TimeField(
                 "Hora apertura", 
                 validators=[DateRange(
@@ -120,13 +134,18 @@ class CenterNewForm(FlaskForm):
                                 min=time.fromisoformat('16:00:00'),
                                 max=time.fromisoformat('21:00:00')),
                             DataRequired('Debe insertar un horario de cierre')])
-        municipalidad = SelectField("Municipalidad",validate_choice = False)
+        municipalidad = StringField("Municipalidad")
         web = StringField("Web")
         email = EmailField("Email")
         coordenadas = StringField("Coordenadas")
         instrucciones = StringField("Instrucciones actuales")
         tipo = SelectField("Tipo",validate_choice = False)
         submit = SubmitField('Crear')
+
+        def validate_instrucciones(form, field):
+            #Si no es un pdf
+            if (field.data and not field.data.endswith('.pdf')):
+                raise ValidationError("La extension del archivo no es pdf")
 
 class CenterNewAPIForm(CenterNewForm):
     """ Clase que se encarga de generar formulario para edicion y creacion de 
@@ -184,7 +203,7 @@ class TurnoAPIForm(TurnoForm):
             validators=[DataRequired('El mail no esta presente')])
     telefono_donante = StringField(
             'Numero de telefono',
-            validators=[DataRequired('El telefono no esta presente')])
+            validators=[DataRequired('El telefono no esta presente'), validate_phone_numeber_arg])
 
 class ReservaSearch(FlaskForm):
 

@@ -202,6 +202,7 @@ class CentroSchema(Schema):
         model = Centro
         ordered = True
 
+    id = fields.Str()
     name = fields.Str()
     location = fields.Str()
     phone_number = fields.Str()
@@ -209,4 +210,4 @@ class CentroSchema(Schema):
     final_time = fields.Str()
     tipo = fields.Pluck("self", "name")
     web = fields.Str()
-    email = fields.Str() 
+    email = fields.Str()
