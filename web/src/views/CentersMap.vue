@@ -26,7 +26,7 @@ export default {
       }
   },
   mounted: function(){
-      axios.get('http://localhost:5000/centros').then((r)=>{this.centers = r.data.centros;
+      axios.get('https://admin-grupo12.proyecto2020.linti.unlp.edu.ar/centros').then((r)=>{this.centers = r.data.centros;console.log(this.centers)
       })
   }   
   }
