@@ -27,7 +27,7 @@ class Turno(db.Model):
 
         # Primero se revisa que el horario para la fecha no exista
         turno = db.session.query(Turno).filter_by(
-                start_time=start_time.strftime("%H:%M:%S"),
+                start_time=start_time.strftime("%H:%M"),
                 date=date.strftime("%Y-%m-%d"),
                 centro_id=center_id).first()
         return turno
@@ -54,8 +54,8 @@ class Turno(db.Model):
         else:
             # Se crea el nuevo turno
             turno = Turno(centro_id=int(form.centro_id.data),
-                          start_time=form.hora_inicio.data.strftime("%H:%M:%S"),
-                          final_time=final_time.strftime("%H:%M:%S"),
+                          start_time=form.hora_inicio.data.strftime("%H:%M"),
+                          final_time=final_time.strftime("%H:%M"),
                           date=form.fecha.data.strftime("%Y-%m-%d"))
             db.session.add(turno)
             db.session.commit()

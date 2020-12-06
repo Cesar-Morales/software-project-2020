@@ -1,4 +1,8 @@
 import Vue from 'vue'
+import BootstrapVue from 'bootstrap-vue'
+import VueMask from 'v-mask'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -15,7 +19,8 @@ L.Icon.Default.mergeOptions({
   iconUrl: require('leaflet/dist/images/marker-icon.png')
 })
 Vue.config.productionTip = false
-
+Vue.use(VueMask)
+Vue.use(BootstrapVue)
 new Vue({
   router,
   store,

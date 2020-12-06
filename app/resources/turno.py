@@ -24,6 +24,7 @@ def index(id=1, page=1):
     total = Turno.getTurnosByDate(id).count()
     turnos = Turno.getTurnosByDate(id).paginate(page, per_page, False)
     total_pages=int(math.ceil(total/per_page))
+
     return render_template('turno/index.html',
                             turnos=turnos,
                             page=page,

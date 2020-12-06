@@ -79,7 +79,11 @@ def show(centro_id):
 def create():
     """ Endpoint para crear un centro """
 
-    if check_data_centro(request.form):
+    # resultado es un array donde la primera posición es un booleano
+    # y el segundo son la lista de errores
+    resultado = check_data_centro(request.form)
+
+    if resultado[0]:
         #Crear centro si no existe
         centro = Centro.createAPI(request.form)
 
@@ -87,4 +91,4 @@ def create():
         if centro:
             return print_centro(centro)
     else:
-        return jsonify({"error_message": "Bad request"}), 400
+        return jsonify({"error_message": resultado[1]}), 400

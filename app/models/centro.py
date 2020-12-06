@@ -202,6 +202,7 @@ class CentroSchema(Schema):
         model = Centro
         ordered = True
 
+    id = fields.Str()
     name = fields.Str()
     location = fields.Str()
     phone_number = fields.Str()
