@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css'
-
+import './scss/main.scss'
 
 
 delete L.Icon.Default.prototype._getIconUrl

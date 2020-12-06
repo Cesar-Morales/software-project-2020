@@ -10,6 +10,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from datetime import date
 from flask_marshmallow import Marshmallow
+from flask_cors import CORS
 
 #Filtro para formatear la fecha. HAY QUE CAMBIAR ESTO DE LUGAR CREO
 def datetimeformat(value, format='%d-%m-%Y'):
@@ -44,6 +45,9 @@ login_manager = LoginManager(app)
 login_manager.login_view = "auth_login"
 login_manager.login_message = "No esta autorizado para realizar esta operacion"
 login_manager.login_message_category = "info"
+
+#Configurar CORS
+CORS(app)
 
 
 #Configurar datos alchemy

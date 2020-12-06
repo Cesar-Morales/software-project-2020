@@ -8,8 +8,10 @@
   },
   "dependencies": {
     "axios": "^0.21.0",
+    "bootstrap-vue": "^2.20.1",
     "core-js": "^3.6.5",
     "leaflet": "^1.7.1",
+    "sass": "^1.29.0",
     "sass-loader": "^10.1.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",

@@ -1,9 +1,9 @@
 <template>
-    <div class="card brew-list">
+    <div class="card Centers-List">
         <ul class="list-group list-group-flush">
             <li 
             v-bind:key="index"
-            v-for="(centers,index) in centers"
+            v-for="(center,index) in centers"
             class="list-group-item"
             > {{center.name}}
             </li>
@@ -12,16 +12,21 @@
 </template>
 <script>
 export default {
-    name: 'CentersList',
+    name: 'CenterList',
     props: {
-        centers:Array
+        centers: Array
     }
 }
 </script>
-<style >
+<style lang="scss" scoped>
     .Centers-List{
         overflow-y:scroll;
         height: 95vh;
+        li {
+            &:hover{
+                background-color: darkgray;
+            }
+        }
 
     }
 
