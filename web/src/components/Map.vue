@@ -1,7 +1,6 @@
 <template>
     <div class="row map">
       <l-map
-            @click="markerFunction('marker.options.title')"
             :zoom="zoom" :center="center">
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
             <l-marker 
@@ -23,18 +22,19 @@ import {LMap, LTileLayer,LMarker,LPopup } from 'vue2-leaflet';
 
 export default {
     name:"Map",
-    props:{centers: Array},
+    props:{centers: Array,zoom: Number,center:Object},
     data:function() {
         return {
-            zoom:13,
-            center: L.latLng(-34.6083,-58.3712),
+            
             url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
             attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-            marker: L.latLng(-34.6083,-58.3712),
             
   }    
 },
-    components: { LMap, LTileLayer, LMarker, LPopup },
+    mounted(){
+        this.center =  this.center= L.latLng(this.lat,this.lng)
+    },
+    components: { LMap, LTileLayer, LMarker, LPopup, Map },
    
     methods:{
         latLng: function(coordinates){
@@ -43,7 +43,8 @@ export default {
             var lng = splitted[1];
             return L.latLng(lat,lng);
         },
-    }
+        
+    },
 
 }
 </script>
