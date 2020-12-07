@@ -9,7 +9,7 @@
   <div class="col-2"></div>
   <div class="col-sm-12 col-12 col-md-12 col-lg-8 p-4 rounded" style="background: #C6B2EF">
       <h1 style="text-align: center">Centros de Ayuda</h1>
-      {% if centers|length %} 
+      {% if centers_pendientes.items|length %} 
         <ul class="nav  nav-pills mb-3" id="pills-tab" role="tablist">
           <li class="nav-item">
             <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Pendientes</a>
@@ -35,7 +35,7 @@
                     </tr>
                   </thead>
                   <tbody> 
-                {% for center in centers %}
+                {% for center in centers_pendientes.items %}
                   {% if  center.estado == 'pendiente' %}                
                     <tr>
                         <td>{{center.name}}</td>
@@ -117,7 +117,7 @@
                     </tr>
                   </thead>
                   <tbody> 
-                {% for center in centers %}
+                {% for center in centers_aceptados.items %}
                   {% if  center.estado == 'aceptado' %}                 
                     <tr>
                         <td>{{center.name}}</td>
@@ -199,7 +199,7 @@
                     </tr>
                   </thead>
                   <tbody> 
-                {% for center in centers %}
+                {% for center in centers_rechazados.items %}
                   {% if  center.estado == 'rechazado' %}                 
                    <tr>
                         <td>{{center.name}}</td>
@@ -271,6 +271,19 @@
             </table>
           </div>
          </div>
+
+         <div class="row" class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+          <div class="col-3 col-md-5"></div>
+          <div class="col-6 col-md-2" aria-label="Page navigation example">
+              <ul id="pagination" class="pagination">
+                <li v-for="i in total_pages" class="page-item">{% set i = [asdasd, asdasd] | length %}<a class="page-link" href="{{url_for('config_center_index', page=i)}}">[[i]]</a></li>
+              </ul>
+          </div>
+          <div class="col-3 col-md-5"></div>
+        </div>
+
+        <hr>
+
   {% else %}
   <hr>
   <div class="p-3 m-4">
