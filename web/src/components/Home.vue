@@ -5,7 +5,7 @@
           <b-nav-item to="/home" exact exact-active-class="active text-black" class="text-white">Ayud-AR </b-nav-item>
           <b-nav-item to="/turno" class="text-white" exact exact-active-class="active">Solicitar Turno</b-nav-item>
           <b-nav-item to="/crear-centro" class="text-white" exact exact-active-class="active">Crear Centros</b-nav-item>
-          <b-nav-item to="/CentersMap" class="text-white" exact exact-active-class="active">Ver Ubicacion de Centros</b-nav-item>
+          <b-nav-item to="/mapas-centros" class="text-white" exact exact-active-class="active">Ver Ubicacion de Centros</b-nav-item>
         </b-nav>
         <router-view ></router-view>
     </div>
@@ -22,22 +22,24 @@ export default {
 <style scoped>
 h3 {
   margin: 40px 0 0;
-}
+  }
 ul {
   list-style-type: none;
   padding: 0;
-}
+  }
 li {
   display: inline-block;
   margin: 0 10px;
-}
+  }
 a {
   color: #FFF;
-  
-}
+  }
 a:link {
   text-decoration: none!important
   }
+a:visited {
+  color: white; font-family: arial; 
+  text-decoration: none;
+  }
 
-a:visited {color: white; font-family: arial; text-decoration: none;}
 </style>
