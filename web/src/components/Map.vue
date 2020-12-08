@@ -1,7 +1,10 @@
 <template>
     <div class="row map">
       <l-map
-            :zoom="zoom" :center="center">
+        :zoom="zoom" 
+        :center="center"
+        @zoomend='reestablecer_zoom'>
+
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
             <l-marker 
             :key="index"
@@ -19,35 +22,42 @@
 <script>
 import {LMap, LTileLayer,LMarker,LPopup } from 'vue2-leaflet';
 
-
 export default {
     name:"Map",
-    props:{centers: Array,zoom: Number,center:Object},
+    components: { LMap, LTileLayer, LMarker, LPopup, Map },
+    props:{
+        centers: Array, 
+        zoomed: Number, 
+        center: Object
+        },
     data:function() {
         return {
-            
+            zoom: null,
             url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
             attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-            
-  }    
-},
-    mounted(){
-        this.center =  this.center= L.latLng(this.lat,this.lng)
+        }    
     },
-    components: { LMap, LTileLayer, LMarker, LPopup, Map },
-   
-    methods:{
+    methods: {
         latLng: function(coordinates){
             var splitted = coordinates.split(",");
             var lat = splitted[0];
             var lng = splitted[1];
             return L.latLng(lat,lng);
         },
-        
+        reestablecer_zoom: function(){
+            
+            this.zoom = 1
+        }
     },
-
+    created: function () {
+        this.zoom = this.zoomed
+    },
+    beforeUpdate: function () {
+        this.zoom = this.zoomed
+    }
 }
 </script>
+
 <style scoped>
     .map{
         height: 95vh;

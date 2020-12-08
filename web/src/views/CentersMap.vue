@@ -4,7 +4,7 @@
             <CentersList :centers="centers" :onUpdate="onUpdate"/>
         </div>
         <div class="col-6">
-            <Map :centers="centers" :zoom="zoom" :lat="lat" :lng="lng"/>
+            <Map :centers="centers" :zoomed="zoomed" :center="center"/>
         </div>
     </div>
 
@@ -17,36 +17,33 @@
 import CentersList from '../components/CentersList.vue'
 import axios from 'axios'
 import Map from '../components/Map.vue'
-import {LMarker } from 'vue2-leaflet';
 
 export default {
-  name: 'CenterList',
-  components:{CentersList,Map},
-  data:function(){
-      return {
-          center:null,
-          zoom:13,
-          centers: [],
-          lat:"-34.6083",
-          lng:"-58.3712"
+    name: 'CenterList',
+    components:{CentersList,Map},
+    data:function(){
+        return {
+            center:null,
+            zoomed: 1,
+            centers: [],
+            lat: "-36.6083",
+            lng: "-58.3712"
 
-      }
-  },
-  mounted: function(){
-      axios.get('https://admin-grupo12.proyecto2020.linti.unlp.edu.ar/centros').then((r)=>{this.centers = r.data.centros;console.log(this.centers)
-      });
-     
-  },
-  methods:{ 
-    onUpdate(lat,lng){
-    console.log(lat); 
-    console.log(lng);  
-    this.zoom=15;
-    this.lat = lat;
-    this.lng = lng ;
-      } 
+        }
+    },
+    methods:{ 
+        onUpdate(lat,lng){ 
+            this.zoomed = 8;
+            this.lat = lat;
+            this.lng = lng ;
+            this.center = L.latLng(this.lat,this.lng)
+        } 
+    },
+    created: function(){
+        this.center = L.latLng(this.lat,this.lng)
+        axios
+            .get('https://admin-grupo12.proyecto2020.linti.unlp.edu.ar/centros')
+            .then((r)=>{this.centers = r.data.centros})
     }
-   
-  }
-
+}
 </script>
