@@ -39,23 +39,30 @@ def reserva(id):
     """ Endpoint para reservar un turno. No verifica que sea multiplo 
     de 30 o que el id del centro fue enviado """
 
+    # resultado es un array donde la primera posición es un booleano
+    # y el segundo son la lista de errores
+    resultado = check_data_reserva(request.form, id)
+
     #Crear la reserva del turno
-    if (check_data_reserva(request.form, id) and
-        Reserva.create(request.form)):
+    if resultado[0]:
+        
+        if Reserva.create(request.form):
+            #Crear el json a devolver
+            data = []
 
-        #Crear el json a devolver
-        data = []
+            #Armar la lista para convertirla a json
+            data.append(
+                {"centro_id": request.form.get('centro_id'),
+                "email_donante": request.form.get('email_donante'),
+                "telefono_donante": request.form.get('telefono_donante'), 
+                "hora_inicio": request.form.get('hora_inicio'), 
+                "hora_fin": request.form.get('hora_fin'), 
+                "fecha": request.form.get('fecha')}
+            )
 
-        #Armar la lista para convertirla a json
-        data.append(
-            {"centro_id": request.form.get('centro_id'),
-            "email_donante": request.form.get('email_donante'),
-            "telefono_donante": request.form.get('telefono_donante'), 
-            "hora_inicio": request.form.get('hora_inicio'), 
-            "hora_fin": request.form.get('hora_fin'), 
-            "fecha": request.form.get('fecha')}
-        )
-
-        return jsonify(atributos=data), 201
+            return jsonify(atributos=data), 201
+        else:
+            return jsonify({"error_message": {
+                                "id": ["Turno ya reservado"]}}), 400
     else:
-        return jsonify({"error_message": "error al crear reserva"}), 400
+        return jsonify({"error_message": resultado[1]}), 400

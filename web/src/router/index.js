@@ -1,17 +1,25 @@
 import Vue from 'vue'
-import Router from 'vue-router'
-
-Vue.use(Router)
-
+import VueRouter from 'vue-router'
+import CentersMap from '../views/CentersMap.vue'
 import Turno from '../components/Turno.vue'
 import CrearCentro from '../components/CrearCentro.vue'
+Vue.use(VueRouter)
 
-var route = new Router({
-  mode: 'history', 
+const routes = [
+  {
+    path:'/CentersMap',
+    name:'CentersMap',
+    component:CentersMap
+  },
+  { path: '/turno', component: Turno},
+  { path: '/crear-centro', component: CrearCentro}
+]
+
+const router = new VueRouter({
+  mode: 'history',
   base: process.env.BASE_URL,
-	routes: [
-    { path: '/turno', component: Turno},
-    { path: '/crear-centro', component: CrearCentro}
-  ]
+  routes
 })
-export default route
+
+export default router
+

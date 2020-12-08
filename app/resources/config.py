@@ -52,6 +52,11 @@ def edit():
 
 @login_required
 def center_index():
+
+    if not check_permission('centro_index'):
+        flash("No posee los permisos necesario para poder listar centros")
+        return redirect(url_for("home"))
+
     #como para empezar me traigo todos los centros cargados, para ver si funciona. 
     centers = Centro.getAll() 
     return render_template("config/centers.html",centers = centers)

@@ -1,112 +1,160 @@
 <script>
-        function ConfirmAccept(elem) {
-          localStorage.setItem('acceptId', $(elem).attr('data-id'));
-          console.log(localStorage.getItem("acceptId"));
-  
-          $('#acceptModal').modal();
-      }
-    </script>
-    <script>
-      function ConfirmReject(elem) {
-        localStorage.setItem('centerTrashOrRejectId', $(elem).attr('data-id'));
-        localStorage.setItem('state','rechazado')
-        $('#rejectModal').modal();
-    }
-    </script>
-    <script>
-      function ConfirmDelete(elem) {
-        localStorage.setItem('centerTrashOrRejectId', $(elem).attr('data-id'));
-        localStorage.setItem('state','borrado')
-        $('#deleteModal').modal();
-    }
-    </script>
-    <script>
-      function accept() {
-        $.ajax({
-            url:"{{ url_for('center_accept') }}" ,
-            data: {
-                id: localStorage.getItem('acceptId')
-            },
-            type:'POST',
-            success: function(res) {
-              console.log(res)
-                var result = JSON.parse(res)
-                if (result.status == 'OK') {
-                   alert("centro aceptado correctamente")
-                   setTimeout(window.location.reload.bind(window.location), 250);
-                   $('#acceptModal').modal('hide');
-                   
-                } else {
-                    alert(result.status)
-                    $('#acceptModal').modal('hide');
-                }
-            },
-            error: function(error) {
-                console.log(error);
+    function ConfirmAccept(elem) {
+      localStorage.setItem('acceptId', $(elem).attr('data-id'));
+      console.log(localStorage.getItem("acceptId"));
+
+      $('#acceptModal').modal();
+  }
+</script>
+
+<script>
+  function ConfirmReject(elem) {
+    localStorage.setItem('centerTrashOrRejectId', $(elem).attr('data-id'));
+    localStorage.setItem('state','rechazado')
+    $('#rejectModal').modal();
+}
+</script>
+
+<script>
+  function ConfirmDelete(elem) {
+    localStorage.setItem('centerTrashOrRejectId', $(elem).attr('data-id'));
+    localStorage.setItem('state','borrado')
+    $('#deleteModal').modal();
+}
+</script>
+
+<script>
+  function accept() {
+    $.ajax({
+        url:"{{ url_for('center_accept') }}" ,
+        data: {
+            id: localStorage.getItem('acceptId')
+        },
+        type:'POST',
+        success: function(res) {
+          console.log(res)
+            var result = JSON.parse(res)
+            if (result.status == 'OK') {
+                alert("centro aceptado correctamente")
+                setTimeout(window.location.reload.bind(window.location), 250);
+                $('#acceptModal').modal('hide');
+                
+            } else {
+                alert(result.status)
+                $('#acceptModal').modal('hide');
             }
-        });
-    }
-    </script>
-    <script>
-      function trashOrReject() {
-        $.ajax({
-            url:"{{ url_for('center_trashOrReject') }}" ,
-            data: {
-                state: localStorage.getItem('state'),
-                id: localStorage.getItem('centerTrashOrRejectId')
-            },
-            type:'POST',
-            success: function(res) {
-              console.log(res)
-                var result = JSON.parse(res)
-                if (result.status == 'OK') {
-                   alert("Operacion realizada correctamente")
-                   setTimeout(window.location.reload.bind(window.location), 250);
-                   $('#blockModal').modal('hide');
-                   
-                } else {
-                    alert(result.status)
-                    $('#blockModal').modal('hide');
-                }
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    }
-    </script>
-   
-      <script>
-        function mostrarPublicados(){
-          var x = document.getElementById("publicados");
-          var y = document.getElementById("pendientes");
-          if (y.style.visibility === "visible" ) 
-              y.style.visibility = "hidden";
-          if (x.style.visibility === "hidden") {
-              x.style.visibility = "visible";
-              document.getElementById('public').innerHTML='Ocultar Centros'
-          } else {
-              document.getElementById('public').innerHTML='Mostrar Centros'
-              x.style.visibility = "hidden";
-          }
-  
-  
+        },
+        error: function(error) {
+            console.log(error);
         }
-        function mostrarPendientes(){
-      var x = document.getElementById("pendientes");
-      var y = document.getElementById("publicados");
-      if (y.style.visibility === "visible" ) 
-          y.style.visibility = "hidden";
-      if (x.style.visibility === "hidden") {
-          x.style.visibility = "visible";
-          document.getElementById('pendant').innerHTML='Ocultar Pendientes'
-      } else {
-          document.getElementById('pendant').innerHTML='Mostrar Pendientes'
-          x.style.visibility = "hidden";
+    });
+}
+</script>
+
+<script>
+  function trashOrReject() {
+    $.ajax({
+        url:"{{ url_for('center_trashOrReject') }}" ,
+        data: {
+            state: localStorage.getItem('state'),
+            id: localStorage.getItem('centerTrashOrRejectId')
+        },
+        type:'POST',
+        success: function(res) {
+          console.log(res)
+            var result = JSON.parse(res)
+            if (result.status == 'OK') {
+                alert("Operacion realizada correctamente")
+                setTimeout(window.location.reload.bind(window.location), 250);
+                $('#deleteModal').modal('hide');
+                
+            } else {
+                alert(result.status)
+                $('#deleteModal').modal('hide');
+            }
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+</script>
+   
+<script>
+  function mostrarPublicados(){
+    var x = document.getElementById("publicados");
+    var y = document.getElementById("pendientes");
+    if (y.style.visibility === "visible" ) 
+        y.style.visibility = "hidden";
+    if (x.style.visibility === "hidden") {
+        x.style.visibility = "visible";
+        document.getElementById('public').innerHTML='Ocultar Centros'
+    } else {
+        document.getElementById('public').innerHTML='Mostrar Centros'
+        x.style.visibility = "hidden";
+    }
+  }
+  function mostrarPendientes(){
+    var x = document.getElementById("pendientes");
+    var y = document.getElementById("publicados");
+    if (y.style.visibility === "visible" ) 
+        y.style.visibility = "hidden";
+    if (x.style.visibility === "hidden") {
+        x.style.visibility = "visible";
+        document.getElementById('pendant').innerHTML='Ocultar Pendientes'
+    } else {
+        document.getElementById('pendant').innerHTML='Mostrar Pendientes'
+        x.style.visibility = "hidden";
+    }
+  }
+</script>
+
+<!-- COMPONENTE DE VUE PARA EL SELECT DE MUNICIPIOS  -->
+
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  Vue.component('api_municipios', {
+    props: {
+      municipio: String
+    },
+    data: function() {
+      return {
+        selected: "Almirante Brown",
+        info: null
       }
-  
-  
-        } 
+    },
+    delimiters: ['[[',']]'],
+    mounted() {
+      axios
+        .get('https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios?per_page=135')
+        .then(response => (this.info = response.data.data.Town))
+      
+      //Necesario para cuando se entra a crear por primera vez porque municipio es vacio
+      if(this.municipio){
+        this.selected = this.municipio
+      }
+    },
+    template: '<div><b>Municipalidad</b><br><select v-model="selected" name="municipalidad"><option v-for="municipio in info" v-bind:value="municipio.name"> [[municipio.name]] </option></select></div>'
+  })
+  new Vue({el: '#app'})
+</script>
      
-      </script>
-     
+<!-- SCRIPT PARA ENMASCARAR EL NUMERO DE TELEFONO  -->
+
+<script src="https://unpkg.com/imask"></script>
+<script>
+  var phoneMask = IMask(
+    document.getElementById('phone_mask'), {
+      mask: '{11}-0000-0000'
+    })
+</script>
+
+
+  <!-- LINKS PARA MAPAS DE COORDENADAS -->
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+  <script type="text/javascript"
+  src="{{ url_for('static', filename='map.js') }}"></script>
