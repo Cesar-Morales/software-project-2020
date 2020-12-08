@@ -1,9 +1,8 @@
 <template>
     <div class="row map">
       <l-map
-        :zoom="zoom" 
         :center="center"
-        @zoomend='reestablecer_zoom'>
+        :zoom="zoomed">
 
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
             <l-marker 
@@ -19,16 +18,23 @@
       </l-map>
     </div>
 </template>
-<script>
-import {LMap, LTileLayer,LMarker,LPopup } from 'vue2-leaflet';
 
+
+<script>
+import { LMap, LTileLayer, LMarker, LPopup } from 'vue2-leaflet';
 export default {
     name:"Map",
-    components: { LMap, LTileLayer, LMarker, LPopup, Map },
+    components: { 
+        LMap, 
+        LTileLayer, 
+        LMarker, 
+        LPopup
+    },
     props:{
         centers: Array, 
         zoomed: Number, 
-        center: Object
+        center: Object,
+        set_zoom: Function
         },
     data:function() {
         return {
@@ -39,27 +45,22 @@ export default {
     },
     methods: {
         latLng: function(coordinates){
-            var splitted = coordinates.split(",");
-            var lat = splitted[0];
-            var lng = splitted[1];
-            return L.latLng(lat,lng);
+            var splitted = coordinates.split(",")
+            var lat = splitted[0]
+            var lng = splitted[1]
+            return L.latLng(lat,lng)
         },
-        reestablecer_zoom: function(){
-            
-            this.zoom = 1
-        }
+        
     },
-    created: function () {
-        this.zoom = this.zoomed
-    },
-    beforeUpdate: function () {
-        this.zoom = this.zoomed
+    mounted: function () {
+        console.log(this.$children)
     }
 }
 </script>
 
+
 <style scoped>
     .map{
-        height: 95vh;
+        height: 95vh
     }
 </style>
