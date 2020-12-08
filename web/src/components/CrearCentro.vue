@@ -5,32 +5,26 @@
       <div class="row">
         <div class="col-md-6 col-12 mt-2">El nombre es: {{ nombre }}
           <b-form-input v-model="nombre" placeholder="Centro Tururu"></b-form-input>
-          <p v-if="check_errors_for_key('nombre')">{{ print_error_key('nombre') }}</p>
         </div>
 
         <div class="col-md-6 col-12 mt-2"> La direccion es: {{ direccion }} 
           <b-form-input v-model="direccion" placeholder="Avenida Siempre Vivas Nro 743"></b-form-input>
-          <p v-if="check_errors_for_key('direccion')">{{ print_error_key('direccion') }}</p>
         </div>
         
         <div class="col-md-6 col-12 mt-2"> El telefono es: {{ telefono }} 
           <b-form-input v-model="telefono" placeholder="11-9999-9999" type="text" v-mask="'##-####-####'"></b-form-input>
-          <p v-if="check_errors_for_key('telefono')">{{ print_error_key('telefono') }}</p>
         </div>
         
         <div class="col-md-6 col-12 mt-2"> La hora de apertura es: {{ hora_apertura }}    
           <b-form-input v-model="hora_apertura" type="time"></b-form-input>
-          <p v-if="check_errors_for_key('hora_apertura')">{{ print_error_key('hora_apertura') }}</p>
         </div>
 
         <div class="col-md-6 col-12 mt-2"> La hora de cierre es: {{ hora_cierre }}    
           <b-form-input v-model="hora_cierre" type="time"></b-form-input>
-          <p v-if="check_errors_for_key('hora_cierre')">{{ print_error_key('hora_cierre') }}</p>
         </div>
         
         <div class="col-md-6 col-12 mt-2"> El tipo de centro es: {{ tipo }}
           <b-form-input placeholder="Comedor" v-model="tipo"></b-form-input>
-          <p v-if="check_errors_for_key('tipo')">{{ print_error_key('tipo') }}</p>
         </div>
         
         <div class="col-md-6 col-12 mt-2"> La web es: {{ web }} 
@@ -43,6 +37,7 @@
       </div>
         <p v-if="respuesta">Petición creada exitosamente, espere pacientemente a que su solicitud sea aprobada.</p>
         <p> {{ respuesta }} </p>
+
         <h3>Errors</h3>
         <ul v-if="errors">
             <li v-for="error in errors" :key="error">
