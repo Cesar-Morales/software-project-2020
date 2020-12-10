@@ -13,19 +13,25 @@ export default {
     'v-chart': ECharts
   },
   data () {
-    let hours = ['12a', '1a', '2a', '3a', '4a', '5a', '6a',
-        '7a', '8a', '9a','10a','11a',
-        '12p', '1p', '2p', '3p', '4p', '5p',
-        '6p', '7p', '8p', '9p', '10p', '11p']
+    //Este está bien que este hecho manualmente
+    let provincias = ['Jujuy', 'Salta', 'Formosa', 
+                 'Corrientes', 'Misiones', 'Entre Rios', 
+                 'Chaco', 'San Luis', 'Catamarca',
+                 'Mendoza', 'La Pampa', 'Buenos Aires',
+                 'Chubut', 'Rio Negro', 'Santiago del Estero',
+                 'Cordoba', 'Tucuman', 'San Juan',
+                 'La Rioja', 'Santa Fe', 'Neuquen',
+                 'Chubut', 'Santa Cruz', 'Tierra del Fuego'
+                ]
 
-    let days = ['Saturday', 'Friday', 'Thursday',
-        'Wednesday', 'Tuesday', 'Monday', 'Sunday']
+    //Este habría que llenarlo con los tipos de centros diferentes, podemos hacer una API
+    //o iterar por todos los centros
+    let tipos = ['Institucion religiosa', 'Merendero']
 
-    let data = [[0,0,5],[0,1,1],[0,2,0],[0,3,0],[0,4,0],[0,5,0],[0,6,0],[0,7,0],[0,8,0],[0,9,0],[0,10,0],[0,11,2],[0,12,4],[0,13,1],[0,14,1],[0,15,3],[0,16,4],[0,17,6],[0,18,4],[0,19,4]]
-
-    data = data.map(function (item) {
-        return [item[1], item[0], item[2] || '-']
-    })
+    //Aca se podría hacer la cuenta de la cantidad de cada tipo
+    let data = [['Jujuy','Merendero',15],
+                ['Tucuman','Institucion religiosa',5],
+                ['Santa Cruz','Merendero',5]]
 
     return {
       heatmap: {
@@ -34,22 +40,22 @@ export default {
         },
         animation: false,
         grid: {
-            height: '50%',
-            top: '10%'
+            height: '20%',
+            width: '80%',
+            top: '20%',
+            left: '20%'
         },
         xAxis: {
             type: 'category',
-            data: hours,
-            splitArea: {
-                show: true
+            data: provincias,
+            axisLabel: {
+                interval: 0,
+                rotate: 90
             }
         },
         yAxis: {
             type: 'category',
-            data: days,
-            splitArea: {
-                show: true
-            }
+            data: tipos
         },
         visualMap: [{
             type: 'continuous',
@@ -57,11 +63,11 @@ export default {
             max: 10,
             calculable: true,
             orient: 'horizontal',
-            left: 'center',
-            bottom: '15%'
+            left: '50%',
+            bottom: '10%'
         }],
         series: [{
-            name: 'Punch Card',
+            name: 'Cantidad de centros',
             type: 'heatmap',
             data: data,
             label: {
