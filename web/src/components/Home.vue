@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="hello" style="min-height: 1000px">
     <div class="link">
         <b-nav class="bg-dark" tabs align="center">
           <b-nav-item to="/home" exact exact-active-class="active text-black" class="text-white">Ayud-AR </b-nav-item>
