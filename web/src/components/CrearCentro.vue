@@ -45,12 +45,14 @@
             </li>
         </ul>
         
-        <vue-recaptcha 
-          @verify='establecer_captcha'
-          @expired='resetear_captcha'
-          sitekey="6LfwIuwZAAAAAOJrxBMi5Er5IqvcXnPUjfdS1O2U" 
-          :loadRecaptchaScript="true">
-        </vue-recaptcha>
+        <div style="text-align: center;">
+          <vue-recaptcha style="display: inline-block;"
+            @verify='establecer_captcha'
+            @expired='resetear_captcha'
+            sitekey="6LfwIuwZAAAAAOJrxBMi5Er5IqvcXnPUjfdS1O2U" 
+            :loadRecaptchaScript="true">
+          </vue-recaptcha>
+        </div>
         <div class="text-center">
           <b-button class="mt-3 btn btn-dark" :disabled="!captcha" v-on:click="crear_centro" v-b-tooltip.hover title="Confirma reCAPTCHA">
             Enviar
