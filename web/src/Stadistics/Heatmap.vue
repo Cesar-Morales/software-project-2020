@@ -63,7 +63,7 @@ export default {
         series: [{
             name: 'Punch Card',
             type: 'heatmap',
-            data: ['12a', 'Monday', 15],
+            data: data,
             label: {
                 show: true
             },
