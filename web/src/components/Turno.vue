@@ -96,7 +96,8 @@
 					fecha: this.formatearFecha(date)}))
                 .then(response => {this.errors = "",
                                   this.respuesta = response.data.atributos,
-                                  this.turno = null})
+                                  this.turno = null,
+								  this.solicitarTurnos()})
                 .catch(error => {this.errors = error.response,
                                 this.respuesta = ""})
 			},
