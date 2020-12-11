@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Home/>
+    <Nav/>
     <Footer/>
     
   </div>
@@ -8,12 +8,12 @@
 
 <script>
 import Footer from './components/Footer.vue'
-import Home from './components/Home.vue'
+import Nav from './components/Nav.vue'
 
 export default {
   name: 'App',
   components: {
-    Home,
+    Nav,
     Footer
   }
 }

@@ -2,10 +2,10 @@
   <div class="hello" style="min-height: 1000px">
     <div class="link">
         <b-nav class="bg-dark" tabs align="center">
-          <b-nav-item to="/home" exact exact-active-class="active text-black" class="text-white">Ayud-AR </b-nav-item>
+          <b-nav-item to="/" exact exact-active-class="active" class="text-white">Ayud-AR </b-nav-item>
           <b-nav-item to="/turno" class="text-white" exact exact-active-class="active">Solicitar Turno</b-nav-item>
           <b-nav-item to="/crear-centro" class="text-white" exact exact-active-class="active">Crear Centros</b-nav-item>
-          <b-nav-item to="/mapas-centros" class="text-white" exact exact-active-class="active">Ver Ubicacion de Centros</b-nav-item>
+          <b-nav-item to="/mapas-centros" class="text-white" exact exact-active-class="active">Ubicacion de Centros</b-nav-item>
         </b-nav>
         <router-view ></router-view>
     </div>
