@@ -2,7 +2,13 @@
     <div class="container">    
         <div class="row">
             <div class="col-12">
-                <Map :centers="centers" :zoomed="zoomed" :center="center" :set_zoom="set_zoom" />
+                <Map 
+                    :centers="centers" 
+                    :zoomed="zoomed" 
+                    :center="center" 
+                    :set_zoom="set_zoom" 
+                    :onUpdate="onUpdate"
+                />
             </div>
         </div>
     </div>
@@ -10,13 +16,14 @@
 
 
 <script>
-import CentersList from '../components/CentersList.vue'
 import axios from 'axios'
 import Map from '../components/Map.vue'
 
 export default {
     name: 'CenterList',
-    components:{CentersList,Map},
+    components:{
+        Map
+    },
     data:function(){
         return {
             center:null,
@@ -54,7 +61,8 @@ export default {
             .then((r)=>{this.centers = r.data.centros})
     },
     mounted: function(){
-        this.map = this.$children[1].$children[0].mapObject
+        this.map = this.$children[0].$children[0].mapObject
     }
 }
 </script>
+
