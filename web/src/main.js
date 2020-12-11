@@ -9,7 +9,11 @@ import store from './store'
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css'
 import './scss/main.scss'
+import ECharts from 'vue-echarts'
 
+// import ECharts modules manually to reduce bundle size
+import 'echarts/lib/chart/bar'
+import 'echarts/lib/component/tooltip'
 
 delete L.Icon.Default.prototype._getIconUrl
 
@@ -19,8 +23,10 @@ L.Icon.Default.mergeOptions({
   iconUrl: require('leaflet/dist/images/marker-icon.png')
 })
 Vue.config.productionTip = false
+Vue.component('v-chart', ECharts)
 Vue.use(VueMask)
 Vue.use(BootstrapVue)
+
 new Vue({
   router,
   store,
