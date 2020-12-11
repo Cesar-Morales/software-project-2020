@@ -1,5 +1,5 @@
 <template>
-  <ve-histogram :data="chartData" :settings="chartSettings"></ve-histogram>
+  <ve-histogram :data="chartData"></ve-histogram>
 </template>
 
 <script>
@@ -9,16 +9,39 @@
     components: {
         VeHistogram
     },
+    props: {
+      centros: Array
+    },
     data () {
       return {
+        tiposCentros: {},
         chartData: {
           columns: ['tipo', 'cantidad'],
-          rows: [
-            { 'tipo': 'Institucion religiosa', 'cantidad': 1523},
-            { 'tipo': 'Merendero', 'cantidad': 122}
-          ]
+          rows: []
         }
       }
+    },
+    methods: {
+        contarTiposCentros(centros) {
+
+          //Obtener y contar los tipos de centros
+                for(var key of centros.keys()){
+                    if(centros[key].tipo in this.tiposCentros ){
+                        this.tiposCentros[centros[key].tipo]++
+                    }
+                    else{
+                        this.tiposCentros[centros[key].tipo] = 1
+                    }
+          }
+          
+          //Poner los datos en charData
+          for(var tipo of Object.keys(this.tiposCentros)){
+              this.chartData.rows.push({tipo: tipo, 'cantidad': this.tiposCentros[tipo]})
+          }
+        }
+    },
+    mounted: function() {
+        this.contarTiposCentros(this.centros)
     }
   }
 </script>
