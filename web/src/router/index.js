@@ -8,8 +8,8 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path:'/CentersMap',
-    name:'CentersMap',
+    path:'/mapas-centros',
+    name:'mapas-centros',
     component:CentersMap
   },
   { path: '/turno', component: Turno},

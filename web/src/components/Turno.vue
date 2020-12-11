@@ -1,26 +1,54 @@
 <template>
 	<div class='turno'>
-		<h1> Solicitar Turno</h1>
+		<b-jumbotron class="container">
+      	<h3 class="text-center">Solicitar Turno</h3>
 		<form @submit.prevent="onSubmit">
-			<label for="email">Email:</label>
-			<input v-model="email_donante" id="email">
-			<label for="telefono">Telefono:</label>
-			<input v-model="telefono_donante" id="telefono">
-			<label for="centro">Centro:</label>
-			<select v-model="centro_id" id="centro" @change="solicitarTurnos()">
-				<option v-for="centro in centros" :value="centro.id" :key="centro.id">{{centro.name}}</option>
-			</select>
-			<label for="fecha" v-if="centro_id">Fecha:</label>
-			<input type="date" id="fecha" v-model="fecha" @change="solicitarTurnos()" :min="tomorrow" v-if="centro_id">
-			<label for="turno">Horario: </label>
-			<select v-model="turno" id="turno">
-				<option v-for="turno in turnos" v-bind:value="turno" v-bind:key="turno">{{turno.hora_inicio}}</option>
-			</select>
-			<button class="btn btn-lg btn-primary pull-xs-right">
-              Solicitar
-            </button>
+			<div class="row">
+				<div class="col-2"></div>
+				<div class="col-8 mt-2">Email:
+					<b-form-input v-model="email_donante" id="email" placeholder="usuario@mail.com" type="email"></b-form-input>
+				</div>
+				<div class="col-2"></div>
+
+				<div class="col-2"></div>
+				<div class="col-8 mt-2">
+					Telefono:
+					<b-form-input v-model="telefono_donante" id="telefono"  placeholder="11-9999-9999" type="text" v-mask="'##-####-####'"></b-form-input>
+				</div>
+				<div class="col-2"></div>
+				
+				<div class="col-2"></div>
+				<div class="col-8 mt-2">
+					Centro:
+					<select class="col-12" v-model="centro_id" id="centro" @change="solicitarTurnos()">
+						<option v-for="centro in centros" :value="centro.id" :key="centro.id">{{centro.name}}</option>
+					</select>
+				</div>
+				<div class="col-2"></div>
+				
+				<div class="col-2"></div>
+				<div v-if="centro_id" class="border mt-4 bg-secondary pb-4 text-white col-8">
+					<div class="col-12 mt-2">
+						Fecha:
+						<b-form-input type="date" id="fecha" v-model="fecha" @change="solicitarTurnos()" :min="tomorrow" v-if="centro_id"></b-form-input>
+					</div>
+					<div class="col-12 mt-2">
+						Horario:
+						<select class="col-12" v-model="turno" id="turno">
+							<option v-for="turno in turnos" v-bind:value="turno" v-bind:key="turno">{{turno.hora_inicio}}</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="col-12 mt-2">
+					<button class="btn btn-sm btn-dark pull-xs-right">
+						Solicitar
+					</button>
+				</div>
+			</div>
 		</form>
 		<p> {{ errors }}</p>
+		</b-jumbotron>
 	</div>
 </template>
 <script>
@@ -68,7 +96,8 @@
 					fecha: this.formatearFecha(date)}))
                 .then(response => {this.errors = "",
                                   this.respuesta = response.data.atributos,
-                                  this.turno = null})
+                                  this.turno = null,
+								  this.solicitarTurnos()})
                 .catch(error => {this.errors = error.response,
                                 this.respuesta = ""})
 			},
