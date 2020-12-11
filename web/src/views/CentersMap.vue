@@ -1,15 +1,11 @@
 <template>
-    <div class="row">
-        <div class="col-6">
-            <CentersList :centers="centers"/>
-        </div>
-        <div class="col-6">
-            <Map :centers="centers"/>
+    <div class="container">    
+        <div class="row">
+            <div class="col-12">
+                <Map :centers="centers"/>
+            </div>
         </div>
     </div>
-
-
- 
 </template>
 
 

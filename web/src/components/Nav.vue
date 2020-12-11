@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: 'Home',
+  name: 'Nav',
 }
 </script>
 
