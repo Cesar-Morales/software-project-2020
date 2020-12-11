@@ -1,8 +1,10 @@
 <template>
     <div class="row map">
-        <l-map
-            @click="markerFunction('marker.options.title')"
-            :zoom="zoom" :center="center">
+
+      <l-map
+        :center="center"
+        :zoom="zoomed">
+
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
             <l-marker 
             :key="index"
@@ -42,48 +44,65 @@
                 <h1>Centros </h1>
                 <hr>
                 <b-img :src="require('../../../app/static/logos/ayudar3.jpg')" fluid thumbnail></b-img>
-                <CentersList :centers="centers"/>
+                <CentersList :centers="centers" :onUpdate="onUpdate"/>
             </div>
             </b-sidebar>
         </div>
     </div>
 </template>
 <script>
-import {LMap, LTileLayer,LMarker,LPopup } from 'vue2-leaflet';
 import CentersList from '../components/CentersList.vue'
-
+import { LMap, LTileLayer, LMarker, LPopup } from 'vue2-leaflet';
 export default {
     name:"Map",
-    props:{centers: Array},
+    components: { 
+        LMap, 
+        LTileLayer, 
+        LMarker, 
+        LPopup
+    },
+    props:{
+        centers: Array, 
+        zoomed: Number, 
+        center: Object,
+        set_zoom: Function
+        },
     data:function() {
         return {
-            zoom:13,
+
+            zoom:null,
             centers: [],
             center: L.latLng(-34.6083,-58.3712),
             url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-            attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-            marker: L.latLng(-34.6083,-58.3712),
+            attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',marker: L.latLng(-34.6083,-58.3712),
             
   }    
 },
     components: { LMap, LTileLayer, LMarker, LPopup, CentersList, Map },
     methods:{
         latLng: function(coordinates){
-            var splitted = coordinates.split(",");
-            var lat = splitted[0];
-            var lng = splitted[1];
-            return L.latLng(lat,lng);
+            var splitted = coordinates.split(",")
+            var lat = splitted[0]
+            var lng = splitted[1]
+            return L.latLng(lat,lng)
         },
         markerFunction: function(string) {
            var vm = this;
             console.log(vm.map)
          },   
+        
+    },
+    mounted: function () {
+        console.log(this.$children)
+
     }
 }
 </script>
+
+
 <style scoped>
     .map{
-        height: 95vh;
+        height: 95vh
     }
     #refreshButton {
       position: absolute;
