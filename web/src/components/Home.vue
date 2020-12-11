@@ -6,6 +6,7 @@
           <b-nav-item to="/turno" class="text-white" exact exact-active-class="active">Solicitar Turno</b-nav-item>
           <b-nav-item to="/crear-centro" class="text-white" exact exact-active-class="active">Crear Centros</b-nav-item>
           <b-nav-item to="/mapas-centros" class="text-white" exact exact-active-class="active">Ver Ubicacion de Centros</b-nav-item>
+          <b-nav-item to="/estadistica" class="text-white" exact exact-active-class="active">Estadisticas</b-nav-item>
         </b-nav>
         <router-view ></router-view>
     </div>
