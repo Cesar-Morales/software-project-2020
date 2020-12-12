@@ -3,10 +3,12 @@ import VueRouter from 'vue-router'
 import CentersMap from '../views/CentersMap.vue'
 import Turno from '../components/Turno.vue'
 import CrearCentro from '../components/CrearCentro.vue'
+import HomeApp from '../components/HomeApp.vue'
 import Stadistic from '../components/Stadistic.vue'
 Vue.use(VueRouter)
 
 const routes = [
+  { path: '/', component: HomeApp},
   {
     path:'/mapas-centros',
     name:'mapas-centros',
