@@ -14,26 +14,27 @@
             <div class="row">
                 <b-card-group deck>
                   <b-card bg-variant="dark" text-variant="white" header="Solicitar turno" class="text-center">
-                    <b-card-text>Usted puede tanto entregar como recibir algun tipo de donacion segun el centro.</b-card-text>
+                    <b-card-text><h6>Usted puede tanto entregar como recibir algun tipo de donacion segun el centro.</h6></b-card-text>
                     <hr>
-                    <b-button href="/turno" variant="warning">Ir</b-button>
+                    <router-link to="/turno"><b-button variant="warning">Ir</b-button></router-link> 
                   </b-card>
     
                   <b-card bg-variant="dark" text-variant="white" header="Crear centro" class="text-center">
-                    <b-card-text>Usted puede solicitar la alta de un centro de ayuda y esperar la verificacion.</b-card-text>
+                    <b-card-text><h6>Usted puede solicitar la alta de un centro de ayuda y esperar la verificacion.</h6></b-card-text>
                     <hr>
-                    <b-button href="/crear-centro" variant="success">Ir</b-button>
+                    <router-link to="/crear-centro" ><b-button variant="success">Ir</b-button></router-link>
                   </b-card>
     
                   <b-card bg-variant="dark" text-variant="white" header="Centro mas cercano" class="text-center">
-                    <b-card-text>Usted puede buscar el centro mas cercano y ver su ubicacion en un mapa.</b-card-text>
+                    <b-card-text><h6>Usted puede buscar el centro mas cercano y ver su ubicacion en un mapa.</h6></b-card-text>
+
                     <hr>
-                    <b-button href="/mapas-centros" variant="info">Ir</b-button>
+                    <router-link to="/mapas-centros"><b-button variant="info">Ir</b-button></router-link>
                   </b-card>
                   <b-card bg-variant="dark" text-variant="white" header="Estadisticas" class="text-center">
-                    <b-card-text>Aqui usted puede ver las estaditicas de los centros de ayuda existentes.</b-card-text>
+                    <b-card-text><h6>Aqui puede ver las estadisticas de los centros de ayuda existentes.</h6></b-card-text>
                     <hr>
-                    <b-button href="/estadistica" variant="danger">Ir</b-button>
+                    <router-link to="/estadistica"><b-button variant="danger">Ir</b-button></router-link>
                   </b-card>
                 </b-card-group>
             </div>
