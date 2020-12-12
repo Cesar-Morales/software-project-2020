@@ -48,6 +48,7 @@
 			</div>
 		</form>
 		<p> {{ errors }}</p>
+		<b-alert class="mt-4" v-if="respuesta" variant="success" show>Solicitud enviada correctamente</b-alert>
 		</b-jumbotron>
 	</div>
 </template>
