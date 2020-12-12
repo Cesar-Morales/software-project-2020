@@ -1,5 +1,6 @@
 <template>
     <div class="row map">
+
       <l-map
         :center="center"
         :zoom="zoomed">
@@ -10,17 +11,48 @@
             v-for="(centerr,index) in centers"
             :lat-lng="latLng(centerr.coordinates)">
             <l-popup class="popup-style" ref="popup">
-                <div class="list-group">
-                    {{centerr.name}}<br> {{centerr.location}}<br> {{centerr.start_time}}<br> {{centerr.final_time}}<br> {{centerr.phone_number}}
+                <div style="width: 130px" class="list-group">
+                <b>Nombre:</b>{{centerr.name}}
+                <br>
+                <b>Direccion:</b>{{centerr.location}}
+                <br>
+                <b>Desde:</b>{{centerr.start_time}}
+                <br>
+                <b>Hasta:</b>{{centerr.final_time}}
+                <br>
+                <b>Telefono:</b>{{centerr.phone_number}}
                 </div>
                 </l-popup>
             </l-marker>
-      </l-map>
+        </l-map>
+        <div>
+            <b-button size="lg" id="refreshButton" variant="light" v-b-toggle.sidebar-footer>Centros</b-button>
+            <b-sidebar 
+                id="sidebar-footer" 
+                aria-label="Centros de ayuda" 
+                no-header 
+                backdrop
+                shadow
+                >
+            <template #footer="{ hide }">
+            <div class="d-flex bg-dark text-light align-items-center px-3 py-2">
+                <strong class="mr-auto">Ayud-AR</strong>
+                <b-button size="sm" variant="light" @click="hide">Cerrar</b-button>
+            </div>
+            </template>
+            <div class="px-3 py-2">
+                <h1>Centros </h1>
+                <hr>
+                <b-img :src="require('../../../app/static/logos/ayudar3.jpg')" fluid thumbnail></b-img>
+                <CentersList :centers="centers" :onUpdate="onUpdate"/>
+            </div>
+            </b-sidebar>
+        </div>
     </div>
 </template>
 
-
 <script>
+import CentersList from '../components/CentersList.vue'
 import { LMap, LTileLayer, LMarker, LPopup } from 'vue2-leaflet';
 export default {
     name:"Map",
@@ -28,13 +60,15 @@ export default {
         LMap, 
         LTileLayer, 
         LMarker, 
-        LPopup
+        LPopup,
+        CentersList
     },
     props:{
         centers: Array, 
         zoomed: Number, 
         center: Object,
-        set_zoom: Function
+        set_zoom: Function,
+        onUpdate: Function
         },
     data:function() {
         return {
@@ -59,8 +93,16 @@ export default {
 </script>
 
 
+
 <style scoped>
     .map{
         height: 95vh
+    }
+    #refreshButton {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px;
+      z-index: 400;
     }
 </style>
