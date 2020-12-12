@@ -16,7 +16,7 @@
       return {
         tiposCentros: {},
         chartData: {
-          columns: ['tipo', 'cantidad'],
+          columns: ['tipo', 'Cantidad'],
           rows: []
         }
       }
@@ -36,7 +36,7 @@
           
           //Poner los datos en charData
           for(var tipo of Object.keys(this.tiposCentros)){
-              this.chartData.rows.push({tipo: tipo, 'cantidad': this.tiposCentros[tipo]})
+              this.chartData.rows.push({tipo: tipo, 'Cantidad': this.tiposCentros[tipo]})
           }
         }
     },
