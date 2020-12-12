@@ -4,7 +4,7 @@
       <h3 class="text-center">Crear Centro</h3>
       <div class="row">
         <div class="col-md-6 col-12 mt-2">El nombre es: {{ nombre }}
-          <b-form-input v-model="nombre" placeholder="Centro Tururu"></b-form-input>
+          <b-form-input v-model="nombre" placeholder="Centro Ejemplo"></b-form-input>
         </div>
 
         <div class="col-md-6 col-12 mt-2"> La direccion es: {{ direccion }} 
@@ -24,19 +24,18 @@
         </div>
         
         <div class="col-md-6 col-12 mt-2"> El tipo de centro es: {{ tipo }}
-          <b-form-input placeholder="Comedor" v-model="tipo"></b-form-input>
+          <b-form-input placeholder="Merendero" v-model="tipo"></b-form-input>
         </div>
         
         <div class="col-md-6 col-12 mt-2"> La web es: {{ web }} 
-          <b-form-input v-model="web" placeholder="http://www.centrotururu.org.ar" type="url"></b-form-input>
+          <b-form-input v-model="web" placeholder="http://www.centroejemplo.org.ar" type="url"></b-form-input>
         </div>
         
         <div class="col-md-6 col-12 mt-2"> El email es: {{ email }} 
-        <b-form-input v-model="email" placeholder="comedortururu@mail.com" type="email"></b-form-input>
+        <b-form-input v-model="email" placeholder="comedorejemplo@mail.com" type="email"></b-form-input>
         </div>
       </div>
-        <p v-if="respuesta">Petición creada exitosamente, espere pacientemente a que su solicitud sea aprobada.</p>
-        <p> {{ respuesta }} </p>
+        <b-alert class="mt-4" v-if="respuesta" variant="success" show>Petición creada exitosamente, espere pacientemente a que su solicitud sea aprobada.</b-alert>
 
         <h3>Errors</h3>
         <ul v-if="errors">
