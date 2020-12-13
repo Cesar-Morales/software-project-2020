@@ -116,9 +116,14 @@ export default {
 			//Obtener y contar los tipos de centros
             for(var key of centros.keys()){
                 this.actualKey = key
-                console.log(centros[key].coordinates)
                 if(centros[key].coordinates != ""){
                     response = await this.obtenerProvincia(centros[key].coordinates)
+                    if(response.data.ubicacion.provincia.nombre == 'Tierra del Fuego, Antártida e Islas del Atlántico Sur'){
+                        response.data.ubicacion.provincia.nombre = 'Tierra del Fuego'
+                    }
+                    if(response.data.ubicacion.provincia.nombre == 'Ciudad Autónoma de Buenos Aires'){
+                        response.data.ubicacion.provincia.nombre = 'Buenos Aires'
+                    }
                     await this.actualizarData(response.data.ubicacion.provincia.nombre)
                 }
             }
