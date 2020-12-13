@@ -41,7 +41,7 @@
 				</div>
 				
 				<div class="col-12 mt-2">
-					<button class="btn btn-sm btn-dark pull-xs-right">
+					<button :disabled="!turno" class="btn btn-sm btn-dark pull-xs-right">
 						Solicitar
 					</button>
 				</div>
