@@ -5,32 +5,32 @@
       <div class="row">
         <div class="col-md-6 col-12 mt-2">El nombre es: {{ nombre }}
           <b-form-input v-model="nombre" placeholder="Centro Ejemplo"></b-form-input>
-          <p v-if="check_errors_for_key('nombre')">{{ print_error_key('nombre') }}</p>
+          <b-alert v-if="check_errors_for_key('nombre')">{{ print_error_key('nombre') }}</b-alert>
         </div>
 
         <div class="col-md-6 col-12 mt-2"> La direccion es: {{ direccion }} 
           <b-form-input v-model="direccion" placeholder="Avenida Siempre Vivas Nro 743"></b-form-input>
-          <p v-if="check_errors_for_key('direccion')">{{ print_error_key('direccion') }}</p>
+          <p class="bg-warning" v-if="check_errors_for_key('direccion')">{{ print_error_key('direccion') }}</p>
         </div>
         
         <div class="col-md-6 col-12 mt-2"> El telefono es: {{ telefono }} 
           <b-form-input v-model="telefono" placeholder="11-9999-9999" type="text" v-mask="'##-####-####'"></b-form-input>
-          <p v-if="check_errors_for_key('telefono')">{{ print_error_key('telefono') }}</p>
+          <p class="bg-warning" v-if="check_errors_for_key('telefono')">{{ print_error_key('telefono') }}</p>
         </div>
         
         <div class="col-md-6 col-12 mt-2"> La hora de apertura es: {{ hora_apertura }}    
           <b-form-input v-model="hora_apertura" type="time"></b-form-input>
-           <p v-if="check_errors_for_key('hora_apertura')">{{ print_error_key('hora_apertura') }}</p>
+           <p class="bg-warning" v-if="check_errors_for_key('hora_apertura')">{{ print_error_key('hora_apertura') }}</p>
         </div>
 
         <div class="col-md-6 col-12 mt-2"> La hora de cierre es: {{ hora_cierre }}    
           <b-form-input v-model="hora_cierre" type="time"></b-form-input>
-          <p v-if="check_errors_for_key('hora_cierre')">{{ print_error_key('hora_cierre') }}</p>
+          <p class="bg-warning" v-if="check_errors_for_key('hora_cierre')">{{ print_error_key('hora_cierre') }}</p>
         </div>
         
         <div class="col-md-6 col-12 mt-2"> El tipo de centro es: {{ tipo }}
           <b-form-input placeholder="Merendero" v-model="tipo"></b-form-input>
-          <p v-if="check_errors_for_key('tipo')">{{ print_error_key('tipo') }}</p>
+          <p class="bg-warning" v-if="check_errors_for_key('tipo')">{{ print_error_key('tipo') }}</p>
         </div>
         
         <div class="col-md-6 col-12 mt-2"> La web es: {{ web }} 
@@ -41,9 +41,9 @@
         <b-form-input v-model="email" placeholder="comedorejemplo@mail.com" type="email"></b-form-input>
         </div>
       </div>
-        <b-alert class="mt-4" v-if="respuesta" variant="success" show>Petición creada exitosamente, espere pacientemente a que su solicitud sea aprobada.</b-alert>
+        <b-alert class="mt-4" v-if="respuesta" variant="success" dismissible show>Petición creada exitosamente, espere pacientemente a que su solicitud sea aprobada.</b-alert>
         
-        <div style="text-align: center;">
+        <div class="mt-4" style="text-align: center;">
           <vue-recaptcha style="display: inline-block;"
             @verify='establecer_captcha'
             @expired='resetear_captcha'

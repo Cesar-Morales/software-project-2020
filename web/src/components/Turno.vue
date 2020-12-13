@@ -47,8 +47,14 @@
 				</div>
 			</div>
 		</form>
-		<p> {{ errors }}</p>
-		<b-alert class="mt-4" v-if="respuesta" variant="success" show>Solicitud enviada correctamente</b-alert>
+		<div class="conatainer mt-3">
+		<div v-if="errors">
+            <div v-for="error in errors" :key="error">
+                <b-alert class="mt-4" variant="warning" dismissible show>{{ error[0] }}</b-alert>
+            </div>
+        </div>
+		</div>
+	  	<b-alert class="mt-4" v-if="respuesta" variant="success" dismissible show>Solicitud creada correctamente para el usuario con mail: {{ respuesta[0].email_donante }}.En el horario: {{ respuesta[0].hora_inicio }}</b-alert>
 		</b-jumbotron>
 	</div>
 </template>
@@ -95,11 +101,11 @@
 					hora_inicio: this.turno.hora_inicio,
 					hora_fin: this.turno.hora_fin,
 					fecha: this.formatearFecha(date)}))
-                .then(response => {this.errors = "",
-                                  this.respuesta = response.data.atributos,
-                                  this.turno = null,
+                .then(response => {this.errors = ""
+                                  this.respuesta = response.data.atributos
+                                  this.turno = null
 								  this.solicitarTurnos()})
-                .catch(error => {this.errors = error.response,
+                .catch(error => {this.errors = error.response.data.error_message
                                 this.respuesta = ""})
 			},
             solicitarTurnos() {
@@ -107,7 +113,7 @@
                 axios
                 .get('https://admin-grupo12.proyecto2020.linti.unlp.edu.ar/centros/'.concat(this.centro_id).concat('/turnos_disponibles?fecha=').concat(this.formatearFecha(date)))
                 .then(response => (this.turnos = response.data.turnos))
-                .catch(error => this.errors = error.response)
+                .catch(error => this.errors = error.response.data.error_message)
                 this.turno = null;
 			},
 			formatearFecha(date) {
