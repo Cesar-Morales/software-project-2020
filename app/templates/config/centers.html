@@ -6,7 +6,8 @@
 {% endblock %}
 {% block content %}
 <div class="row">
-  <div class="col-2"></div>
+  
+
   <div class="col-sm-12 col-12 col-md-12 col-lg-8 p-4 rounded" style="background: #C6B2EF">
       <h1 style="text-align: center">Centros de Ayuda</h1>
       {% if centers|length %} 
@@ -30,7 +31,6 @@
                       <th scope="col">Direccion</th>
                       <th scope="col">Telefono</th>
                       <th scope="col">Apertura</th>
-                      <th scope="col">Ubicacion</th>
                       <th scope="col">Acciones</th>
                     </tr>
                   </thead>
@@ -42,7 +42,6 @@
                         <td>{{ center.location }}</td>
                         <td>{{ center.phone_number }}</td>
                         <td>{{ center.start_time }}hs-{{center.final_time}}hs</td>
-                        <td><button onclick="verMapa('{{center.coordinates}}')">Ver ubicacion</button></td>
 
                       <td>
                         <!--BOTON y Modal INFO-->
@@ -124,6 +123,7 @@
                         <td>{{ center.location }}</td>
                         <td>{{ center.phone_number }}</td>
                         <td>{{ center.start_time }}hs-{{center.final_time}}hs</td>
+                        <td><button onclick="verMapa('{{center.coordinates}}')">Ver ubicacion</button></td>
 
                       <td style="display:inline-flex;" class="column11">
                       <!-- Boton para editar -->
@@ -194,7 +194,6 @@
                       <th scope="col">Direccion</th>
                       <th scope="col">Telefono</th>
                       <th scope="col">Apertura</th>
-                      <th scope="col">Ubicacion</th>
                       <th scope="col">Acciones</th>
                     </tr>
                   </thead>
@@ -206,7 +205,6 @@
                         <td>{{ center.location }}</td>
                         <td>{{ center.phone_number }}</td>
                         <td>{{ center.start_time }}hs-{{center.final_time}}hs</td>
-                        <td><button onclick="verMapa('{{center.coordinates}}')">Ver ubicacion</button></td>
                         <script>
                           
                         </script>
@@ -283,10 +281,24 @@
     <a href="{{ url_for('centros_new') }}" class="col-3 btn btn-success btn-sm">Nuevo</a>
     <div class="col-2"></div>
     <a href="{{ url_for('home') }}" class="col-3 btn btn-dark btn-sm">Volver</a>
-    <div class="col-2"></div>
   </div><br>
-  <div id="mapid"></div>
+
+</div>
+<div class="col-4">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    
+  <h6>Ubicacion de Centros</h6>
+  <div  style="height: 600px;width: 500px;" id="mapid">
+
+  </div> 
+    <!-- links para mapas de coordenadas -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+  <script type="text/javascript"
+         src="{{ url_for('static', filename='mapCentros.js') }}"></script>
+         <!-- fin de link de mapas de coordenadas -->
+
 </div> 
-<div class="col-2"></div>
 {% include "modalsCentros.html" %}
 {% endblock %}

@@ -1,12 +1,5 @@
 
-// function verMapa(centercoordinates){ 
-//     console.log(centercoordinates)
-//     var res = centercoordinates.split(',')
-//     var lat = res[0]
-//     var long = res[1]
-//     console.log(res)
-//     console.log(lat)
-//     console.log(long)
+
 const tilesProvider = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 
 let myMap = L.map('mapid').setView([-34.6083,-58.3712],13)
@@ -21,8 +14,7 @@ var myIcon = L.icon({
     iconAnchor:[25,16],
 })
 
-    // var marker = L.marker([-34.6083,-58.3712],{icon:myIcon})
-    // .addTo(myMap)
+  
     myMap.setView([-34.6083,-58.3712],13)
     console.log("PROBANDO");
     
@@ -40,6 +32,20 @@ var myIcon = L.icon({
     }
     
     myMap.on('click', onMapClick);
+    
+    
+function verMapa(centercoordinates){ 
+    console.log(centercoordinates)
+    var res = centercoordinates.split(',')
+    var lat = res[0]
+    var long = res[1]
+    console.log(res)
+    console.log(lat)
+    console.log(long)
+    marker = L.marker([lat,long]).addTo(myMap)
+    myMap.setView([lat,long],10)
+
+    }
 
     // return false;
  
