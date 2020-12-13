@@ -137,7 +137,7 @@ class CenterNewForm(FlaskForm):
         municipalidad = StringField("Municipalidad")
         web = StringField("Web")
         email = EmailField("Email")
-        coordenadas = StringField("Coordenadas")
+        coordenadas = StringField("Coordenadas",id="coordinates")
         instrucciones = StringField("Instrucciones actuales")
         tipo = SelectField("Tipo",validate_choice = False)
         submit = SubmitField('Crear')

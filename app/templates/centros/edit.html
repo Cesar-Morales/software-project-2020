@@ -6,8 +6,7 @@
   {% endblock %}
 {% block content %}
 <div class="row">
-    <div class="col-md-1 col-lg-3"></div>
-    <div class="col-12 col-md-10 col-lg-6 p-4 rounded" style="background: #cccccc">
+    <div class="col-12 col-md-10 col-lg-6 p-4 rounded">
       <h1 style="text-align: center">Edicion de Centro</h1>
       <hr>
       <form autocomplete="off" action="{{ url_for('center_confirmEdit') }}" method="POST" enctype="multipart/form-data">
@@ -81,7 +80,7 @@
             <span style="color: red;">{{error}}</span>
             {% endfor %}
           </div>
-
+         
           <div class="col-12 mb-3 col-sm-6 col-md-6 col-lg-6">
             <b>{{form.instrucciones.label}}</b>
             {{ form.instrucciones(class="col-12 mb-2", readonly=true) }}
@@ -115,7 +114,21 @@
         </div>
       </form>
     </div>
-    <div class="col-md-1 col-lg-3"></div>
+    <div class="col-12 col-md-10 col-lg-6 p-4 rounded" style="background: #C6B2EF"> 
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+      
+      <h6>Seleccione la ubicacion de su centro</h6>
+      <div  style="height: 600px;width: 500px;" id="mapid">
+    
+      </div> 
+        <!-- links para mapas de coordenadas -->
+      <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""></script>
+      <script type="text/javascript"
+             src="{{ url_for('static', filename='map.js') }}"></script>
+             <!-- fin de link de mapas de coordenadas -->
+    </div>
 </div>
 
 {% include "modalsCentros.html" %}
