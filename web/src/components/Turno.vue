@@ -41,13 +41,14 @@
 				</div>
 				
 				<div class="col-12 mt-2">
-					<button class="btn btn-sm btn-dark pull-xs-right">
+					<button :disabled="!turno" class="btn btn-sm btn-dark pull-xs-right">
 						Solicitar
 					</button>
 				</div>
 			</div>
 		</form>
 		<p> {{ errors }}</p>
+		<b-alert class="mt-4" v-if="respuesta" variant="success" show>Solicitud enviada correctamente</b-alert>
 		</b-jumbotron>
 	</div>
 </template>

@@ -116,8 +116,11 @@ export default {
 			//Obtener y contar los tipos de centros
             for(var key of centros.keys()){
                 this.actualKey = key
-                response = await this.obtenerProvincia(centros[key].coordinates)
-                await this.actualizarData(response.data.ubicacion.provincia.nombre)
+                console.log(centros[key].coordinates)
+                if(centros[key].coordinates != ""){
+                    response = await this.obtenerProvincia(centros[key].coordinates)
+                    await this.actualizarData(response.data.ubicacion.provincia.nombre)
+                }
             }
 
             console.log(this.heatmap.series[0].data)
