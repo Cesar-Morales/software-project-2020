@@ -16,7 +16,7 @@ from app.models.site import Site
 import math
 from datetime import time
 
-# @login_required
+@login_required
 def new_center():
     
     if not check_permission('centro_new'):
@@ -37,6 +37,7 @@ def create():
 
     form = CenterNewForm()
     form.instrucciones.data = request.files['file'].filename
+    form.coordenadas.data = request.form.get('coordinates')
     if form.validate():
         if Centro.create(form, request.files['file']):
             flash("Centro creado correctamente")

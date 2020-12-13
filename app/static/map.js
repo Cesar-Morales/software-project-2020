@@ -1,12 +1,12 @@
 
-function verMapa(centercoordinates){ 
-    console.log(centercoordinates)
-    var res = centercoordinates.split(',')
-    var lat = res[0]
-    var long = res[1]
-    console.log(res)
-    console.log(lat)
-    console.log(long)
+// function verMapa(centercoordinates){ 
+//     console.log(centercoordinates)
+//     var res = centercoordinates.split(',')
+//     var lat = res[0]
+//     var long = res[1]
+//     console.log(res)
+//     console.log(lat)
+//     console.log(long)
 const tilesProvider = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 
 let myMap = L.map('mapid').setView([-34.6083,-58.3712],13)
@@ -21,10 +21,26 @@ var myIcon = L.icon({
     iconAnchor:[25,16],
 })
 
-    var marker = L.marker([lat,long],{icon:myIcon})
-    .addTo(myMap)
-    myMap.setView([lat,long],13)
+    // var marker = L.marker([-34.6083,-58.3712],{icon:myIcon})
+    // .addTo(myMap)
+    myMap.setView([-34.6083,-58.3712],13)
     console.log("PROBANDO");
-    return false;
+    
+    var popup = L.popup();
+
+    function onMapClick(e) {
+        popup
+            .setLatLng(e.latlng)
+            .setContent("Coordenadas seleccionadas" + e.latlng.toString())
+            .openOn(myMap);
+        var lat = e.latlng.lat;
+        var lng = e.latlng.lng;    
+        console.log(lat,lng);
+     document.getElementById('coordinates').value=lat.toString()+','+lng.toString()       
+    }
+    
+    myMap.on('click', onMapClick);
+
+    // return false;
  
-}
+// }
