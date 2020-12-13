@@ -19,12 +19,12 @@ export default {
     data () {
         //Este está bien que este hecho manualmente
         var provincias = ['Jujuy', 'Salta', 'Formosa', 
-                    'Corrientes', 'Misiones', 'Entre Rios', 
+                    'Corrientes', 'Misiones', 'Entre Ríos', 
                     'Chaco', 'San Luis', 'Catamarca',
                     'Mendoza', 'La Pampa', 'Buenos Aires',
-                    'Chubut', 'Rio Negro', 'Santiago del Estero',
-                    'Cordoba', 'Tucuman', 'San Juan',
-                    'La Rioja', 'Santa Fe', 'Neuquen',
+                    'Chubut', 'Río Negro', 'Santiago del Estero',
+                    'Córdoba', 'Tucumán', 'San Juan',
+                    'La Rioja', 'Santa Fe', 'Neuquén',
                     'Chubut', 'Santa Cruz', 'Tierra del Fuego'
                     ]
 
