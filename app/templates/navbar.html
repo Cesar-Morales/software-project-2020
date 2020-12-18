@@ -21,7 +21,7 @@
                                 Listar Usuarios
                             </a><!--VER DONDE QUEDA AL FINAL-->
                             <a class="dropdown-item" href="{{ url_for('config_index') }}">Configuracion</a>
-                            <a class="dropdown-item" href="{{ url_for('config_center_index', page=1) }}">Administrar Centros</a>
+                            <a class="dropdown-item" href="{{ url_for('config_center_index', page_pendiente=1, page_aceptado=1, page_rechazado=1) }}">Administrar Centros</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ url_for('auth_logout') }}">
                                     Cerrar sesion

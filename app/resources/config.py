@@ -1,7 +1,7 @@
 """ 
 Manejador de la configuracion
 """
-from flask import render_template, session, redirect, url_for, flash
+from flask import render_template, session, redirect, url_for, flash, request
 from app.helpers.forms import ConfigForm
 from app import db
 from app.models.site import Site
@@ -52,7 +52,7 @@ def edit():
     return render_template("config/index.html", form=form)
 
 @login_required
-def center_index(page=1, modal='#pills-home'):
+def center_index(modal='pendiente'):
 
     if not check_permission('centro_index'):
         flash("No posee los permisos necesario para poder listar centros")
@@ -62,21 +62,32 @@ def center_index(page=1, modal='#pills-home'):
     
     permiso = check_permission('center_show')
 
+    #Obtener parametros de url
+    if(request.args.get('modal')):
+        modal = request.args.get('modal')
+
+
+    page_pendiente = int(request.args.get('page_pendiente'))
+    page_aceptado = int(request.args.get('page_aceptado'))
+    page_rechazado = int(request.args.get('page_rechazado'))
+
+
+
     per_page = Site.page()
 
     #Centros pendientes
     total_pendientes = Centro.getAllPendientes().count()
-    centers_pendientes = Centro.getAllPendientes().paginate(page,per_page,False)
+    centers_pendientes = Centro.getAllPendientes().paginate(page_pendiente,per_page,False)
     total_pages_pendientes=int(math.ceil(total_pendientes/per_page))
 
     #Centros aceptaos
     total_aceptados = Centro.getAllAceptados().count()
-    centers_aceptados = Centro.getAllAceptados().paginate(page,per_page,False)
+    centers_aceptados = Centro.getAllAceptados().paginate(page_aceptado,per_page,False)
     total_pages_aceptadas=int(math.ceil(total_aceptados/per_page))
 
     #Centros rechazado
     total_rechazados = Centro.getAllRechazados().count()
-    centers_rechazados = Centro.getAllRechazados().paginate(page,per_page,False)
+    centers_rechazados = Centro.getAllRechazados().paginate(page_rechazado,per_page,False)
     total_pages_rechazados=int(math.ceil(total_rechazados/per_page))
     
     return render_template("config/centers.html", 
@@ -87,4 +98,7 @@ def center_index(page=1, modal='#pills-home'):
                            centers_rechazados = centers_rechazados, 
                            total_pages_rechazados=total_pages_rechazados, 
                            tienePermiso=permiso,
-                           modal=modal)
+                           modal=modal,
+                           page_pendiente=page_pendiente,
+                           page_aceptado=page_aceptado,
+                           page_rechazado=page_rechazado)

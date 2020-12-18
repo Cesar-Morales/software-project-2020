@@ -42,7 +42,7 @@ def create():
             flash("Centro creado correctamente")
         else:
             flash("Ocurrio un error, intente nuevamente.")
-        return redirect(url_for("config_center_index"))
+        return redirect(url_for("config_center_index", page_pendiente=1, page_aceptado=1, page_rechazado=1))
 
     center_types = Tipo.getAllTypes()
     form.tipo.choices = [(tipo.name, tipo.name) for tipo in center_types]
