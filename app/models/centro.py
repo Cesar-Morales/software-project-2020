@@ -36,10 +36,16 @@ class Centro(db.Model):
     
     def getAll():
         """Metodo que devuelve todos los centros creados en la base de datos: sin filtros"""
-        return db.session.query(Centro).all()
+        return db.session.query(Centro)
     
     def getAllAceptados():
         return db.session.query(Centro).filter_by(estado='aceptado')
+    
+    def getAllPendientes():
+        return db.session.query(Centro).filter_by(estado='pendiente')
+
+    def getAllRechazados():
+        return db.session.query(Centro).filter_by(estado='rechazado')
 
     def createAPI(form):
         

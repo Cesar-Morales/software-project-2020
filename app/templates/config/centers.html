@@ -10,20 +10,36 @@
 
   <div class="col-sm-12 col-12 col-md-12 col-lg-8 p-4 rounded" style="background: #C6B2EF">
       <h1 style="text-align: center">Centros de Ayuda</h1>
-      {% if centers|length %} 
+      {% if centers_pendientes.items|length %} 
         <ul class="nav  nav-pills mb-3" id="pills-tab" role="tablist">
           <li class="nav-item">
-            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Pendientes</a>
+            {% if modal == 'pendiente' %}
+              <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Pendientes</a>
+            {% else %}
+              <a class="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Pendientes</a>
+            {% endif %}  
           </li>
           <li class="nav-item">
+            {% if modal == 'aceptado' %}
+              <a class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Aceptados</a>
+            {% else %}
             <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Aceptados</a>
+            {% endif %}  
           </li>
           <li class="nav-item">
+            {% if modal == 'rechazado' %}
+              <a class="nav-link active" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Rechazados</a>
+            {% else %}
             <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Rechazados</a>
+            {% endif %}
           </li>
         </ul>
         <div class="tab-content" id="pills-tabContent">
-          <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+            {% if modal == 'pendiente' %}
+              <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+            {% else %}
+              <div class="tab-pane fade" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+            {% endif %}
               <table class="col-12 table">
                   <thead class="thead-dark">
                     <tr>
@@ -35,7 +51,7 @@
                     </tr>
                   </thead>
                   <tbody> 
-                {% for center in centers %}
+                {% for center in centers_pendientes.items %}
                   {% if  center.estado == 'pendiente' %}                
                     <tr>
                         <td>{{center.name}}</td>
@@ -102,8 +118,26 @@
                 {% endfor %}
               </tbody>
             </table>
+
+            <div class="row">
+              <div class="col-3 col-md-5"></div>
+                <div class="col-6 col-md-2" aria-label="Page navigation example">
+                  <ul class="pagination">
+                    {% for i in range(total_pages_pendientes)  %}
+                            <li class="page-item"><a class="page-link" href="{{url_for('config_center_index', page_pendiente=i+1, page_aceptado=page_aceptado, page_rechazado=page_rechazado)}}">{{ i+1 }}</a></li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              <div class="col-3 col-md-5"></div>
+            </div>
+
           </div>
-          <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+          {% if modal == 'aceptado' %}
+            <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+          {% else %}
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+          {% endif %}
+          
               <table class="col-12 table">
                   <thead class="thead-dark">
                     <tr>
@@ -116,7 +150,7 @@
                     </tr>
                   </thead>
                   <tbody> 
-                {% for center in centers %}
+                {% for center in centers_aceptados.items %}
                   {% if  center.estado == 'aceptado' %}                 
                     <tr>
                         <td>{{center.name}}</td>
@@ -185,8 +219,25 @@
                 {% endfor %}
               </tbody>
             </table>
+
+            <div class="row">
+              <div class="col-3 col-md-5"></div>
+                <div class="col-6 col-md-2" aria-label="Page navigation example">
+                  <ul class="pagination">
+                    {% for i in range(total_pages_aceptadas)  %}
+                            <li class="page-item"><a class="page-link" href="{{url_for('config_center_index', page_pendiente=page_pendiente, page_aceptado=i+1, page_rechazado=page_rechazado, modal='aceptado')}}">{{ i+1 }}</a></li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              <div class="col-3 col-md-5"></div>
+            </div>
+
           </div>
-          <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+          {% if modal == 'rechazado' %}
+          <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+          {% else %}
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+          {% endif %}        
               <table class="col-12 table">
                   <thead class="thead-dark">
                     <tr>
@@ -198,7 +249,7 @@
                     </tr>
                   </thead>
                   <tbody> 
-                {% for center in centers %}
+                {% for center in centers_rechazados.items %}
                   {% if  center.estado == 'rechazado' %}                 
                    <tr>
                         <td>{{center.name}}</td>
@@ -267,8 +318,21 @@
                 {% endfor %}
               </tbody>
             </table>
+            <div class="row">
+              <div class="col-3 col-md-5"></div>
+                <div class="col-6 col-md-2" aria-label="Page navigation example">
+                  <ul class="pagination">
+                    {% for i in range(total_pages_rechazados)  %}
+                            <li class="page-item"><a class="page-link" href="{{url_for('config_center_index', page_pendiente=page_pendiente, page_aceptado=page_aceptado, page_rechazado=i+1, modal='rechazado')}}">{{ i+1 }}</a></li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              <div class="col-3 col-md-5"></div>
+            </div>  
+
           </div>
          </div>
+
   {% else %}
   <hr>
   <div class="p-3 m-4">
