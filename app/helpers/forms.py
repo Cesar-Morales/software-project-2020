@@ -108,6 +108,8 @@ class UserForm(FlaskForm):
             'Contraseña',
             validators=[DataRequired('Debe insertar una contraseña')])
     image_name = StringField('NombreImagen')
+    idUser = IntegerField("idUsuario")
+
 
 class CenterNewForm(FlaskForm):
         """ Form para la creacion de centros """
