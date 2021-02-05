@@ -108,7 +108,7 @@ class UserForm(FlaskForm):
             'Contraseña',
             validators=[DataRequired('Debe insertar una contraseña')])
     image_name = StringField('NombreImagen')
-    idUser = IntegerField("idUsuario")
+    idUser = HiddenField('idUser')
 
 
 class CenterNewForm(FlaskForm):
