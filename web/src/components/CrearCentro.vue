@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-md-6 col-12 mt-2">El nombre es: {{ nombre }}
           <b-form-input v-model="nombre" placeholder="Centro Ejemplo"></b-form-input>
-          <b-alert v-if="check_errors_for_key('nombre')">{{ print_error_key('nombre') }}</b-alert>
+          <p class="bg-warning" v-if="check_errors_for_key('nombre')">{{ print_error_key('nombre') }}</p>
         </div>
 
         <div class="col-md-6 col-12 mt-2"> La direccion es: {{ direccion }} 
