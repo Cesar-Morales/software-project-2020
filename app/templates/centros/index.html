@@ -111,20 +111,19 @@
           </table>
           <div class="row">
               <div class="col-3 col-md-5"></div>
-            <div class="col-6 col-md-2" aria-label="Page navigation example">
-                <div class="col-6" aria-label="Page navigation example">
-                <ul class="pagination">
-                  {% for i in range(total_pages)  %}
-                      <li class="page-item">
-                        <form method="GET" action="{{url_for('center_search', page=i+1)}}">
-                          <input name="search" hidden value="{{ search }}">
-                          <input name="options" hidden value="{{ options }}">
-                          <button class="page-link" type="submit" >{{ i+1 }}</button>
-                        </form> 
-                      </li>
-                  {% endfor %}
-                </ul>
-            </div>
+                <div class="col-6 col-md-2" aria-label="Page navigation example">
+                  <ul class="pagination">
+                    {% for i in range(total_pages)  %}
+                        <li class="page-item">
+                          <form method="GET" action="{{url_for('center_search', page=i+1)}}">
+                            <input name="search" hidden value="{{ search }}">
+                            <input name="options" hidden value="{{ options }}">
+                            <button class="page-link" type="submit" >{{ i+1 }}</button>
+                          </form> 
+                        </li>
+                    {% endfor %}
+                  </ul>
+                </div>
             <div class="col-3 col-md-5"></div>
           </div>
         </div>

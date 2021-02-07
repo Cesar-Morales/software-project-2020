@@ -139,7 +139,22 @@
   })
   new Vue({el: '#app'})
 </script>
+
+<!-- PAGINACION  -->
      
+<script>
+  new Vue({
+    el: '#pagination',
+    data: function() {
+      return {
+        total_pages: {{total_pages_pendientes}},
+      }
+    },
+    delimiters: ['[[',']]']
+    })
+</script>
+
+
 <!-- SCRIPT PARA ENMASCARAR EL NUMERO DE TELEFONO  -->
 
 <script src="https://unpkg.com/imask"></script>
