@@ -14,10 +14,18 @@ var myIcon = L.icon({
     iconAnchor:[25,16],
 })
 
+    if(document.getElementById("coordinates").value){
+        var coordinates = document.getElementById("coordinates").value
+        var centername = document.getElementById("nombre").value
+        console.log(coordinates)
 
-
-    myMap.setView([-34.6083,-58.3712],13)
-    console.log("PROBANDO");
+        var res = coordinates.split(',')
+        var lat = res[0]
+        var long = res[1]
+        marker = new L.marker([lat.toString(),long.toString()])
+        myMap.addLayer(marker);
+        myMap.setView([lat,long],13)
+    }
     
     var popup = L.popup();
 
