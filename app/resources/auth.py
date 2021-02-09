@@ -75,7 +75,6 @@ def logout():
     del session["roles"]
     del session["username"]
     del session["idUserLogged"]
-    session.clear()
     flash("La sesión se cerró correctamente.")
 
     logout_user()
