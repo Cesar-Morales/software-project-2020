@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, send_from_directory
+from flask import render_template, send_from_directory, session
 from app.resources import user
 from app.resources import center
 from app.resources import auth
@@ -77,6 +77,7 @@ def home():
     formCenterSearch = CenterSearchForm()
     formCenterSearch.options.choices = ["","aceptado","rechazado","pendiente"]
     site = Site.obtain_site()
+    session["site"] = site
     return render_template("home.html", 
                             form=form, 
                             form_reserva=form_reserva, 
