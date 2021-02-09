@@ -90,6 +90,7 @@ app.add_url_rule("/centros/<id>/reserva", "api_turno_reserva", api_turno.reserva
 
 #Centros
 app.add_url_rule("/centros", "api_centro_index", api_centro.index, methods=["GET"])
+app.add_url_rule("/centrossinpaginar", "api_centro_index_all", api_centro.index_all, methods=["GET"])
 app.add_url_rule("/centros/<centro_id>", "api_centro_show", api_centro.show, methods=["GET"])
 app.add_url_rule("/centros", "api_centro_create", api_centro.create, methods=["POST"])
 
