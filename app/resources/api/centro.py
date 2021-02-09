@@ -52,6 +52,22 @@ def index():
 
     return jsonify(centros=data, total=total, pagina=pagina), 200
 
+def index_all():
+    """" Todos los centros sin paginación """
+
+    centros = Centro.getAllAceptados()
+
+    #Donde se va a formar el json
+    data = []
+    centro_schema = CentroSchema()
+
+    #Armar la lista para convertirla a json
+    for centro in centros:
+        data.append(centro_schema.dump(centro))
+
+    return jsonify(centros=data), 200
+
+
 def print_centro(centro):
 
     #Donde se va a formar el json

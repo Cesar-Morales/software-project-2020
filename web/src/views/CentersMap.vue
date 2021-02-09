@@ -57,7 +57,7 @@ export default {
     created: function(){
         this.center = L.latLng(this.lat,this.lng)
         axios
-            .get('https://admin-grupo12.proyecto2020.linti.unlp.edu.ar/centros')
+            .get('https://admin-grupo12.proyecto2020.linti.unlp.edu.ar/centrossinpaginar')
             .then((r)=>{this.centers = r.data.centros})
     },
     mounted: function(){
