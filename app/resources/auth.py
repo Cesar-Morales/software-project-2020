@@ -61,7 +61,6 @@ def authenticate():
         return redirect(url_for("home"))
     else:
         del session["roles"]
-        session.clear()
         flash("La pagina se encuentra en mantenimiento. Intente mas tarde")
         return redirect(url_for("auth_login"))
 
