@@ -110,8 +110,8 @@
             </tbody>
           </table>
          
-                <div class="text-center" aria-label="Page navigation example">
-                  <ul class="pagination">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center">
                     {% for i in range(total_pages)  %}
                         <li class="page-item">
                           <form method="GET" action="{{url_for('center_search', page=i+1)}}">
@@ -122,7 +122,7 @@
                         </li>
                     {% endfor %}
                   </ul>
-                </div>
+                </nav>
             
         </div>
           <hr>
