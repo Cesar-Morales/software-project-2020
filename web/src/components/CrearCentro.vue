@@ -103,7 +103,7 @@ export default {
     },
     crear_centro() {
       axios
-        .post('https://admin-grupo12.proyecto2020.linti.unlp.edu.ar/centros', qs.stringify({
+        .post('https://admin-grupo12.proyecto2020.linti.unlp.edu.ar/centrossinpaginar', qs.stringify({
           nombre: this.nombre,
           direccion: this.direccion,
           telefono: this.telefono,
