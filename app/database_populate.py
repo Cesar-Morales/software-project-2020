@@ -48,7 +48,7 @@ if not user_operator:
         first_name = 'Marta', 
         password = '123123', 
         username = 'operator')
-    db.session.add(user_operator)
+    # db.session.add(user_operator)
     db.session.commit()
 
 #Creacion user normal para probar permisos  
