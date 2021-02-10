@@ -28,7 +28,7 @@ if not site:
 
 
 #Creacion admin inicial del sistema si no existe
-user = db.session.query(User).filter(or_(User.username == 'admin', User.email == 'admin')).first()
+user = db.session.query(User).filter(or_(User.username == 'admin', User.email == 'admin@admin.com')).first()
 if not user:
     user = User(
         email='admin@admin.com', 
@@ -40,7 +40,7 @@ if not user:
     db.session.commit()
     
 #Creacion operator para probar permisos  
-user_operator = db.session.query(User).filter(or_(User.username == 'operator', User.email == 'operator')).first()
+user_operator = db.session.query(User).filter(or_(User.username == 'operator', User.email == 'operator@operator.com')).first()
 if not user_operator:
     user_operator = User(
         email = 'operator@operator.com', 
@@ -48,7 +48,7 @@ if not user_operator:
         first_name = 'Marta', 
         password = '123123', 
         username = 'operator')
-    # db.session.add(user_operator)
+    db.session.add(user_operator)
     db.session.commit()
 
 #Creacion user normal para probar permisos  
