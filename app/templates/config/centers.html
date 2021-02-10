@@ -119,17 +119,13 @@
               </tbody>
             </table>
 
-            <div class="row">
-              <div class="col-3 col-md-5"></div>
-                <div class="col-6 col-md-2" aria-label="Page navigation example">
-                  <ul class="pagination">
+           <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center">
                     {% for i in range(total_pages_pendientes)  %}
                             <li class="page-item"><a class="page-link" href="{{url_for('config_center_index', page_pendiente=i+1, page_aceptado=page_aceptado, page_rechazado=page_rechazado)}}">{{ i+1 }}</a></li>
                     {% endfor %}
                   </ul>
-                </div>
-              <div class="col-3 col-md-5"></div>
-            </div>
+           </nav>
 
           </div>
           {% if modal == 'aceptado' %}
