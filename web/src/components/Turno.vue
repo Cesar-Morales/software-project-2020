@@ -83,7 +83,7 @@
 		},
 		mounted () {
             axios
-            .get('https://admin-grupo12.proyecto2020.linti.unlp.edu.ar/centrossnipaginar')
+            .get('https://admin-grupo12.proyecto2020.linti.unlp.edu.ar/centros')
             .then(response => (this.centros = response.data.centros))
             .catch(error => this.errors = error.response)
             this.tomorrow = this.tomorrow.getFullYear() + '-' + ('0'+ (this.tomorrow.getMonth()+1)).slice(-2) + '-' +
