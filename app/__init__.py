@@ -59,7 +59,7 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
 #Importar creacion inicial de la base de datos
-# from app import database_populate
+from app import database_populate
 
 #Importar las rutas de la aplicacion
 from app import routes
